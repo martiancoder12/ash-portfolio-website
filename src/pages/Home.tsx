@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 import { ArrowUpRight, Check, Mail, MapPin, Phone } from 'lucide-react'
+import { useSiteAnimations } from '../hooks/useSiteAnimations'
 import '../App.css'
 
 const projects = [
@@ -73,8 +74,12 @@ function SectionHeader({ number, title, meta }: { number: string; title: string;
 }
 
 export default function Home() {
+  const shellRef = useRef<HTMLElement>(null)
+  useSiteAnimations(shellRef)
+
   return (
-    <main className="site-shell">
+    <main className="site-shell" ref={shellRef}>
+      <div className="scroll-progress" aria-hidden="true" />
       <div className="paper-grid" aria-hidden="true" />
 
       <nav className="top-nav" aria-label="Primary navigation">

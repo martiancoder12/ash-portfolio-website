@@ -28,7 +28,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Programmatic scrolls are handled by GSAP ScrollToPlugin; keep the native
+     behavior instant so the two don't double-smooth and fight each other. */
+  scroll-behavior: auto;
 }
 
 body {
@@ -878,6 +880,122 @@ a:hover {
   .timeline div {
     min-height: auto;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion & interaction layer                                          */
+/* ------------------------------------------------------------------ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 30;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Parallax target for the giant "AK" watermark (driven by --ak-y) */
+.hero::after {
+  transform: translateY(var(--ak-y, 0px));
+  will-change: transform;
+}
+
+.nav-links a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-links a.is-active {
+  color: var(--ink);
+}
+
+.nav-links a.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* Card hover lift */
+.info-card,
+.skill-card,
+.experience-card,
+.featured-project {
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.info-card:hover,
+.skill-card:hover,
+.experience-card:hover,
+.featured-project:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 34px 74px -48px rgba(0, 0, 0, 0.4);
+  border-color: var(--line-strong);
+}
+
+.accent-card:hover {
+  border-color: rgba(24, 95, 165, 0.34);
+}
+
+/* Project rows */
+.project-row {
+  padding-inline: 16px;
+  margin-inline: -16px;
+  border-radius: 10px;
+  transition: background 0.22s ease;
+}
+
+.project-row:hover {
+  background: var(--surface);
+}
+
+.project-row:hover .project-index {
+  color: var(--ink);
+}
+
+/* Arrow nudges */
+.project-actions a svg,
+.text-link svg,
+.hero-actions .button svg {
+  transition: transform 0.2s ease;
+}
+
+.project-actions a:hover svg,
+.text-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Chips */
+.chip-row span {
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.chip-row span:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+/* Button press */
+.button:active {
+  transform: translateY(1px);
+}
+
+/* Keyboard focus */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 5px;
 }
 
 @media (prefers-reduced-motion: reduce) {
