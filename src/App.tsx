@@ -11,6 +11,8 @@ const AdminProjectForm = lazy(() => import('./admin/pages/ProjectForm'));
 const AdminProjectFiles = lazy(() => import('./admin/pages/ProjectFiles'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const AdminPosts = lazy(() => import('./admin/pages/Posts'));
+const AdminPostForm = lazy(() => import('./admin/pages/PostForm'));
 
 function PageLoader() {
   return (
@@ -37,6 +39,30 @@ export default function App() {
           element={
             <AdminLayout>
               <AdminDashboard />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/posts"
+          element={
+            <AdminLayout>
+              <AdminPosts />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/posts/new"
+          element={
+            <AdminLayout>
+              <AdminPostForm />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/posts/:id/edit"
+          element={
+            <AdminLayout>
+              <AdminPostForm />
             </AdminLayout>
           }
         />

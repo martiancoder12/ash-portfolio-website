@@ -9,6 +9,8 @@ import {
   Menu,
   X,
   User,
+  Newspaper,
+  SquarePen,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -22,10 +24,14 @@ function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
   const navItems = [
     { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { to: '/admin/projects/new', icon: Plus, label: 'New Project' },
+    { to: '/admin/posts', icon: Newspaper, label: 'Blog Posts' },
+    { to: '/admin/posts/new', icon: SquarePen, label: 'New Post' },
   ];
 
   const isActive = (path: string) => {
     if (path === '/admin/dashboard') return location.pathname === '/admin/dashboard';
+    if (path === '/admin/posts') return location.pathname === '/admin/posts';
+    if (path === '/admin/posts/new') return location.pathname === '/admin/posts/new';
     return location.pathname.startsWith(path);
   };
 
