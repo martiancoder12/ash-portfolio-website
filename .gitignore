@@ -28,3 +28,7 @@ dist-ssr
 
 # Claude Code local tooling
 .claude
+
+# Environment variables
+.env
+.env.*

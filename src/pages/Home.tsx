@@ -1,52 +1,8 @@
 import { useRef, type ReactNode } from 'react'
 import { ArrowUpRight, Check, Mail, MapPin, Phone } from 'lucide-react'
 import { useSiteAnimations } from '../hooks/useSiteAnimations'
+import DynamicProjectsSection from '../components/DynamicProjectsSection'
 import '../App.css'
-
-const projects = [
-  {
-    name: 'PSP360',
-    tag: 'Healthcare operations platform',
-    status: 'Live',
-    description:
-      'Three React and TypeScript frontends — case-manager console, physician portal and patient app — on one NestJS, Prisma and PostgreSQL backend. State-machine case flow, SLA escalation, RBAC and an append-only PHI audit trail.',
-    stack: ['NestJS', 'Prisma', 'PostgreSQL', 'React', 'JWT / RBAC'],
-    link: 'https://psp360-ops-web.vercel.app',
-    linkLabel: 'Live demo',
-  },
-  {
-    name: 'Codr',
-    tag: 'Peer-to-peer matching',
-    status: 'Live',
-    description:
-      'An installable PWA for mutual-match discovery between technology professionals. Chat unlocks only on a mutual match, backed by a PostgreSQL schema with row-level security, triggers and storage policies.',
-    stack: ['Next.js 15', 'React 19', 'Supabase', 'Turborepo', 'PWA'],
-    link: 'https://codr-cyan-two.vercel.app/',
-    linkLabel: 'Website',
-    app: 'https://www.codrapp.ca/',
-  },
-  {
-    name: 'the-indication',
-    tag: 'AI content intelligence',
-    status: 'Live',
-    description:
-      'A Next.js application connecting the Claude API to a custom MCP server, retrieval-augmented generation over embeddings and Inngest background ingestion. Includes authentication, billing and structured content workflows.',
-    stack: ['Next.js', 'Claude API', 'MCP', 'RAG', 'Stripe'],
-    link: 'https://the-indication.vercel.app',
-    linkLabel: 'Open live',
-    code: 'https://github.com/martiancoder12/the-indication',
-  },
-  {
-    name: 'frenchwithash.ca',
-    tag: 'Marketing site + edge auth',
-    status: 'Live',
-    description:
-      'A fast static website with Netlify edge functions gating premium content, better-auth over Postgres, GitHub Actions CI/CD and a complete technical SEO layer.',
-    stack: ['HTML / CSS / JS', 'Netlify', 'better-auth', 'GitHub Actions'],
-    link: 'https://www.frenchwithash.ca',
-    linkLabel: 'Visit site',
-  },
-]
 
 const skills = [
   ['Languages', ['TypeScript', 'JavaScript', 'Python', 'SQL', 'HTML / CSS']],
@@ -193,29 +149,7 @@ export default function Home() {
             </aside>
           </article>
 
-          <div className="project-list">
-            {projects.map((project, index) => (
-              <article className="project-row" key={project.name}>
-                <div className="project-index">{String(index + 2).padStart(2, '0')}</div>
-                <div className="project-body">
-                  <div className="project-title-row">
-                    <h3>{project.name}</h3>
-                    <span>{project.tag}</span>
-                  </div>
-                  <p>{project.description}</p>
-                  <div className="chip-row compact">
-                    {project.stack.map((item) => <span key={item}>{item}</span>)}
-                  </div>
-                </div>
-                <div className="project-actions">
-                  <span className="live-badge">{project.status}</span>
-                  <a href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a>
-                  {'app' in project && project.app && <a className="secondary-link" href={project.app} target="_blank" rel="noreferrer">Get the app <ArrowUpRight size={14} /></a>}
-                  {project.code && <a className="secondary-link" href={project.code} target="_blank" rel="noreferrer">Code <ArrowUpRight size={14} /></a>}
-                </div>
-              </article>
-            ))}
-          </div>
+          <DynamicProjectsSection />
         </div>
       </section>
 
