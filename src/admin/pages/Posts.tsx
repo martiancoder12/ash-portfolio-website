@@ -1,7 +1,50 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAllPosts, useDeletePost } from '@/hooks/usePosts';
-import { Plus, Pencil, Trash2, ExternalLink, Newspaper } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, Newspaper, RefreshCw, Loader2 } from 'lucide-react';
 import type { Post } from '@/lib/supabase';
+
+const DEPLOY_HOOK_URL = import.meta.env.VITE_DEPLOY_HOOK_URL as string | undefined;
+
+function RegenerateSitemapButton() {
+  const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+
+  if (!DEPLOY_HOOK_URL) return null;
+
+  const handleClick = async () => {
+    setState('sending');
+    try {
+      // no-cors: api.vercel.com doesn't return CORS headers for hook triggers;
+      // an opaque response still means the request went out.
+      await fetch(DEPLOY_HOOK_URL, { method: 'POST', mode: 'no-cors' });
+      setState('sent');
+      setTimeout(() => setState('idle'), 15000);
+    } catch {
+      setState('error');
+      setTimeout(() => setState('idle'), 8000);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-end gap-1">
+      <button
+        onClick={handleClick}
+        disabled={state === 'sending'}
+        className="inline-flex items-center gap-2 border border-neutral-300 text-neutral-700 px-4 py-2 rounded-lg font-medium hover:bg-neutral-100 transition-colors disabled:opacity-50"
+        title="Triggers a Vercel rebuild; the sitemap is regenerated from live content during the build"
+      >
+        {state === 'sending' ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+        Regenerate sitemap
+      </button>
+      {state === 'sent' && (
+        <p className="text-xs text-emerald-600">Deploy triggered — sitemap updates in ~1 minute.</p>
+      )}
+      {state === 'error' && (
+        <p className="text-xs text-red-600">Could not reach Vercel. Try again.</p>
+      )}
+    </div>
+  );
+}
 
 export default function AdminPosts() {
   const { data: posts, isLoading } = useAllPosts();
@@ -42,13 +85,16 @@ export default function AdminPosts() {
           <h1 className="text-2xl font-semibold text-neutral-900">Blog Posts</h1>
           <p className="text-neutral-500 mt-1">Write and manage your blog</p>
         </div>
-        <button
-          onClick={() => navigate('/admin/posts/new')}
-          className="inline-flex items-center gap-2 bg-neutral-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-neutral-800 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          New Post
-        </button>
+        <div className="flex items-center gap-3">
+          <RegenerateSitemapButton />
+          <button
+            onClick={() => navigate('/admin/posts/new')}
+            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-neutral-800 transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            New Post
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
