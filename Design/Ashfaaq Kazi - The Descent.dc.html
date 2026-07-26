@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/tef-exam-prep-academy-design-system-a8721518-dc1c-49bc-91a0-42d89b73573c/styles.css">
+<script src="_ds/tef-exam-prep-academy-design-system-a8721518-dc1c-49bc-91a0-42d89b73573c/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollToPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollSmoother.min.js"></script>
+<style>
+*{box-sizing:border-box;}
+html{scroll-behavior:auto;}
+body{margin:0;background:#ffffff;background-image:linear-gradient(rgba(13,13,12,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(13,13,12,0.022) 1px,transparent 1px);background-size:44px 44px;color:#0D0D0C;font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+a{color:inherit;text-decoration:none;}
+a:hover{opacity:.86;}
+::selection{background:#0D0D0C;color:#fff;}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+@media (max-width:1180px){[data-gauge]{display:none !important;}}
+@media (max-width:920px){
+[data-hero-grid]{grid-template-columns:1fr !important;}
+[data-layer]{grid-template-columns:1fr !important;padding-left:52px !important;}
+[data-two-col]{grid-template-columns:1fr !important;}
+[data-flagship]{grid-template-columns:1fr !important;}
+[data-diptych-halves]{flex-direction:column !important;}
+[data-tool-grid]{grid-template-columns:repeat(2,1fr) !important;}
+[data-step]{margin-left:0 !important;}
+[data-prow]{grid-template-columns:34px 1fr !important;}
+[data-prow-actions]{grid-column:2 !important;align-items:flex-start !important;flex-direction:row !important;flex-wrap:wrap !important;}
+}
+@media (max-width:600px){
+[data-tool-grid]{grid-template-columns:1fr !important;}
+[data-prow]{grid-template-columns:1fr !important;}
+[data-nav-links]{gap:12px !important;font-size:12.5px !important;}
+[data-hero-panel]{max-width:460px;}
+}
+</style>
+</helmet>
+
+<div data-shell="" ref="{{ setRoot }}" style="position:relative;min-height:100vh;">
+
+<div data-progress="" aria-hidden="true" style="position:fixed;top:0;left:0;right:0;height:2px;z-index:60;background:var(--accent);transform:scaleX(0);transform-origin:left center;pointer-events:none;"></div>
+<div data-wipe="" aria-hidden="true" style="position:fixed;inset:0;z-index:80;background:#0D0D0C;transform:scaleY(0);transform-origin:bottom;display:none;pointer-events:none;"></div>
+
+<div data-gauge="" aria-hidden="true" style="position:fixed;left:clamp(16px,2.4vw,34px);top:50%;transform:translateY(-50%);z-index:40;opacity:0;pointer-events:none;">
+  <div style="position:relative;height:300px;">
+    <div style="position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:rgba(13,13,12,0.15);"></div>
+    <div data-gauge-fill="" style="position:absolute;left:5px;top:6px;width:1px;height:calc(100% - 12px);background:var(--accent);transform:scaleY(0);transform-origin:top;"></div>
+    <div style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:12px;"><span data-gnode="" style="width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.25);box-sizing:border-box;"></span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:#8A8A83;">L1</span></div>
+      <div style="display:flex;align-items:center;gap:12px;"><span data-gnode="" style="width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.25);box-sizing:border-box;"></span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:#8A8A83;">L2</span></div>
+      <div style="display:flex;align-items:center;gap:12px;"><span data-gnode="" style="width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.25);box-sizing:border-box;"></span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:#8A8A83;">L3</span></div>
+      <div style="display:flex;align-items:center;gap:12px;"><span data-gnode="" style="width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.25);box-sizing:border-box;"></span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:#8A8A83;">L4</span></div>
+      <div style="display:flex;align-items:center;gap:12px;"><span data-gnode="" style="width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.25);box-sizing:border-box;"></span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:#8A8A83;">L5</span></div>
+    </div>
+  </div>
+  <div data-gauge-label="" style="margin-top:16px;font-family:var(--font-mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:#8A8A83;max-width:132px;line-height:1.5;">L1 · Trust between humans</div>
+</div>
+
+<nav data-nav="" aria-label="Primary navigation" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,5vw,40px);border-bottom:1px solid rgba(13,13,12,0.08);background:rgba(255,255,255,0.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+  <a href="#top" aria-label="Ashfaaq Kazi — home" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-sans);font-weight:600;letter-spacing:-0.02em;color:#0D0D0C;">
+    <span style="display:grid;place-items:center;width:29px;height:29px;border-radius:7px;background:#0D0D0C;color:#fff;font-weight:700;line-height:1;font-size:15px;">A</span>
+    <span>Ashfaaq Kazi</span>
+  </a>
+  <div data-nav-links="" style="display:flex;align-items:center;gap:clamp(14px,3vw,28px);font-family:var(--font-sans);font-size:14px;font-weight:500;color:#8A8A83;">
+    <a href="#journey" style="color:inherit;" style-hover="color:#0D0D0C;">journey</a>
+    <a href="#research" style="color:inherit;" style-hover="color:#0D0D0C;">research</a>
+    <a href="#work" style="color:inherit;" style-hover="color:#0D0D0C;">work</a>
+    <a href="#credentials" style="color:inherit;" style-hover="color:#0D0D0C;">credentials</a>
+    <a href="#contact" style="color:inherit;" style-hover="color:#0D0D0C;">contact</a>
+  </div>
+</nav>
+
+<div id="smooth-wrapper"><div id="smooth-content">
+<header id="top" style="position:relative;background:transparent;padding:clamp(70px,11vw,128px) 0 clamp(60px,9vw,100px);">
+  <div style="width:min(1200px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    
+  <div data-hero-grid="" style="display:grid;grid-template-columns:minmax(0,1fr) 358px;gap:clamp(40px,7vw,92px);align-items:start;">
+      <div>
+        <div data-hero-eyebrow="" style="display:inline-flex;align-items:center;gap:9px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>Security · Privacy · Healthcare systems</div>
+        <h1 data-h1="" style="font-family:'Newsreader',Georgia,serif;font-optical-sizing:auto;font-weight:500;margin:24px 0 0;font-size:clamp(44px,6.3vw,74px);line-height:1.04;letter-spacing:-0.022em;color:#0D0D0C;max-width:15ch;">Ten years learning where trust breaks.<br>Now learning to build systems where it can’t.</h1>
+        
+        <div data-hero-actions="" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;align-items:center;">
+          <a href="#journey" style="display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:0 22px;border-radius:12px;background:#0D0D0C;color:#fff;font-family:var(--font-sans);font-size:14px;font-weight:600;" style-hover="opacity:.85;">Begin the descent <span data-bob="" style="display:inline-block;">↓</span></a>
+          <a href="mailto:ashfaaq.kazi@outlook.com" style="display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid rgba(13,13,12,0.16);color:#0D0D0C;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.04em;" style-hover="border-color:rgba(13,13,12,0.32);">ashfaaq.kazi@outlook.com</a>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+      <figure data-hero-photo="" style="margin:0;border:1px solid rgba(13,13,12,0.12);border-radius:16px;overflow:hidden;background:#FAFAF9;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 30px 70px -52px rgba(0,0,0,0.28);">
+        <img src="uploads/Ash_Headshot_Jun%202026.jpg" alt="Ashfaaq Kazi" loading="eager" style="display:block;width:100%;height:300px;object-fit:cover;object-position:50% 18%;">
+        <figcaption style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid rgba(13,13,12,0.1);font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8A8A83;"><span style="color:#0D0D0C;">Ashfaaq Kazi</span><span>Montréal · 2026</span></figcaption>
+      </figure>
+      <aside data-hero-panel="" aria-label="Current position" style="border:1px solid rgba(13,13,12,0.12);border-radius:16px;background:#FAFAF9;padding:26px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 30px 70px -52px rgba(0,0,0,0.28);">
+        <div style="color:var(--accent);font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;">Current position</div>
+        <h2 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:14px 0 8px;font-size:23px;letter-spacing:-0.01em;line-height:1.14;color:#0D0D0C;">In transit, deliberately.</h2>
+        
+        <p style="margin:0 0 20px;font-family:var(--font-sans);font-size:13.5px;line-height:1.6;color:#4A4A46;">Full-time preparation for Concordia, fall 2026.</p><div data-panel-row="" style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid rgba(13,13,12,0.1);font-size:12px;"><span style="color:#8A8A83;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.09em;font-size:10px;">Base</span><strong style="font-weight:500;text-align:right;">Montréal, QC</strong></div>
+        <div data-panel-row="" style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid rgba(13,13,12,0.1);font-size:12px;"><span style="color:#8A8A83;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.09em;font-size:10px;">Mode</span><strong style="font-weight:500;text-align:right;">Remote · EN / FR</strong></div>
+        <div data-panel-row="" style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid rgba(13,13,12,0.1);font-size:12px;"><span style="color:#8A8A83;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.09em;font-size:10px;">Trajectory</span><strong style="font-weight:500;text-align:right;">BEng Cybersecurity → <a href="#research" style="color:var(--accent);text-decoration:underline;text-decoration-color:rgba(24,95,165,0.3);text-underline-offset:2px;">see Research</a></strong></div>
+      </aside>
+      </div>
+    </div></div>
+</header>
+
+<section id="journey" data-journey="" aria-label="The journey" style="position:relative;background:transparent;padding:clamp(80px,10vw,124px) 0;">
+  <div style="width:min(1200px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    <div data-reveal="" style="display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;margin-bottom:clamp(30px,4vw,44px);">
+      <span style="padding-top:8px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;">01</span>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>The journey</div>
+        
+      </div>
+    </div>
+    
+
+    <div style="position:relative;margin-top:clamp(36px,5vw,64px);">
+      <div aria-hidden="true" style="position:absolute;left:32px;top:0;bottom:0;width:1px;background:rgba(13,13,12,0.12);"></div>
+      <div data-spine-fill="" aria-hidden="true" style="position:absolute;left:32px;top:0;width:1px;height:100%;background:var(--accent);transform:scaleY(0);transform-origin:top;"></div>
+
+      <div data-layer="1" style="position:relative;display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(24px,4.5vw,68px);padding:clamp(28px,4.5vw,54px) 0 clamp(28px,4.5vw,54px) 72px;">
+        <span data-node="" style="position:absolute;left:32px;top:64px;width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.22);transform:translate(-50%,-50%);box-sizing:border-box;z-index:1;"></span>
+        <div style="position:relative;">
+          <span data-marker="" style="position:absolute;left:-6px;top:-24px;font-family:var(--font-mono);font-weight:600;font-size:clamp(64px,8vw,104px);letter-spacing:-0.04em;color:rgba(13,13,12,0.07);line-height:1;pointer-events:none;">L1</span>
+          <div style="position:relative;padding-top:6px;">
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#8A8A83;">2018–2020 · McKesson Canada, Specialty Health</div>
+            <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:14px 0 0;font-size:clamp(26px,3vw,33px);letter-spacing:-0.018em;line-height:1.08;color:#0D0D0C;">Trust between humans</h3>
+            <div style="margin-top:11px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:#4A4A46;">Reimbursement Case Manager — Amgen ProVital (Prolia &amp; Evenity)</div>
+          </div>
+        </div>
+        <div data-layer-body="" style="padding-top:6px;">
+          <p style="max-width:60ch;margin:0;font-family:var(--font-sans);font-size:16px;line-height:1.68;color:#4A4A46;">I guided patients through insurance verification, prior authorization and appeals — coordinating clinics, insurers and specialty pharmacies. It’s where I learned the first law of this field: systems rarely fail at the server. They fail between people, under pressure, at the exact moment trust is needed most.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;">
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">Frontline of specialty-biologics patient support</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-layer="2" style="position:relative;display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(24px,4.5vw,68px);padding:clamp(28px,4.5vw,54px) 0 clamp(28px,4.5vw,54px) 72px;">
+        <span data-node="" style="position:absolute;left:32px;top:64px;width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.22);transform:translate(-50%,-50%);box-sizing:border-box;z-index:1;"></span>
+        <div style="position:relative;">
+          <span data-marker="" style="position:absolute;left:-6px;top:-24px;font-family:var(--font-mono);font-weight:600;font-size:clamp(64px,8vw,104px);letter-spacing:-0.04em;color:rgba(13,13,12,0.07);line-height:1;pointer-events:none;">L2</span>
+          <div style="position:relative;padding-top:6px;">
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#8A8A83;">2017–2022 · Sheridan College → McKesson Canada, Specialty Health</div>
+            <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:14px 0 0;font-size:clamp(26px,3vw,33px);letter-spacing:-0.018em;line-height:1.08;color:#0D0D0C;">Trust as law</h3>
+            <div style="margin-top: 11px; font-family: var(--font-sans); font-size: 14px; line-height: 1.5; color: #4A4A46; font-weight: 700">Licensed Paralegal (P1, Law Society of Ontario) → Technical Writer</div>
+          </div>
+        </div>
+        <div data-layer-body="" style="padding-top:6px;">
+          <p style="max-width:60ch;margin:0;font-family:var(--font-sans);font-size:16px;line-height:1.68;color:#4A4A46;">I trained as a paralegal while working full-time — then spent two years as the division’s technical writer, turning regulation into daily practice: SOPs and governance documentation, process flows rebuilt with Six Sigma methodology alongside the product owners, contract reviews, and a seat at new program launches as the subject-matter expert. It’s where I learned that compliance is a discipline that has to survive contact with real workflows.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;">
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">P1 paralegal license</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">SOPs &amp; governance docs</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">Six Sigma process design</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-layer="3" style="position:relative;display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(24px,4.5vw,68px);padding:clamp(28px,4.5vw,54px) 0 clamp(28px,4.5vw,54px) 72px;">
+        <span data-node="" style="position:absolute;left:32px;top:64px;width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.22);transform:translate(-50%,-50%);box-sizing:border-box;z-index:1;"></span>
+        <div style="position:relative;">
+          <span data-marker="" style="position:absolute;left:-6px;top:-24px;font-family:var(--font-mono);font-weight:600;font-size:clamp(64px,8vw,104px);letter-spacing:-0.04em;color:rgba(13,13,12,0.07);line-height:1;pointer-events:none;">L3</span>
+          <div style="position:relative;padding-top:6px;">
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#8A8A83;">2022–2025 · McKesson Canada, Specialty Health</div>
+            <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:14px 0 0;font-size:clamp(26px,3vw,33px);letter-spacing:-0.018em;line-height:1.08;color:#0D0D0C;">Trust as product</h3>
+            <div style="margin-top: 11px; font-family: var(--font-sans); font-size: 14px; line-height: 1.5; color: #4A4A46; font-weight: 700">Project Manager → Digital Project Lead &amp; Product Owner</div>
+          </div>
+        </div>
+        <div data-layer-body="" style="padding-top:6px;">
+          <p style="max-width:60ch;margin:0;font-family:var(--font-sans);font-size:16px;line-height:1.68;color:#4A4A46;">As Project Manager I led new program launches end to end — everything the frontline and the writing desk had taught me, now pointed at delivery. Then, as Product Owner of the Bien+ loyalty and pharmacy digital platforms, I shipped compliant products to 300,000+ members across 50+ pharmacy partners — 40% year-over-year engagement growth, 95%+ partner adoption — while serving as Privacy &amp; Compliance Lead for PIPEDA, PHIPA and Quebec Law 25 across six national brands: Uniprix, Proxim, Remedy’sRx, IDA, Guardian, Medicine Shoppe. The lesson I keep: regulation and growth are not enemies. Distrust is the tax; trust is the feature.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;">
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">300K+ members</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">50+ partners</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">+40% YoY</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">95% adoption</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">6 brands</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">3 privacy regimes</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-layer="4" style="position:relative;display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(24px,4.5vw,68px);padding:clamp(28px,4.5vw,54px) 0 clamp(28px,4.5vw,54px) 72px;">
+        <span data-node="" style="position:absolute;left:32px;top:64px;width:11px;height:11px;border-radius:50%;background:#fff;border:1px solid rgba(13,13,12,0.22);transform:translate(-50%,-50%);box-sizing:border-box;z-index:1;"></span>
+        <div style="position:relative;">
+          <span data-marker="" style="position:absolute;left:-6px;top:-24px;font-family:var(--font-mono);font-weight:600;font-size:clamp(64px,8vw,104px);letter-spacing:-0.04em;color:rgba(13,13,12,0.07);line-height:1;pointer-events:none;">L4</span>
+          <div style="position:relative;padding-top:6px;">
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#8A8A83;">2024–2026</div>
+            <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:14px 0 0;font-size:clamp(26px,3vw,33px);letter-spacing:-0.018em;line-height:1.08;color:#0D0D0C;">Trust as code</h3>
+            <div style="margin-top:11px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:#4A4A46;">Full-Stack Software Dev certificate program @ McGill University School of Continuing Studies, independent builds; Senior PM (contract), Rouge on Blue</div>
+          </div>
+        </div>
+        <div data-layer-body="" style="padding-top:6px;">
+          <p style="max-width:60ch;margin:0;font-family:var(--font-sans);font-size:16px;line-height:1.68;color:#4A4A46;">I went down the last layer and learned to build the controls myself: RBAC, row-level security, append-only audit trails, hashed credentials. Under my own practice — Laboratoires Structure — I built analytical instruments and agentic systems. A short Senior PM contract designing multi-agent AI workflows bridged me to school, concluded April 2026 as planned.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;">
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">RLS</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">RBAC</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">audit trails</span>
+            <span data-mchip="" style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(13,13,12,0.14);border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">multi-agent systems</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-layer="5" style="position:relative;display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(24px,4.5vw,68px);padding:clamp(28px,4.5vw,54px) 0 clamp(20px,3vw,36px) 72px;">
+        <span data-node="" style="position:absolute;left:32px;top:64px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:1px solid var(--accent);transform:translate(-50%,-50%);box-sizing:border-box;z-index:1;"></span>
+        <div style="position:relative;">
+          <span data-marker="" style="position:absolute;left:-6px;top:-24px;font-family:var(--font-mono);font-weight:600;font-size:clamp(64px,8vw,104px);letter-spacing:-0.04em;color:rgba(13,13,12,0.07);line-height:1;pointer-events:none;">L5</span>
+          <div style="position:relative;padding-top:6px;">
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#8A8A83;">2026 →</div>
+            <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:14px 0 0;font-size:clamp(26px,3vw,33px);letter-spacing:-0.018em;line-height:1.08;color:#0D0D0C;">Trust as science</h3>
+            <div style="margin-top:11px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:#4A4A46;">BEng Cybersecurity, Concordia University</div>
+          </div>
+        </div>
+        <div data-layer-body="" style="padding-top:6px;">
+          <p style="max-width:60ch;margin:0;font-family:var(--font-sans);font-size:16px;line-height:1.68;color:#4A4A46;">The Google Cybersecurity Certificate in 2024 was the deliberate first move — then math and physics at the Open University, then computer science at McGill.&nbsp;</p>
+          <div style="margin-top:24px;">
+            <a href="#research" data-doorway="" style="display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid rgba(180,83,9,0.34);background:rgba(180,83,9,0.06);border-radius:999px;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#B45309;" style-hover="background:rgba(180,83,9,0.11);">The descent continues →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="research" data-research="" aria-label="Research direction" style="background:#101014;color:#F5F5F3;padding:clamp(88px,11vw,140px) 0;">
+  <div style="width:min(1080px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    <div data-research-lead="" style="display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;">
+      <span style="padding-top:8px;color:#7FB5E6;font-family:var(--font-mono);font-size:11px;font-weight:600;">02</span>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;color:#7FB5E6;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>Where this is going</div>
+        <h2 style="font-family:'Newsreader',Georgia,serif;font-optical-sizing:auto;font-weight:500;max-width:18ch;margin:13px 0 0;font-size:clamp(36px,4.4vw,52px);letter-spacing:-0.02em;line-height:1.04;color:#F5F5F3;">The questions are already in hand.</h2>
+        <p style="max-width:66ch;margin:26px 0 0;font-family:var(--font-sans);font-size:clamp(16px,1.3vw,18px);line-height:1.7;color:rgba(255,255,255,0.7);">The BEng is the foundation. My roadmap runs <span data-traj="" style="position: relative; display: inline-block; color: rgb(231, 151, 47); font-weight: 500; white-space: nowrap;">BEng → MSc → PhD<span data-traj-fill="" style="position: absolute; left: 0px; right: 0px; bottom: -3px; height: 2px; background: rgb(231, 151, 47); transform: scaleX(0); transform-origin: left center;"></span></span>, and the research territory has been visible from every layer of the descent: <strong style="color: rgb(245, 245, 243); font-weight: 600;">privacy engineering and usable security in regulated health systems</strong> — with the security of AI-agent systems as the forward edge.</p>
+      </div>
+    </div>
+
+    <div data-questions="" style="margin:clamp(44px,6vw,72px) 0 0 70px;display:grid;gap:0;">
+      <div data-question="" style="display:grid;grid-template-columns:48px 1fr;gap:20px;padding:clamp(24px,3vw,34px) 0;border-top:1px solid rgba(255,255,255,0.14);">
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:600;color:#7FB5E6;padding-top:4px;">01</span>
+        <div>
+          <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:0;font-size:clamp(21px,2.2vw,26px);letter-spacing:-0.015em;line-height:1.15;color:#F5F5F3;">Why do security controls die in real clinical workflows?</h3>
+          <p style="max-width:62ch;margin:12px 0 0;font-family:var(--font-sans);font-size:15.5px;line-height:1.66;color:rgba(255,255,255,0.62);">Controls that are correct on paper fail at the pharmacy counter. What does usable security look like when the user is overworked, the stakes are a patient’s medication, and the audit is months away?</p>
+        </div>
+      </div>
+      <div data-question="" style="display:grid;grid-template-columns:48px 1fr;gap:20px;padding:clamp(24px,3vw,34px) 0;border-top:1px solid rgba(255,255,255,0.14);">
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:600;color:#7FB5E6;padding-top:4px;">02</span>
+        <div>
+          <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:0;font-size:clamp(21px,2.2vw,26px);letter-spacing:-0.015em;line-height:1.15;color:#F5F5F3;">Can regulation compile?</h3>
+          <p style="max-width:62ch;margin:12px 0 0;font-family:var(--font-sans);font-size:15.5px;line-height:1.66;color:rgba(255,255,255,0.62);">PIPEDA, PHIPA and Law 25 are read by lawyers and audited by checklists. What would it take to express them as verifiable properties of the schema itself — compliance as a build artifact, not an annual ritual?</p>
+        </div>
+      </div>
+      <div data-question="" style="display:grid;grid-template-columns:48px 1fr;gap:20px;padding:clamp(24px,3vw,34px) 0;border-top:1px solid rgba(255,255,255,0.14);border-bottom:1px solid rgba(255,255,255,0.14);">
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:600;color:#7FB5E6;padding-top:4px;">03</span>
+        <div>
+          <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:0;font-size:clamp(21px,2.2vw,26px);letter-spacing:-0.015em;line-height:1.15;color:#F5F5F3;">Where is the security boundary when AI agents act for us?</h3>
+          <p style="max-width:62ch;margin:12px 0 0;font-family:var(--font-sans);font-size:15.5px;line-height:1.66;color:rgba(255,255,255,0.62);">Multi-agent systems now read, decide and write across applications. My own work (see Conductor, below) treats the broker as the entire trust boundary. That question deserves a research career, not a blog post.</p>
+        </div>
+      </div>
+    </div>
+    <p data-question="" style="margin:clamp(36px,4vw,52px) 0 0 70px;max-width:60ch;font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:clamp(20px,2vw,25px);line-height:1.4;letter-spacing:-0.01em;color:#F5F5F3;">I’ve spent ten years collecting the evidence. The next ten are for the answers.</p>
+  </div>
+</section>
+
+<section id="work" aria-label="Selected work" style="background:transparent;padding:clamp(80px,10vw,124px) 0;">
+  <div style="width:min(1160px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    <div data-reveal="" style="display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;margin-bottom:clamp(32px,4vw,50px);">
+      <span style="padding-top:8px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;">03</span>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>Selected work</div>
+        
+      </div>
+    </div>
+
+    <article data-flagship="" style="display:grid;grid-template-columns:minmax(0,1fr) 328px;background:#0D0D0C;color:#F5F5F3;border-radius:20px;overflow:hidden;">
+      <div style="padding:clamp(30px,4vw,46px);">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <span style="display:inline-flex;align-items:center;padding:6px 11px;border-radius:999px;background:var(--accent);color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;">Flagship</span>
+          <span style="display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);"><span style="width:6px;height:6px;border-radius:50%;background:#7FB5E6;margin-right:7px;"></span>Live</span>
+        </div>
+        <div style="margin-top:20px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7FB5E6;">Trust as code — regulated healthcare</div>
+        <h3 style="font-family:'Newsreader',Georgia,serif;font-weight:500;margin:12px 0 0;font-size:clamp(44px,6vw,68px);letter-spacing:-0.03em;line-height:0.98;color:#F5F5F3;">PSP360</h3>
+        <p style="max-width:64ch;margin:20px 0 0;font-family:var(--font-sans);font-size:15.5px;line-height:1.68;color:rgba(255,255,255,0.7);">Case-manager console, physician portal, patient app — on one NestJS, Prisma and PostgreSQL backend. <br>State-machine case flow, SLA escalation, role-based access, and an append-only PHI audit trail. <br>This is the McKesson years rebuilt as software: the same patient-support programs I once ran from the inside, engineered the way seven years of compliance work taught me they should be.</p>
+        <div style="display:grid;gap:11px;margin-top:26px;">
+          <div data-check="" style="display:grid;grid-template-columns:20px 1fr;gap:10px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:rgba(255,255,255,0.82);"><span style="color:#7FB5E6;font-weight:700;">✓</span><span><strong style="color:#F5F5F3;font-weight:600;">Append-only PHI audit trail</strong></span></div>
+          <div data-check="" style="display:grid;grid-template-columns:20px 1fr;gap:10px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:rgba(255,255,255,0.82);"><span style="color:#7FB5E6;font-weight:700;">✓</span><span><strong style="color:#F5F5F3;font-weight:600;">RBAC across three roles</strong></span></div>
+          <div data-check="" style="display:grid;grid-template-columns:20px 1fr;gap:10px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:rgba(255,255,255,0.82);"><span style="color:#7FB5E6;font-weight:700;">✓</span><span><strong style="color:#F5F5F3;font-weight:600;">State-machine case flow</strong></span></div>
+          <div data-check="" style="display:grid;grid-template-columns:20px 1fr;gap:10px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:rgba(255,255,255,0.82);"><span style="color:#7FB5E6;font-weight:700;">✓</span><span><strong style="color:#F5F5F3;font-weight:600;">SLA escalation</strong></span></div>
+        </div>
+      </div>
+      <aside style="padding:clamp(26px,3vw,34px);border-left:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);">
+        <div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#7FB5E6;">At a glance</div>
+        <dl style="margin:18px 0 0;">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);"><dt style="margin:0;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.5);">Domain</dt><dd style="margin:0;font-family:var(--font-mono);font-size:11px;text-align:right;color:#F5F5F3;">Regulated healthcare</dd></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);"><dt style="margin:0;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.5);">Frontends</dt><dd style="margin:0;font-family:var(--font-mono);font-size:11px;text-align:right;color:#F5F5F3;">Console · Portal · App</dd></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);"><dt style="margin:0;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.5);">Backend</dt><dd style="margin:0;font-family:var(--font-mono);font-size:11px;text-align:right;color:#F5F5F3;">NestJS · Prisma · PG</dd></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;"><dt style="margin:0;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.5);">Access</dt><dd style="margin:0;font-family:var(--font-mono);font-size:11px;text-align:right;color:#F5F5F3;">JWT · RBAC · 3 roles</dd></div>
+        </dl>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:22px;">
+          <span style="padding:5px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:rgba(255,255,255,0.78);">NestJS</span>
+          <span style="padding:5px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:rgba(255,255,255,0.78);">Prisma</span>
+          <span style="padding:5px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:rgba(255,255,255,0.78);">PostgreSQL</span>
+          <span style="padding:5px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:rgba(255,255,255,0.78);">React</span>
+          <span style="padding:5px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:rgba(255,255,255,0.78);">JWT / RBAC</span>
+        </div>
+        <a href="https://psp360-ops-web.vercel.app" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:6px;margin-top:24px;color:#7FB5E6;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:underline;text-decoration-color:rgba(127,181,230,0.4);text-underline-offset:4px;">Live demo →</a>
+      </aside>
+    </article>
+
+    <div style="margin-top:clamp(36px,4vw,52px);border-top:1px solid rgba(13,13,12,0.16);">
+      <article data-prow="" style="display:grid;grid-template-columns:52px minmax(0,1fr) 176px;gap:22px;padding:26px 16px;margin:0 -16px;border-bottom:1px solid rgba(13,13,12,0.1);border-radius:10px;" style-hover="background:#FAFAF9;">
+        <div style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;padding-top:5px;">02</div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;"><h3 style="margin:0;font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:25px;letter-spacing:-0.02em;color:#0D0D0C;">Conductor</h3><span style="color:#8A8A83;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;">AI systems — the broker as security boundary</span></div>
+          <p style="max-width:76ch;margin:11px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.64;color:#4A4A46;">A web-based desktop where an omnipresent AI broker is the <em>only</em> thing that touches application state. Apps never talk to each other; every exchange is mediated by the broker — which makes it, by design, the entire security boundary. The architectural bet behind my third research question, running in production.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;">
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">React</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">TypeScript</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">WebSocket</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Anthropic API</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Neon</span>
+          </div>
+        </div>
+        <div data-prow-actions="" style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+          <span style="padding:6px 10px;background:#0D0D0C;color:#fff;border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;">Live</span>
+        </div>
+      </article>
+
+      <article data-prow="" style="display:grid;grid-template-columns:52px minmax(0,1fr) 176px;gap:22px;padding:26px 16px;margin:0 -16px;border-bottom:1px solid rgba(13,13,12,0.1);border-radius:10px;" style-hover="background:#FAFAF9;">
+        <div style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;padding-top:5px;">03</div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;"><h3 style="margin:0;font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:25px;letter-spacing:-0.02em;color:#0D0D0C;">URIM</h3><span style="color:#8A8A83;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;">Trust as law — computed</span></div>
+          <p style="max-width:76ch;margin:11px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.64;color:#4A4A46;">A legal prediction engine: probable litigation outcomes and the paths that reach them, tested against decided cases.&nbsp;</p>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;">
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Vercel serverless</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Neon Postgres</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">GSAP</span>
+          </div>
+        </div>
+        <div data-prow-actions="" style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+          <span style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8A8A83;">Instrument</span>
+        </div>
+      </article>
+
+      <article data-prow="" style="display:grid;grid-template-columns:52px minmax(0,1fr) 176px;gap:22px;padding:26px 16px;margin:0 -16px;border-bottom:1px solid rgba(13,13,12,0.1);border-radius:10px;" style-hover="background:#FAFAF9;">
+        <div style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;padding-top:5px;">04</div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;"><h3 style="margin:0;font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:25px;letter-spacing:-0.02em;color:#0D0D0C;">Codr</h3><span style="color:#8A8A83;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;">Privacy by design</span></div>
+          <p style="max-width:76ch;margin:11px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.64;color:#4A4A46;">A peer-matching PWA for technology professionals where chat unlocks only on mutual match — enforced at the database, not the UI. Row-level security, triggers and storage policies in PostgreSQL mean privacy is a property of the schema.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;">
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Next.js 15</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">React 19</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Supabase</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Turborepo</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">PWA</span>
+          </div>
+        </div>
+        <div data-prow-actions="" style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+          <span style="padding:6px 10px;background:#0D0D0C;color:#fff;border-radius:999px;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;">Live</span>
+          <a href="https://codr-cyan-two.vercel.app/" target="_blank" rel="noreferrer" style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Website →</a>
+          <a href="https://www.codrapp.ca/" target="_blank" rel="noreferrer" style="color:#8A8A83;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Get the app →</a>
+        </div>
+      </article>
+
+      <article data-prow="" style="display:grid;grid-template-columns:52px minmax(0,1fr) 176px;gap:22px;padding:26px 16px;margin:0 -16px;border-bottom:1px solid rgba(13,13,12,0.1);border-radius:10px;" style-hover="background:#FAFAF9;">
+        <div style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;padding-top:5px;">05</div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;"><h3 style="margin:0;font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:25px;letter-spacing:-0.02em;color:#0D0D0C;">Cartograph</h3><span style="color:#8A8A83;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;">Engineering depth</span></div>
+          <p style="max-width:76ch;margin:11px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.64;color:#4A4A46;">A real-time collaborative canvas where the board is a semantic graph, not a drawing. Custom SVG rendering engine, conflict-free multiplayer through Yjs CRDTs, and agent-native editing through a custom MCP server with validated, undoable changes.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;">
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">React 19</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Yjs CRDT</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Custom SVG</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Node.js</span>
+            <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">MCP</span>
+          </div>
+        </div>
+        <div data-prow-actions="" style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+          <span style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8A8A83;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:6px;"></span>In development</span>
+          <a href="https://cartograph-indol.vercel.app" target="_blank" rel="noreferrer" style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">View live →</a>
+        </div>
+      </article>
+    </div>
+
+    <article data-diptych="" style="margin-top:clamp(20px,3vw,30px);border:1px solid rgba(13,13,12,0.12);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 24px 60px -48px rgba(0,0,0,0.26);">
+      <div style="padding:clamp(24px,3vw,32px) clamp(24px,3vw,32px) clamp(18px,2vw,22px);border-bottom:1px solid rgba(13,13,12,0.1);">
+        <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;"><span style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;">06</span><h3 style="margin:0;font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:clamp(24px,2.8vw,30px);letter-spacing:-0.02em;color:#0D0D0C;">Proof of work — two careers in artifacts</h3></div>
+        <p style="margin:10px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.6;color:#4A4A46;">Two instruments, one from each of my McKesson lives.</p>
+      </div>
+      <div data-diptych-halves="" style="display:flex;align-items:stretch;">
+        <div data-dip-half="" style="flex:1 1 0;min-width:0;padding:clamp(24px,3vw,34px);">
+          <div style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A8A83;">the-indication · <span style="color:#4A4A46;">from the Specialty Health years</span></div>
+          <p style="margin:14px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.66;color:#4A4A46;">AI content intelligence: the Claude API wired to a custom MCP server, retrieval-augmented generation over embeddings, background ingestion with Inngest, auth and billing included.</p>
+          <div style="display:flex;gap:16px;margin-top:18px;">
+            <a href="https://the-indication.vercel.app" target="_blank" rel="noreferrer" style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Open live →</a>
+            <a href="https://github.com/martiancoder12/the-indication" target="_blank" rel="noreferrer" style="color:#8A8A83;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Code →</a>
+          </div>
+        </div>
+        <div style="width:1px;background:rgba(13,13,12,0.1);"></div>
+        <div data-dip-half="" style="flex:1 1 0;min-width:0;padding:clamp(24px,3vw,34px);">
+          <div style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A8A83;">Cadence · <span style="color:#4A4A46;">from the loyalty years</span></div>
+          <p style="margin:14px 0 0;font-family:var(--font-sans);font-size:14.5px;line-height:1.66;color:#4A4A46;">A French-first marketing-intelligence publication that scores loyalty and retention programs — the Operator Score — on first-party data, margin and experience. The Bien+ years, turned into an independent analytical voice, Law 25 commentary included.</p>
+        </div>
+      </div>
+      <div style="padding:clamp(16px,2vw,20px) clamp(24px,3vw,34px);border-top:1px solid rgba(13,13,12,0.1);display:flex;flex-wrap:wrap;gap:7px;background:#FAFAF9;">
+        <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;background:#fff;">Next.js</span>
+        <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;background:#fff;">Claude API</span>
+        <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;background:#fff;">MCP</span>
+        <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;background:#fff;">RAG</span>
+        <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;background:#fff;">PostgreSQL</span>
+        <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;background:#fff;">i18n</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="credentials" aria-label="Credentials" style="background:#FAFAF9;border-top:1px solid rgba(13,13,12,0.08);padding:clamp(80px,10vw,124px) 0;">
+  <div style="width:min(1160px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    <div data-reveal="" style="display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;margin-bottom:clamp(16px,2vw,24px);">
+      <span style="padding-top:8px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;">05</span>
+      <div>
+        <div style="display: inline-flex; align-items: center; gap: 9px; color: var(--accent); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>Credentials</div>
+        
+      </div>
+    </div>
+    
+
+    <div style="display:flex;flex-direction:column-reverse;gap:12px;">
+      <div data-step="" style="margin-left:0;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#fff;border:1px solid rgba(13,13,12,0.1);border-left:2px solid rgba(13,13,12,0.3);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#8A8A83;padding-top:2px;">01</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Paralegal Diploma</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#8A8A83;">Sheridan College · 2017–2019 · P1 Licensee, Law Society of Ontario</div></div>
+      </div>
+      <div data-step="" style="margin-left:40px;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#fff;border:1px solid rgba(13,13,12,0.1);border-left:2px solid rgba(13,13,12,0.3);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#8A8A83;padding-top:2px;">02</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Foundations of Project Management</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#8A8A83;">University of Toronto · 2022</div></div>
+      </div>
+      <div data-step="" style="margin-left:80px;max-width:640px;position:relative;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:rgba(180,83,9,0.05);border:1px solid rgba(180,83,9,0.28);border-left:2px solid #B45309;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span data-amber-marker="" style="position:relative;font-family:var(--font-mono);font-size:11px;font-weight:600;color:#B45309;padding-top:2px;">03<span data-amber-ring="" style="position:absolute;left:-3px;top:2px;width:14px;height:14px;border-radius:50%;border:1.5px solid #B45309;transform:scale(0.6);opacity:0;pointer-events:none;"></span></span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Google Cybersecurity Professional Certificate</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#B45309;">2024 · the first deliberate move toward security</div></div>
+      </div>
+      <div data-step="" style="margin-left:120px;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#fff;border:1px solid rgba(13,13,12,0.1);border-left:2px solid rgba(13,13,12,0.3);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#8A8A83;padding-top:2px;">04</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Software Development Bootcamp</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#8A8A83;">Circuit Stream · 2024 · Full-stack JavaScript, Python, APIs</div></div>
+      </div>
+      <div data-step="" style="margin-left:160px;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#fff;border:1px solid rgba(13,13,12,0.1);border-left:2px solid rgba(13,13,12,0.3);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#8A8A83;padding-top:2px;">05</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Product Management with AI/ML</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#8A8A83;">ELVTR · 2024</div></div>
+      </div>
+      <div data-step="" style="margin-left:200px;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#fff;border:1px solid rgba(13,13,12,0.1);border-left:2px solid rgba(13,13,12,0.3);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#8A8A83;padding-top:2px;">06</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Mathematics &amp; Physics</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#8A8A83;">The Open University · 2024–2026</div></div>
+      </div>
+      <div data-step="" style="margin-left:240px;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#fff;border:1px solid rgba(13,13,12,0.1);border-left:2px solid rgba(13,13,12,0.3);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#8A8A83;padding-top:2px;">07</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#0D0D0C;">Computer Science &amp; Engineering Certificate</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#8A8A83;">McGill University · May 2025 – Apr 2026 · completed</div></div>
+      </div>
+      <div data-step="" style="margin-left:280px;max-width:640px;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:#0D0D0C;border:1px solid #0D0D0C;border-left:2px solid var(--accent);border-radius:12px;box-shadow:0 12px 30px -22px rgba(0,0,0,0.6);">
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:#7FB5E6;padding-top:2px;">08</span>
+        <div><div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:#F5F5F3;">BEng Cybersecurity</div><div style="margin-top:5px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#7FB5E6;">Concordia University · Fall 2026 →</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="toolkit" aria-label="Toolkit" style="background:transparent;padding:clamp(80px,10vw,124px) 0;">
+  <div style="width:min(1160px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    <div data-reveal="" style="display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;margin-bottom:clamp(32px,4vw,48px);">
+      <span style="padding-top:8px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;">06</span>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>Toolkit</div>
+        <h2 style="font-family:'Newsreader',Georgia,serif;font-optical-sizing:auto;font-weight:500;margin:13px 0 0;font-size:clamp(34px,4.2vw,50px);letter-spacing:-0.02em;line-height:1.05;color:#0D0D0C;">Broad on purpose. Sharp where it matters.</h2>
+      </div>
+    </div>
+    <div data-tool-grid="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-left:70px;">
+      <div data-tool="" style="padding:22px;border:1px solid rgba(13,13,12,0.1);border-radius:14px;background:#fff;">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:#0D0D0C;padding-bottom:14px;border-bottom:1px solid rgba(13,13,12,0.1);">Security</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">RBAC</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Row-level security</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">JWT</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">argon2 / bcrypt</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Helmet</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">audit-trail design</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">PIPEDA / PHIPA / Law 25</span>
+        </div>
+      </div>
+      <div data-tool="" style="padding:22px;border:1px solid rgba(13,13,12,0.1);border-radius:14px;background:#fff;">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:#0D0D0C;padding-bottom:14px;border-bottom:1px solid rgba(13,13,12,0.1);">Data</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">PostgreSQL</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Prisma</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">SQL migrations</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">MongoDB</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Redis</span>
+        </div>
+      </div>
+      <div data-tool="" style="padding:22px;border:1px solid rgba(13,13,12,0.1);border-radius:14px;background:#fff;">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:#0D0D0C;padding-bottom:14px;border-bottom:1px solid rgba(13,13,12,0.1);">Backend</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Node.js</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">NestJS</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Express</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">serverless</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">REST APIs</span>
+        </div>
+      </div>
+      <div data-tool="" style="padding:22px;border:1px solid rgba(13,13,12,0.1);border-radius:14px;background:#fff;">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:#0D0D0C;padding-bottom:14px;border-bottom:1px solid rgba(13,13,12,0.1);">Frontend</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">React 19</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Next.js</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">TypeScript</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Vite</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Tailwind</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">PWA</span>
+        </div>
+      </div>
+      <div data-tool="" style="padding:22px;border:1px solid rgba(13,13,12,0.1);border-radius:14px;background:#fff;">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:#0D0D0C;padding-bottom:14px;border-bottom:1px solid rgba(13,13,12,0.1);">AI systems</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Claude API</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">MCP servers</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">multi-agent workflows</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">RAG / embeddings</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Inngest</span>
+        </div>
+      </div>
+      <div data-tool="" style="padding:22px;border:1px solid rgba(13,13,12,0.1);border-radius:14px;background:#fff;">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:#0D0D0C;padding-bottom:14px;border-bottom:1px solid rgba(13,13,12,0.1);">Product &amp; delivery</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">roadmaps</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">requirements &amp; user stories</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Agile / SAFe</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">KPI design</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">Power BI</span>
+          <span style="padding:5px 9px;border:1px solid rgba(13,13,12,0.1);border-radius:999px;font-family:var(--font-sans);font-size:11px;color:#4A4A46;">SQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="contact" data-contact="" aria-label="Contact" style="background:#101014;color:#F5F5F3;padding:clamp(88px,11vw,140px) 0 0;">
+  <div style="width:min(1120px,calc(100% - clamp(40px,8vw,80px)));margin:0 auto;">
+    <div data-reveal="" style="display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;margin-bottom:clamp(36px,5vw,54px);">
+      <span style="padding-top:8px;color:#7FB5E6;font-family:var(--font-mono);font-size:11px;font-weight:600;">07</span>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;color:#7FB5E6;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;"></span>Contact · Montréal</div>
+        <h2 style="font-family:'Newsreader',Georgia,serif;font-optical-sizing:auto;font-weight:500;margin:13px 0 0;font-size:clamp(40px,5.2vw,64px);letter-spacing:-0.025em;line-height:1.0;color:#F5F5F3;">Two doors, both open.</h2>
+      </div>
+    </div>
+    <div data-two-col="" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.5vw,26px);margin-left:70px;">
+      <div data-door="1" style="border:1px solid rgba(255,255,255,0.16);border-radius:16px;background:rgba(255,255,255,0.03);padding:clamp(26px,3vw,34px);">
+        <div style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:#7FB5E6;">Research &amp; academia</div>
+        <p style="margin:16px 0 0;font-family:var(--font-sans);font-size:15.5px;line-height:1.66;color:rgba(255,255,255,0.7);">If you work on privacy engineering, usable security, or the security of AI-agent systems — I’d like to talk. Supervisors, labs, collaborators.</p>
+        <a href="mailto:ashfaaq.kazi@outlook.com?subject=Research" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;min-height:44px;padding:0 18px;border-radius:10px;background:#fff;color:#0D0D0C;font-family:var(--font-sans);font-size:13.5px;font-weight:600;" style-hover="opacity:.88;">Start a conversation →</a>
+      </div>
+      <div data-door="2" style="border:1px solid rgba(255,255,255,0.16);border-radius:16px;background:rgba(255,255,255,0.03);padding:clamp(26px,3vw,34px);">
+        <div style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:#7FB5E6;">Product &amp; engineering</div>
+        <p style="margin:16px 0 0;font-family:var(--font-sans);font-size:15.5px;line-height:1.66;color:rgba(255,255,255,0.7);">I take on a small number of product and engineering engagements alongside the BEng. If your system handles regulated data and real users, we should speak.</p>
+        <a href="mailto:ashfaaq.kazi@outlook.com?subject=Engagement" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;min-height:44px;padding:0 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.28);color:#F5F5F3;font-family:var(--font-sans);font-size:13.5px;font-weight:600;" style-hover="border-color:rgba(255,255,255,0.5);">Discuss a project →</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin:clamp(34px,4vw,46px) 0 0 70px;">
+      <a href="mailto:ashfaaq.kazi@outlook.com" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:.03em;color:#F5F5F3;" style-hover="border-color:rgba(255,255,255,0.4);">ashfaaq.kazi@outlook.com</a>
+      <a href="tel:+14168991692" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:.03em;color:#F5F5F3;" style-hover="border-color:rgba(255,255,255,0.4);">+1 416-899-1692</a>
+      <a href="https://github.com/martiancoder12" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:.03em;color:#F5F5F3;" style-hover="border-color:rgba(255,255,255,0.4);">GitHub · martiancoder12</a>
+      <a href="https://www.linkedin.com/in/ashfaaq-kazi/" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:.03em;color:#F5F5F3;" style-hover="border-color:rgba(255,255,255,0.4);">LinkedIn · /in/ashfaaq-kazi</a>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:clamp(56px,7vw,88px);padding:22px 0;border-top:1px solid rgba(255,255,255,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.42);">
+      <span>Montréal, Québec · Bilingual EN / FR</span>
+      <span>© 2026 Ashfaaq Kazi</span>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 1024 },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#185FA5&quot;, &quot;options&quot;: [&quot;#185FA5&quot;, &quot;#1D4ED8&quot;, &quot;#4F46E5&quot;, &quot;#0D0D0C&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot;, &quot;label&quot;: &quot;Accent&quot; },
+  &quot;showDepthGauge&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Theme&quot;, &quot;label&quot;: &quot;Depth gauge (desktop)&quot; },
+  &quot;reduceMotion&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot;, &quot;label&quot;: &quot;Calm mode (no scroll motion)&quot; }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return { setRoot: (el) => { if (el) this._root = el; } };
+  }
+
+  componentDidMount() { this._boot(0); }
+
+  componentWillUnmount() {
+    try { this._ctx && this._ctx.revert(); } catch (e) {}
+    try { this._split && this._split.revert(); } catch (e) {}
+    try { this._smoother && this._smoother.kill(); } catch (e) {}
+    if (this._padNav) window.removeEventListener('resize', this._padNav);
+    (this._anchors || []).forEach((a) => a.removeEventListener('click', this._onClick));
+  }
+
+  _boot(tries) {
+    if (window.gsap && window.ScrollTrigger && window.ScrollToPlugin) return this._init();
+    if (tries > 120) return; // gsap never loaded — page stays fully visible
+    setTimeout(() => this._boot(tries + 1), 50);
+  }
+
+  _init() {
+    const gsap = window.gsap;
+    const ST = window.ScrollTrigger;
+    const root = this._root || document;
+    const p = this.props || {};
+
+    // ScrollSmoother's measurement fires the benign "ResizeObserver loop" browser error.
+    // Swallow only that exact message so the console stays clean (real errors pass through).
+    if (!window.__roErrPatched) {
+      window.__roErrPatched = true;
+      window.addEventListener('error', (e) => {
+        if (e && e.message && e.message.indexOf('ResizeObserver loop') !== -1) { e.stopImmediatePropagation(); e.preventDefault(); }
+      });
+    }
+
+    gsap.registerPlugin(ST, window.ScrollToPlugin);
+    if (window.SplitText) gsap.registerPlugin(window.SplitText);
+    if (window.ScrollSmoother) gsap.registerPlugin(window.ScrollSmoother);
+
+    // Nav is fixed now (so it survives ScrollSmoother's content transform) — pad the
+    // scroll content by the nav height so nothing hides beneath it.
+    const navEl = root.querySelector('[data-nav]');
+    const contentEl = root.querySelector('#smooth-content');
+    this._padNav = () => { if (contentEl && navEl) contentEl.style.paddingTop = navEl.offsetHeight + 'px'; };
+    this._padNav();
+    window.addEventListener('resize', this._padNav);
+
+    if (p.accent) document.documentElement.style.setProperty('--accent', p.accent);
+    if (p.showDepthGauge === false) { const g = root.querySelector('[data-gauge]'); if (g) g.style.display = 'none'; }
+
+    const forceCalm = !!p.reduceMotion;
+    const prefersReduced = forceCalm || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Smooth in-page navigation (offset for sticky nav); L5 doorway gets the ink wipe.
+    this._onClick = (e) => {
+      const a = e.currentTarget;
+      const hash = a.getAttribute('href') || '';
+      if (hash.length < 2) return;
+      const t = root.querySelector(hash);
+      if (!t) return;
+      e.preventDefault();
+      const nav = root.querySelector('[data-nav]');
+      const offset = (nav ? nav.offsetHeight : 0) + 14;
+      const jump = () => {
+        if (this._smoother) this._smoother.scrollTo(this._smoother.offset(t, 'top top') - offset, !prefersReduced);
+        else gsap.to(window, { duration: prefersReduced ? 0 : 0.8, ease: 'power2.inOut', scrollTo: { y: t, offsetY: offset }, overwrite: 'auto' });
+      };
+      if (a.hasAttribute('data-doorway') && !prefersReduced) this._doorway(jump); else jump();
+    };
+    this._anchors = Array.from(root.querySelectorAll('a[href^="#"]'));
+    this._anchors.forEach((a) => a.addEventListener('click', this._onClick));
+
+    this._gaugeSetup(gsap);
+
+    this._ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (forceCalm) return;
+        const q = (s) => gsap.utils.toArray(s);
+
+        // Page-wide smooth scroll — GSAP-native ScrollSmoother, which is built to run
+        // WITH ScrollTrigger (the brief's caution was against locomotive-scroll, not this).
+        if (window.ScrollSmoother) {
+          this._smoother = window.ScrollSmoother.create({ wrapper: '#smooth-wrapper', content: '#smooth-content', smooth: 1.1, smoothTouch: 0, effects: false });
+          ST.addEventListener('refresh', this._padNav);
+          this._padNav();
+        }
+
+        // Top scroll-progress bar
+        gsap.to('[data-progress]', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
+
+        // The one looping animation on the page: the hero scroll cue.
+        gsap.to('[data-bob]', { y: 7, duration: 1.1, ease: 'power1.inOut', repeat: -1, yoyo: true });
+
+        this._hero(gsap);
+
+        // Depth gauge progress driven by the Journey
+        ST.create({
+          trigger: '[data-journey]', start: 'top center', end: 'bottom center',
+          onUpdate: (self) => this._gaugeUpdate(self.progress),
+          onEnter: () => gsap.to('[data-gauge]', { autoAlpha: 1, duration: 0.5 }),
+          onEnterBack: () => gsap.to('[data-gauge]', { autoAlpha: 1, duration: 0.5 }),
+          onLeave: () => { this._gaugeUpdate(1); gsap.to('[data-gauge]', { autoAlpha: 0.5, duration: 0.5 }); },
+          onLeaveBack: () => gsap.to('[data-gauge]', { autoAlpha: 0, duration: 0.5 }),
+        });
+
+        // Journey spine draws with scroll
+        const spine = root.querySelector('[data-spine-fill]');
+        if (spine) gsap.fromTo(spine, { scaleY: 0 }, { scaleY: 1, ease: 'none', transformOrigin: 'top', scrollTrigger: { trigger: '[data-journey]', start: 'top 68%', end: 'bottom 82%', scrub: 0.6 } });
+
+        // Journey layer bodies — reversal is intentional (re-ascending the layers)
+        q('[data-layer-body]').forEach((el) => {
+          gsap.set(el, { autoAlpha: 0, y: 24 });
+          gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power4.out', scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play reverse play reverse' } });
+        });
+        // The only parallax on the page: the giant layer markers
+        q('[data-marker]').forEach((m) => {
+          const layer = m.closest('[data-layer]');
+          gsap.fromTo(m, { y: -22 }, { y: 22, ease: 'none', scrollTrigger: { trigger: layer, start: 'top bottom', end: 'bottom top', scrub: true } });
+        });
+
+        // Calm reveals (section headers, now/next, archive)
+        const revs = q('[data-reveal]');
+        gsap.set(revs, { autoAlpha: 0, y: 22 });
+        ST.batch(revs, { start: 'top 88%', onEnter: (b) => gsap.to(b, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power2.out', overwrite: true }) });
+
+        // Now & Next readiness / two columns handled by reveals above; nothing extra.
+
+        // Research — darker rooms take longer to walk into
+        const r = root.querySelector('[data-research]');
+        if (r) {
+          gsap.from('[data-research-lead]', { autoAlpha: 0, y: 20, duration: 0.9, ease: 'power4.out', scrollTrigger: { trigger: r, start: 'top 74%', once: true } });
+          gsap.from('[data-question]', { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.15, ease: 'power4.out', scrollTrigger: { trigger: '[data-questions]', start: 'top 82%', once: true } });
+          const tf = root.querySelector('[data-traj-fill]');
+          if (tf) gsap.fromTo(tf, { scaleX: 0 }, { scaleX: 1, transformOrigin: 'left', ease: 'power1.inOut', scrollTrigger: { trigger: tf, start: 'top 88%', end: 'top 52%', scrub: true } });
+        }
+
+        // Selected work — flagship clip wipe from below + checks stroke in
+        const fl = root.querySelector('[data-flagship]');
+        if (fl) {
+          gsap.from(fl, { clipPath: 'inset(100% 0 0 0)', duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: fl, start: 'top 82%', once: true } });
+          gsap.from(fl.querySelectorAll('[data-check]'), { autoAlpha: 0, x: -8, duration: 0.5, stagger: 0.09, ease: 'power2.out', scrollTrigger: { trigger: fl, start: 'top 60%', once: true } });
+        }
+        ST.batch('[data-prow]', { start: 'top 88%', onEnter: (b) => gsap.from(b, { autoAlpha: 0, y: 28, stagger: 0.08, duration: 0.6, ease: 'power4.out' }) });
+        const dip = root.querySelector('[data-diptych]');
+        if (dip) gsap.from(dip, { autoAlpha: 0, y: 26, duration: 0.8, ease: 'power4.out', scrollTrigger: { trigger: dip, start: 'top 85%', once: true } });
+
+        // Credentials staircase + one-time amber pulse
+        ST.batch('[data-step]', { start: 'top 90%', onEnter: (b) => gsap.from(b, { autoAlpha: 0, y: 24, stagger: 0.06, duration: 0.6, ease: 'power4.out' }) });
+        const ring = root.querySelector('[data-amber-ring]');
+        if (ring) ST.create({ trigger: ring, start: 'top 82%', once: true, onEnter: () => gsap.fromTo(ring, { scale: 0.6, autoAlpha: 0.7 }, { scale: 2.6, autoAlpha: 0, duration: 1.1, ease: 'power2.out' }) });
+
+        // Toolkit — by now the page is documentation
+        ST.batch('[data-tool]', { start: 'top 90%', onEnter: (b) => gsap.from(b, { autoAlpha: 0, y: 18, stagger: 0.06, duration: 0.5, ease: 'power2.out' }) });
+
+        // Contact — panels wipe in from opposite directions
+        const d1 = root.querySelector('[data-door="1"]');
+        const d2 = root.querySelector('[data-door="2"]');
+        if (d1) gsap.from(d1, { clipPath: 'inset(0 100% 0 0)', duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: '[data-contact]', start: 'top 80%', once: true } });
+        if (d2) gsap.from(d2, { clipPath: 'inset(0 0 0 100%)', duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: '[data-contact]', start: 'top 80%', once: true } });
+
+        // Diptych: hovered half gently expands — two lives, one career
+        const halves = q('[data-dip-half]');
+        if (dip && halves.length === 2) {
+          halves.forEach((h) => h.addEventListener('mouseenter', () => halves.forEach((o) => gsap.to(o, { flexGrow: o === h ? 1.45 : 0.8, duration: 0.4, ease: 'power2.out' }))));
+          dip.addEventListener('mouseleave', () => halves.forEach((o) => gsap.to(o, { flexGrow: 1, duration: 0.4, ease: 'power2.out' })));
+        }
+      });
+    }, root);
+
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (this._padNav) this._padNav(); window.ScrollTrigger.refresh(); });
+    else setTimeout(() => window.ScrollTrigger.refresh(), 400);
+  }
+
+  _hero(gsap) {
+    const root = this._root || document;
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    const h1 = root.querySelector('[data-h1]');
+    let lines = null;
+    if (window.SplitText && h1) {
+      try { this._split = new window.SplitText(h1, { type: 'lines', mask: 'lines' }); lines = this._split.lines; } catch (e) { lines = null; }
+    }
+    gsap.set('[data-hero-eyebrow],[data-hero-sub],[data-hero-actions]', { autoAlpha: 0, y: 14 });
+    if (lines && lines.length) { gsap.set(lines, { yPercent: 110 }); tl.to(lines, { yPercent: 0, duration: 1.0, stagger: 0.08 }, 0); }
+    else if (h1) { gsap.set(h1, { autoAlpha: 0, y: 28 }); tl.to(h1, { autoAlpha: 1, y: 0, duration: 1.0 }, 0); }
+    tl.to('[data-hero-eyebrow]', { autoAlpha: 1, y: 0, duration: 0.7 }, 0.15)
+      .to('[data-hero-sub]', { autoAlpha: 1, y: 0, duration: 0.7 }, 0.45)
+      .to('[data-hero-actions]', { autoAlpha: 1, y: 0, duration: 0.7 }, 0.6);
+    const photo = root.querySelector('[data-hero-photo]');
+    if (photo) {
+      gsap.set(photo, { autoAlpha: 0, y: 16, clipPath: 'inset(0 0 100% 0)' });
+      tl.to(photo, { autoAlpha: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.7, ease: 'power3.out' }, 0.2);
+    }
+    const panel = root.querySelector('[data-hero-panel]');
+    if (panel) {
+      gsap.set(panel, { clipPath: 'inset(0 0 100% 0)' });
+      tl.to(panel, { clipPath: 'inset(0 0 0% 0)', duration: 0.7, ease: 'power3.out' }, 0.5);
+      gsap.set('[data-panel-row]', { autoAlpha: 0, y: 10 });
+      tl.to('[data-panel-row]', { autoAlpha: 1, y: 0, stagger: 0.08, duration: 0.5 }, 0.85);
+    }
+  }
+
+  _gaugeSetup(gsap) {
+    const root = this._root || document;
+    this._gDots = gsap.utils.toArray('[data-gnode]');
+    this._gFill = root.querySelector('[data-gauge-fill]');
+    this._gLabel = root.querySelector('[data-gauge-label]');
+    this._gNames = ['L1 · Trust between humans', 'L2 · Trust as law', 'L3 · Trust as product', 'L4 · Trust as code', 'L5 · Trust as science'];
+    this._gaugeUpdate(0);
+  }
+
+  _gaugeUpdate(pRaw) {
+    const p = Math.max(0, Math.min(1, pRaw));
+    if (this._gFill) this._gFill.style.transform = 'scaleY(' + p + ')';
+    const idx = Math.min(4, Math.floor(p * 4.999));
+    (this._gDots || []).forEach((d, i) => {
+      const on = i <= idx;
+      d.style.background = on ? 'var(--accent)' : '#ffffff';
+      d.style.borderColor = on ? 'var(--accent)' : 'rgba(13,13,12,0.25)';
+    });
+    if (this._gLabel) this._gLabel.textContent = this._gNames[idx];
+  }
+
+  _doorway(cb) {
+    const gsap = window.gsap;
+    const root = this._root || document;
+    const ov = root.querySelector('[data-wipe]');
+    if (!ov) { cb(); return; }
+    gsap.set(ov, { display: 'block', scaleY: 0, transformOrigin: 'bottom' });
+    gsap.timeline()
+      .to(ov, { scaleY: 1, duration: 0.3, ease: 'power2.in' })
+      .add(() => cb())
+      .to(ov, { scaleY: 0, transformOrigin: 'top', duration: 0.42, ease: 'power2.out' }, '+=0.08')
+      .set(ov, { display: 'none' });
+  }
+}
+</script>
+</body>
+</html>

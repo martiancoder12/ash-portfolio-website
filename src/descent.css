@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
+
+/* ------------------------------------------------------------------ */
+/* "The Descent" design — scoped to the Home page via body.descent     */
+/* ------------------------------------------------------------------ */
+
+body.descent {
+  --accent: #185FA5;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  margin: 0;
+  background: #ffffff;
+  background-image:
+    linear-gradient(rgba(13, 13, 12, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13, 13, 12, 0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
+  color: #0D0D0C;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.descent a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body.descent a:hover {
+  opacity: 0.86;
+}
+
+body.descent ::selection {
+  background: #0D0D0C;
+  color: #fff;
+}
+
+body.descent a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hover states (the design file's style-hover attributes) */
+.d-hover-ink:hover { color: #0D0D0C !important; }
+.d-hover-fade:hover { opacity: 0.85 !important; }
+.d-hover-border-ink:hover { border-color: rgba(13, 13, 12, 0.32) !important; }
+.d-hover-doorway:hover { background: rgba(180, 83, 9, 0.11) !important; }
+.d-hover-prow:hover { background: #FAFAF9; }
+.d-hover-border-light:hover { border-color: rgba(255, 255, 255, 0.4) !important; }
+.d-hover-border-lighter:hover { border-color: rgba(255, 255, 255, 0.5) !important; }
+
+/* Responsive rules ported verbatim from the design file */
+@media (max-width: 1180px) {
+  [data-gauge] { display: none !important; }
+}
+
+@media (max-width: 920px) {
+  [data-hero-grid] { grid-template-columns: 1fr !important; }
+  [data-layer] { grid-template-columns: 1fr !important; padding-left: 52px !important; }
+  [data-two-col] { grid-template-columns: 1fr !important; }
+  [data-flagship] { grid-template-columns: 1fr !important; }
+  [data-diptych-halves] { flex-direction: column !important; }
+  [data-tool-grid] { grid-template-columns: repeat(2, 1fr) !important; }
+  [data-step] { margin-left: 0 !important; }
+  [data-prow] { grid-template-columns: 34px 1fr !important; }
+  [data-prow-actions] {
+    grid-column: 2 !important;
+    align-items: flex-start !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+@media (max-width: 600px) {
+  [data-tool-grid] { grid-template-columns: 1fr !important; }
+  [data-prow] { grid-template-columns: 1fr !important; }
+  [data-nav-links] { gap: 12px !important; font-size: 12.5px !important; }
+  [data-hero-panel] { max-width: 460px; }
+}
