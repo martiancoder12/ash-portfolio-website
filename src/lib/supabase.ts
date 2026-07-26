@@ -109,3 +109,30 @@ export interface Tag {
   color: string | null;
   description: string | null;
 }
+
+export interface Post {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string | null;
+  tags: string[] | null;
+  status: 'draft' | 'published' | 'archived';
+  published_at: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+}
+
+export interface PostInsert {
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  content?: string | null;
+  tags?: string[] | null;
+  status?: 'draft' | 'published' | 'archived';
+  published_at?: string | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+}

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router'
 import '../descent.css'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -318,6 +319,7 @@ export default function Home() {
           {['journey', 'research', 'work', 'credentials', 'contact'].map((id) => (
             <a key={id} href={`#${id}`} className="d-hover-ink" style={{ color: 'inherit' }}>{id}</a>
           ))}
+          <Link to="/blog" className="d-hover-ink" style={{ color: 'inherit' }}>blog</Link>
         </div>
       </nav>
 

@@ -9,6 +9,8 @@ const AdminLogin = lazy(() => import('./admin/pages/Login'));
 const AdminDashboard = lazy(() => import('./admin/pages/Dashboard'));
 const AdminProjectForm = lazy(() => import('./admin/pages/ProjectForm'));
 const AdminProjectFiles = lazy(() => import('./admin/pages/ProjectFiles'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
 
 function PageLoader() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
 
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
