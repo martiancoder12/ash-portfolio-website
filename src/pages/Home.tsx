@@ -563,8 +563,7 @@ export default function Home() {
                   chips: ['Next.js 15', 'React 19', 'Supabase', 'Turborepo', 'PWA'],
                   actions: [
                     { kind: 'badge', label: 'Live' },
-                    { kind: 'link', label: 'Website →', href: 'https://codr-cyan-two.vercel.app/' },
-                    { kind: 'link-muted', label: 'Get the app →', href: 'https://www.codrapp.ca/' },
+                    { kind: 'link', label: 'Open live →', href: 'https://www.codrapp.ca/' },
                   ],
                 },
                 {
