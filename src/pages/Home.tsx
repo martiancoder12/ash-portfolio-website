@@ -575,6 +575,15 @@ export default function Home() {
                     { kind: 'link', label: 'View live →', href: 'https://cartograph-indol.vercel.app' },
                   ],
                 },
+                {
+                  n: '06', title: 'Maison MANCE', tag: 'Brand system — concept to production',
+                  body: <>A bilingual Quebec ritual brand developed from first principles: positioning, product architecture, visual identity, campaign direction, original photography, editorial voice, and a 62-page accessible storefront. The project tested how AI can accelerate creative production without outsourcing taste, coherence, or final judgement.</>,
+                  chips: ['Brand strategy', 'Creative direction', 'Bilingual UX', 'Generative imagery', 'HTML · CSS · JavaScript'],
+                  actions: [
+                    { kind: 'badge', label: 'Live' },
+                    { kind: 'link', label: 'Open live →', href: 'https://maisonmance.ca/' },
+                  ],
+                },
               ].map((p) => (
                 <article key={p.n} data-prow="" className="d-hover-prow" style={{ display: 'grid', gridTemplateColumns: '52px minmax(0,1fr) 176px', gap: 22, padding: '26px 16px', margin: '0 -16px', borderBottom: '1px solid rgba(13,13,12,0.1)', borderRadius: 10 }}>
                   <div style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, paddingTop: 5 }}>{p.n}</div>
@@ -605,7 +614,7 @@ export default function Home() {
             <article data-diptych="" style={{ marginTop: 'clamp(20px,3vw,30px)', border: '1px solid rgba(13,13,12,0.12)', borderRadius: 16, overflow: 'hidden', background: '#fff', boxShadow: '0 1px 2px rgba(0,0,0,0.04),0 24px 60px -48px rgba(0,0,0,0.26)' }}>
               <div style={{ padding: 'clamp(24px,3vw,32px) clamp(24px,3vw,32px) clamp(18px,2vw,22px)', borderBottom: '1px solid rgba(13,13,12,0.1)' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap' }}>
-                  <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>06</span>
+                  <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>07</span>
                   <h3 style={{ margin: 0, fontFamily: serif, fontWeight: 500, fontSize: 'clamp(24px,2.8vw,30px)', letterSpacing: '-0.02em', color: '#0D0D0C' }}>Proof of work — two careers in artifacts</h3>
                 </div>
                 <p style={{ margin: '10px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.6, color: '#4A4A46' }}>Two instruments, one from each of my McKesson lives.</p>
