@@ -17,6 +17,42 @@ declare global {
 
 const serif = "'Newsreader',Georgia,serif"
 
+function ProjectPlate({
+  src,
+  alt,
+  label,
+  href,
+  dark = false,
+  compact = false,
+}: {
+  src: string
+  alt: string
+  label: string
+  href?: string
+  dark?: boolean
+  compact?: boolean
+}) {
+  const plate = (
+    <figure className={`d-project-plate${dark ? ' is-dark' : ''}${compact ? ' is-compact' : ''}`}>
+      <div className="d-project-plate-bar" aria-hidden="true">
+        <span className="d-project-plate-dots"><i></i><i></i><i></i></span>
+        <span>{label}</span>
+      </div>
+      <div className="d-project-plate-image">
+        <img src={src} alt={alt} width="1440" height="900" loading="lazy" decoding="async" />
+      </div>
+    </figure>
+  )
+
+  if (!href) return plate
+
+  return (
+    <a className="d-project-plate-link" href={href} target="_blank" rel="noreferrer" aria-label={`Open ${label}`}>
+      {plate}
+    </a>
+  )
+}
+
 /**
  * Scroll-animation layer, ported from the design's DCLogic script.
  * Waits for the GSAP CDN scripts, then wires: ScrollSmoother, scroll progress,
@@ -520,7 +556,14 @@ export default function Home() {
                 </div>
               </div>
               <aside style={{ padding: 'clamp(26px,3vw,34px)', borderLeft: '1px solid rgba(255,255,255,0.14)', background: 'rgba(255,255,255,0.03)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: '#7FB5E6' }}>At a glance</div>
+                <ProjectPlate
+                  src="/projects/psp360.png"
+                  alt="PSP360 operations platform sign-in screen"
+                  label="ops.psp360"
+                  href="https://psp360-ops-web.vercel.app"
+                  dark
+                />
+                <div style={{ marginTop: 28, fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: '#7FB5E6' }}>At a glance</div>
                 <dl style={{ margin: '18px 0 0' }}>
                   {[
                     ['Domain', 'Regulated healthcare'],
@@ -550,12 +593,14 @@ export default function Home() {
                   body: <>A web-based desktop where an omnipresent AI broker is the <em>only</em> thing that touches application state. Apps never talk to each other; every exchange is mediated by the broker — which makes it, by design, the entire security boundary. The architectural bet behind my third research question, running in production.</>,
                   chips: ['React', 'TypeScript', 'WebSocket', 'Anthropic API', 'Neon'],
                   actions: [{ kind: 'badge', label: 'Live' }],
+                  image: undefined, imageAlt: undefined, imageLabel: undefined, imageHref: undefined,
                 },
                 {
                   n: '03', title: 'URIM', tag: 'Trust as law — computed',
                   body: <>A legal prediction engine: probable litigation outcomes and the paths that reach them, tested against decided cases.</>,
                   chips: ['Vercel serverless', 'Neon Postgres', 'GSAP'],
                   actions: [{ kind: 'muted', label: 'Instrument' }],
+                  image: undefined, imageAlt: undefined, imageLabel: undefined, imageHref: undefined,
                 },
                 {
                   n: '04', title: 'Codr', tag: 'Privacy by design',
@@ -565,6 +610,7 @@ export default function Home() {
                     { kind: 'badge', label: 'Live' },
                     { kind: 'link', label: 'Open live →', href: 'https://www.codrapp.ca/' },
                   ],
+                  image: '/projects/codr.png', imageAlt: 'Codr peer-matching application landing page', imageLabel: 'codrapp.ca', imageHref: 'https://www.codrapp.ca/',
                 },
                 {
                   n: '05', title: 'Cartograph', tag: 'Engineering depth',
@@ -574,6 +620,7 @@ export default function Home() {
                     { kind: 'dot', label: 'In development' },
                     { kind: 'link', label: 'View live →', href: 'https://cartograph-indol.vercel.app' },
                   ],
+                  image: '/projects/cartograph.png', imageAlt: 'Cartograph collaborative project canvas landing page', imageLabel: 'cartograph', imageHref: 'https://cartograph-indol.vercel.app',
                 },
                 {
                   n: '06', title: 'Maison MANCE', tag: 'Brand system — concept to production',
@@ -583,6 +630,7 @@ export default function Home() {
                     { kind: 'badge', label: 'Live' },
                     { kind: 'link', label: 'Open live →', href: 'https://maisonmance.ca/' },
                   ],
+                  image: '/projects/maison-mance.png', imageAlt: 'Maison MANCE Quebec honey storefront', imageLabel: 'maisonmance.ca', imageHref: 'https://maisonmance.ca/',
                 },
                 {
                   n: '07', title: 'CompressorX', tag: 'Privacy-first browser tooling',
@@ -593,11 +641,12 @@ export default function Home() {
                     { kind: 'link', label: 'Open live →', href: 'https://compressorx.vercel.app/' },
                     { kind: 'link-muted', label: 'View source →', href: 'https://github.com/martiancoder12/compressorx' },
                   ],
+                  image: '/projects/compressorx.png', imageAlt: 'CompressorX private browser-based image compression interface', imageLabel: 'compressorx', imageHref: 'https://compressorx.vercel.app/',
                 },
               ].map((p) => (
-                <article key={p.n} data-prow="" className="d-hover-prow" style={{ display: 'grid', gridTemplateColumns: '52px minmax(0,1fr) 176px', gap: 22, padding: '26px 16px', margin: '0 -16px', borderBottom: '1px solid rgba(13,13,12,0.1)', borderRadius: 10 }}>
+                <article key={p.n} data-prow="" data-has-media={p.image ? 'true' : 'false'} className="d-hover-prow" style={{ display: 'grid', gridTemplateColumns: p.image ? '52px minmax(0,1fr) minmax(270px,33%)' : '52px minmax(0,1fr) 176px', gap: 22, padding: p.image ? '34px 16px' : '26px 16px', margin: '0 -16px', borderBottom: '1px solid rgba(13,13,12,0.1)', borderRadius: 10, alignItems: 'center' }}>
                   <div style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, paddingTop: 5 }}>{p.n}</div>
-                  <div>
+                  <div data-prow-body="">
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap' }}>
                       <h3 style={{ margin: 0, fontFamily: serif, fontWeight: 500, fontSize: 25, letterSpacing: '-0.02em', color: '#0D0D0C' }}>{p.title}</h3>
                       <span style={{ color: '#8A8A83', fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase' }}>{p.tag}</span>
@@ -609,13 +658,18 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
-                  <div data-prow-actions="" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 10 }}>
-                    {p.actions.map((a) => {
-                      if (a.kind === 'badge') return <span key={a.label} style={{ padding: '6px 10px', background: '#0D0D0C', color: '#fff', borderRadius: 999, fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase' }}>{a.label}</span>
-                      if (a.kind === 'muted') return <span key={a.label} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8A8A83' }}>{a.label}</span>
-                      if (a.kind === 'dot') return <span key={a.label} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8A8A83' }}><span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', marginRight: 6 }}></span>{a.label}</span>
-                      return <a key={a.label} href={a.href} target="_blank" rel="noreferrer" style={{ color: a.kind === 'link-muted' ? '#8A8A83' : 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>{a.label}</a>
-                    })}
+                  <div data-prow-rail="">
+                    {p.image && p.imageAlt && p.imageLabel && (
+                      <ProjectPlate src={p.image} alt={p.imageAlt} label={p.imageLabel} href={p.imageHref} />
+                    )}
+                    <div data-prow-actions="">
+                      {p.actions.map((a) => {
+                        if (a.kind === 'badge') return <span key={a.label} style={{ padding: '6px 10px', background: '#0D0D0C', color: '#fff', borderRadius: 999, fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase' }}>{a.label}</span>
+                        if (a.kind === 'muted') return <span key={a.label} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8A8A83' }}>{a.label}</span>
+                        if (a.kind === 'dot') return <span key={a.label} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8A8A83' }}><span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', marginRight: 6 }}></span>{a.label}</span>
+                        return <a key={a.label} href={'href' in a ? a.href : undefined} target="_blank" rel="noreferrer" style={{ color: a.kind === 'link-muted' ? '#8A8A83' : 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>{a.label}</a>
+                      })}
+                    </div>
                   </div>
                 </article>
               ))}
@@ -631,6 +685,13 @@ export default function Home() {
               </div>
               <div data-diptych-halves="" style={{ display: 'flex', alignItems: 'stretch' }}>
                 <div data-dip-half="" style={{ flex: '1 1 0', minWidth: 0, padding: 'clamp(24px,3vw,34px)' }}>
+                  <ProjectPlate
+                    src="/projects/the-indication.png"
+                    alt="The Indication Canadian pharmaceutical intelligence publication"
+                    label="the-indication"
+                    href="https://the-indication.vercel.app"
+                    compact
+                  />
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8A8A83' }}>the-indication · <span style={{ color: '#4A4A46' }}>from the Specialty Health years</span></div>
                   <p style={{ margin: '14px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.66, color: '#4A4A46' }}>AI content intelligence: the Claude API wired to a custom MCP server, retrieval-augmented generation over embeddings, background ingestion with Inngest, auth and billing included.</p>
                   <div style={{ display: 'flex', gap: 16, marginTop: 18 }}>
@@ -640,8 +701,19 @@ export default function Home() {
                 </div>
                 <div style={{ width: 1, background: 'rgba(13,13,12,0.1)' }}></div>
                 <div data-dip-half="" style={{ flex: '1 1 0', minWidth: 0, padding: 'clamp(24px,3vw,34px)' }}>
+                  <ProjectPlate
+                    src="/projects/cadence.png"
+                    alt="Cadence French-first loyalty intelligence publication"
+                    label="cadence"
+                    href="https://cadence-fawn-pi.vercel.app"
+                    compact
+                  />
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8A8A83' }}>Cadence · <span style={{ color: '#4A4A46' }}>from the loyalty years</span></div>
                   <p style={{ margin: '14px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.66, color: '#4A4A46' }}>A French-first marketing-intelligence publication that scores loyalty and retention programs — the Operator Score — on first-party data, margin and experience. The Bien+ years, turned into an independent analytical voice, Law 25 commentary included.</p>
+                  <div style={{ display: 'flex', gap: 16, marginTop: 18 }}>
+                    <a href="https://cadence-fawn-pi.vercel.app" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>Open live →</a>
+                    <a href="https://github.com/martiancoder12/cadence" target="_blank" rel="noreferrer" style={{ color: '#8A8A83', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>Code →</a>
+                  </div>
                 </div>
               </div>
               <div style={{ padding: 'clamp(16px,2vw,20px) clamp(24px,3vw,34px)', borderTop: '1px solid rgba(13,13,12,0.1)', display: 'flex', flexWrap: 'wrap', gap: 7, background: '#FAFAF9' }}>
