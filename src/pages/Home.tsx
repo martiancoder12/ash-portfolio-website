@@ -584,6 +584,16 @@ export default function Home() {
                     { kind: 'link', label: 'Open live →', href: 'https://maisonmance.ca/' },
                   ],
                 },
+                {
+                  n: '07', title: 'CompressorX', tag: 'Privacy-first browser tooling',
+                  body: <>A batch image-compression PWA that keeps the entire pipeline on-device. Concurrent Web Workers handle JPEG, PNG, WebP and AVIF conversion without blocking the interface; quality and dimension controls, before-and-after comparison, offline support, IndexedDB history and ZIP export turn a focused utility into a production-ready tool.</>,
+                  chips: ['React 19', 'TypeScript', 'Web Workers', 'IndexedDB', 'PWA'],
+                  actions: [
+                    { kind: 'badge', label: 'Live' },
+                    { kind: 'link', label: 'Open live →', href: 'https://compressorx.vercel.app/' },
+                    { kind: 'link-muted', label: 'View source →', href: 'https://github.com/martiancoder12/compressorx' },
+                  ],
+                },
               ].map((p) => (
                 <article key={p.n} data-prow="" className="d-hover-prow" style={{ display: 'grid', gridTemplateColumns: '52px minmax(0,1fr) 176px', gap: 22, padding: '26px 16px', margin: '0 -16px', borderBottom: '1px solid rgba(13,13,12,0.1)', borderRadius: 10 }}>
                   <div style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, paddingTop: 5 }}>{p.n}</div>
@@ -614,7 +624,7 @@ export default function Home() {
             <article data-diptych="" style={{ marginTop: 'clamp(20px,3vw,30px)', border: '1px solid rgba(13,13,12,0.12)', borderRadius: 16, overflow: 'hidden', background: '#fff', boxShadow: '0 1px 2px rgba(0,0,0,0.04),0 24px 60px -48px rgba(0,0,0,0.26)' }}>
               <div style={{ padding: 'clamp(24px,3vw,32px) clamp(24px,3vw,32px) clamp(18px,2vw,22px)', borderBottom: '1px solid rgba(13,13,12,0.1)' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap' }}>
-                  <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>07</span>
+                  <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>08</span>
                   <h3 style={{ margin: 0, fontFamily: serif, fontWeight: 500, fontSize: 'clamp(24px,2.8vw,30px)', letterSpacing: '-0.02em', color: '#0D0D0C' }}>Proof of work — two careers in artifacts</h3>
                 </div>
                 <p style={{ margin: '10px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.6, color: '#4A4A46' }}>Two instruments, one from each of my McKesson lives.</p>
