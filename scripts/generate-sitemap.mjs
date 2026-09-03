@@ -7,7 +7,7 @@
  * Reads VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY from the environment,
  * falling back to the local .env file.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -39,6 +39,22 @@ async function fetchSlugs(table, select, url, key) {
   return res.json();
 }
 
+function readBuiltinPostSlugs() {
+  const contentDir = join(root, 'content', 'blog');
+  try {
+    return readdirSync(contentDir)
+      .filter((name) => name.endsWith('.md'))
+      .map((name) => readFileSync(join(contentDir, name), 'utf8'))
+      .map((source) => ({
+        slug: source.match(/^slug:\s*["']?([^"'\n]+)["']?\s*$/m)?.[1]?.trim(),
+        published_at: source.match(/^published_at:\s*["']?([^"'\n]+)["']?\s*$/m)?.[1]?.trim(),
+      }))
+      .filter((post) => post.slug);
+  } catch {
+    return [];
+  }
+}
+
 const today = new Date().toISOString().slice(0, 10);
 
 function urlEntry(loc, lastmod, changefreq, priority) {
@@ -55,11 +71,16 @@ const [posts, projects] = await Promise.all([
   fetchSlugs('posts', 'slug,published_at', url, key),
   fetchSlugs('projects', 'slug,updated_at', url, key),
 ]);
+const builtinPosts = readBuiltinPostSlugs();
+const allPosts = [
+  ...posts,
+  ...builtinPosts.filter((builtin) => !posts.some((post) => post.slug === builtin.slug)),
+];
 
 const entries = [
   urlEntry(`${BASE_URL}/`, today, 'monthly', '1.0'),
   urlEntry(`${BASE_URL}/blog`, today, 'weekly', '0.8'),
-  ...posts.map((p) =>
+  ...allPosts.map((p) =>
     urlEntry(`${BASE_URL}/blog/${p.slug}`, (p.published_at || today).slice(0, 10), 'monthly', '0.6')
   ),
   ...projects.map((p) =>
@@ -70,4 +91,4 @@ const entries = [
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`;
 
 writeFileSync(join(root, 'public', 'sitemap.xml'), xml);
-console.log(`[sitemap] wrote ${entries.length} URLs (posts: ${posts.length}, projects: ${projects.length})`);
+console.log(`[sitemap] wrote ${entries.length} URLs (posts: ${allPosts.length}, projects: ${projects.length})`);

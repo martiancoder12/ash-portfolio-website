@@ -137,6 +137,23 @@ async function fetchPosts(url: string, key: string): Promise<PublishedPost[]> {
   return response.json() as Promise<PublishedPost[]>
 }
 
+async function readBuiltinPosts(): Promise<PublishedPost[]> {
+  const source = await readFile(path.resolve('content/blog/how-to-study-math-problem-solving-courses.md'), 'utf8')
+  const content = source.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+  return [{
+    title: 'How to Study for Math and Problem-Solving Courses: A Practical Active-Learning System',
+    slug: 'how-to-study-math-problem-solving-courses',
+    excerpt: 'A practical system for engineering students: preview the terrain, learn in small loops, solve from a blank page, diagnose mistakes, space retrieval, and teach the method.',
+    content,
+    tags: ['Learning strategies', 'Engineering', 'Mathematics', 'Active learning', 'Student success'],
+    published_at: '2026-09-02T21:00:00-04:00',
+    created_at: '2026-09-03T01:00:00.000Z',
+    updated_at: '2026-09-03T04:15:00.000Z',
+    meta_title: 'How to Study for Math & Problem-Solving Courses',
+    meta_description: 'A practical active-learning system for math and engineering courses: preview, solve from a blank page, diagnose errors, space retrieval, and teach back.',
+  }]
+}
+
 export function prerenderBlogPlugin(url: string | undefined, key: string | undefined): Plugin {
   return {
     name: 'prerender-blog-posts',
@@ -148,7 +165,9 @@ export function prerenderBlogPlugin(url: string | undefined, key: string | undef
       }
 
       const template = await readFile(path.resolve('dist/index.html'), 'utf8')
-      const posts = await fetchPosts(url, key)
+      const [databasePosts, builtinPosts] = await Promise.all([fetchPosts(url, key), readBuiltinPosts()])
+      const databaseSlugs = new Set(databasePosts.map((post) => post.slug))
+      const posts = [...databasePosts, ...builtinPosts.filter((post) => !databaseSlugs.has(post.slug))]
       for (const post of posts) {
         const destination = path.resolve('dist/blog', post.slug)
         await mkdir(destination, { recursive: true })

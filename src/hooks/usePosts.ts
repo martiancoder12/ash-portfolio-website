@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase, type Post, type PostInsert } from '@/lib/supabase';
+import { builtinPosts, mergePublishedPosts } from '@/content/builtinPosts';
 
 // ============== PUBLIC QUERIES ==============
 
@@ -13,7 +14,7 @@ export function usePublishedPosts() {
         .eq('status', 'published')
         .order('published_at', { ascending: false });
       if (error) throw error;
-      return data || [];
+      return mergePublishedPosts(data || []);
     },
   });
 }
@@ -23,6 +24,8 @@ export function usePostBySlug(slug: string | undefined) {
     queryKey: ['post', slug],
     queryFn: async (): Promise<Post | null> => {
       if (!slug) return null;
+      const builtin = builtinPosts.find((post) => post.slug === slug);
+      if (builtin) return builtin;
       const { data, error } = await supabase
         .from('posts')
         .select('*')
