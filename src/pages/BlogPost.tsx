@@ -13,7 +13,7 @@ function safeHref(value: string) {
 }
 
 function inlineMarkdown(text: string): ReactNode[] {
-  const tokenPattern = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\x60[^\x60]+\x60)/g
+  const tokenPattern = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*|\x60[^\x60]+\x60)/g
   return text.split(tokenPattern).filter(Boolean).map((part, index) => {
     const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
     if (link) {
@@ -26,6 +26,7 @@ function inlineMarkdown(text: string): ReactNode[] {
       )
     }
     if (part.startsWith('**') && part.endsWith('**')) return <strong key={index} style={{ color: '#262623' }}>{part.slice(2, -2)}</strong>
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) return <em key={index}>{part.slice(1, -1)}</em>
     if (part.charCodeAt(0) === 96 && part.charCodeAt(part.length - 1) === 96) return <code key={index} style={{ padding: '2px 5px', borderRadius: 5, background: '#F0F0ED', fontFamily: 'var(--font-mono)', fontSize: '.9em' }}>{part.slice(1, -1)}</code>
     return <Fragment key={index}>{part}</Fragment>
   })

@@ -33,7 +33,7 @@ function safeUrl(value: string) {
 }
 
 function renderInline(value: string) {
-  const tokens = value.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g).filter(Boolean)
+  const tokens = value.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g).filter(Boolean)
   return tokens.map((token) => {
     const link = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
     if (link) {
@@ -41,6 +41,7 @@ function renderInline(value: string) {
       return '<a href="' + href + '">' + escapeHtml(link[1]) + '</a>'
     }
     if (token.startsWith('**') && token.endsWith('**')) return '<strong>' + escapeHtml(token.slice(2, -2)) + '</strong>'
+    if (token.startsWith('*') && token.endsWith('*') && token.length > 2) return '<em>' + escapeHtml(token.slice(1, -1)) + '</em>'
     return escapeHtml(token)
   }).join('')
 }
@@ -140,6 +141,8 @@ async function fetchPosts(url: string, key: string): Promise<PublishedPost[]> {
 async function readBuiltinPosts(): Promise<PublishedPost[]> {
   const source = await readFile(path.resolve('content/blog/how-to-study-math-problem-solving-courses.md'), 'utf8')
   const content = source.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+  const labourDaySource = await readFile(path.resolve('content/blog/the-unfinished-work-of-labour-day.md'), 'utf8')
+  const labourDayContent = labourDaySource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   return [{
     title: 'How to Study for Math and Problem-Solving Courses: A Practical Active-Learning System',
     slug: 'how-to-study-math-problem-solving-courses',
@@ -151,6 +154,17 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
     updated_at: '2026-09-03T04:15:00.000Z',
     meta_title: 'How to Study for Math & Problem-Solving Courses',
     meta_description: 'A practical active-learning system for math and engineering courses: preview, solve from a blank page, diagnose errors, space retrieval, and teach back.',
+  }, {
+    title: 'The Unfinished Work of Labour Day',
+    slug: 'the-unfinished-work-of-labour-day',
+    excerpt: "Labour Day was born on a picket line in 1872. Reclaiming it means fighting for the whole working class — the right to strike, gig and migrant workers, low pay, and more of our lives back.",
+    content: labourDayContent,
+    tags: ['Labour', 'Canada', 'Labour Day', "Workers' rights", 'Political economy'],
+    published_at: '2026-09-07T11:00:00-04:00',
+    created_at: '2026-09-07T15:00:00.000Z',
+    updated_at: '2026-09-07T15:00:00.000Z',
+    meta_title: 'The Unfinished Work of Labour Day',
+    meta_description: 'Labour Day was born on a picket line in 1872. A reflection on reclaiming the holiday: the right to strike, gig and migrant work, low pay, and shorter working time.',
   }]
 }
 

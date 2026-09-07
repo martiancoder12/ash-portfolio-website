@@ -1,7 +1,9 @@
 import type { Post } from '@/lib/supabase'
 import learningStrategiesSource from '../../content/blog/how-to-study-math-problem-solving-courses.md?raw'
+import labourDaySource from '../../content/blog/the-unfinished-work-of-labour-day.md?raw'
 
 const learningStrategiesContent = learningStrategiesSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+const labourDayContent = labourDaySource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 
 export const builtinPosts: Post[] = [
   {
@@ -17,6 +19,20 @@ export const builtinPosts: Post[] = [
     published_at: '2026-09-02T21:00:00-04:00',
     meta_title: 'How to Study for Math & Problem-Solving Courses',
     meta_description: 'A practical active-learning system for math and engineering courses: preview, solve from a blank page, diagnose errors, space retrieval, and teach back.',
+  },
+  {
+    id: 'builtin-labour-day',
+    created_at: '2026-09-07T15:00:00.000Z',
+    updated_at: '2026-09-07T15:00:00.000Z',
+    title: 'The Unfinished Work of Labour Day',
+    slug: 'the-unfinished-work-of-labour-day',
+    excerpt: "Labour Day was born on a picket line in 1872. Reclaiming it means fighting for the whole working class — the right to strike, gig and migrant workers, low pay, and more of our lives back.",
+    content: labourDayContent,
+    tags: ['Labour', 'Canada', 'Labour Day', "Workers' rights", 'Political economy'],
+    status: 'published',
+    published_at: '2026-09-07T11:00:00-04:00',
+    meta_title: 'The Unfinished Work of Labour Day',
+    meta_description: 'Labour Day was born on a picket line in 1872. A reflection on reclaiming the holiday: the right to strike, gig and migrant work, low pay, and shorter working time.',
   },
 ]
 
