@@ -675,10 +675,41 @@ export default function Home() {
               ))}
             </div>
 
+            <article data-bench="" style={{ marginTop: 'clamp(20px,3vw,30px)', border: '1px solid rgba(180,83,9,0.34)', borderRadius: 16, overflow: 'hidden', background: 'rgba(180,83,9,0.045)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(270px,34%)', gap: 'clamp(24px,3vw,40px)', padding: 'clamp(24px,3vw,34px)', alignItems: 'center' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+                    <span style={{ color: '#B45309', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>08</span>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: '#B45309' }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor' }}></span>On the bench · open hardware problem</span>
+                  </div>
+                  <h3 style={{ margin: '14px 0 0', fontFamily: serif, fontWeight: 500, fontSize: 'clamp(24px,2.8vw,30px)', letterSpacing: '-0.02em', lineHeight: 1.12, color: '#0D0D0C' }}>ReLoom — can a desktop machine turn old clothes back into yarn?</h3>
+                  <p style={{ maxWidth: '76ch', margin: '14px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.66, color: '#4A4A46' }}>
+                    A Filabot for textiles: garment in one end, spool of new yarn out the other — shred, open, card, spin, on a workbench. The blueprint and the routing logic were the easy part; they’re live. The open problems are mechanical: opening fabric gently enough that fibre length survives, 3D-printing a carding drum precise enough to align fibre at desktop scale, and closing the loop with an optical evenness sensor. Next milestone is the Phase 1 bench rig — modified shredder, printed drum carder, e-spinner — and the first real skein of recycled yarn.
+                  </p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginTop: 16 }}>
+                    {['Mechanical design', 'Fibre physics', '3D printing', 'ESP32', 'Circular textiles'].map((c) => (
+                      <span key={c} style={{ padding: '5px 9px', border: '1px solid rgba(180,83,9,0.22)', borderRadius: 999, fontFamily: 'var(--font-sans)', fontSize: 11, color: '#4A4A46', background: '#fff' }}>{c}</span>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 16, marginTop: 18 }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#B45309' }}><span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#B45309', marginRight: 6 }}></span>In the workshop — Phase 1</span>
+                    <a href="https://relloom.vercel.app" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>Interactive blueprint →</a>
+                    <a href="https://github.com/martiancoder12/relloom" target="_blank" rel="noreferrer" style={{ color: '#8A8A83', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>Code →</a>
+                  </div>
+                </div>
+                <ProjectPlate
+                  src="/projects/relloom.png"
+                  alt="ReLoom interactive blueprint showing the eight-stage clothes-to-yarn pipeline"
+                  label="relloom.vercel.app"
+                  href="https://relloom.vercel.app"
+                />
+              </div>
+            </article>
+
             <article data-diptych="" style={{ marginTop: 'clamp(20px,3vw,30px)', border: '1px solid rgba(13,13,12,0.12)', borderRadius: 16, overflow: 'hidden', background: '#fff', boxShadow: '0 1px 2px rgba(0,0,0,0.04),0 24px 60px -48px rgba(0,0,0,0.26)' }}>
               <div style={{ padding: 'clamp(24px,3vw,32px) clamp(24px,3vw,32px) clamp(18px,2vw,22px)', borderBottom: '1px solid rgba(13,13,12,0.1)' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap' }}>
-                  <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>08</span>
+                  <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>09</span>
                   <h3 style={{ margin: 0, fontFamily: serif, fontWeight: 500, fontSize: 'clamp(24px,2.8vw,30px)', letterSpacing: '-0.02em', color: '#0D0D0C' }}>Proof of work — two careers in artifacts</h3>
                 </div>
                 <p style={{ margin: '10px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.6, color: '#4A4A46' }}>Two instruments, one from each of my McKesson lives.</p>
