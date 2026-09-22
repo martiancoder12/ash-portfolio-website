@@ -28,6 +28,10 @@ const desks = [
 ]
 
 export default function StudyLab() {
+  // Full-page navigation loads the independently built lab, including its assets.
+  useEffect(() => {
+    window.location.replace(`/study-lab/index.html${window.location.hash || '#study-lab'}`)
+  }, [])
   useDescentBody()
   const root = useRef<HTMLDivElement>(null)
 

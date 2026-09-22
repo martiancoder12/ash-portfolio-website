@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/study-lab/">
+<link rel="canonical" href="https://ashfaaqkazi.ca/study-lab/">
+<script>if(location.pathname==='/study-lab')history.replaceState(null,'','/study-lab/'+location.search+location.hash);</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn differential equations and circuit analysis through simple stories, interactive diagrams, worked examples, and recall checks.">
+<title>Ash’s Study Lab</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="vendor/katex/katex.min.css"><link rel="stylesheet" href="engr213.css"><link rel="stylesheet" href="hub.css"><link rel="stylesheet" href="teaching.css"><script defer src="vendor/gsap.min.js"></script><script defer src="vendor/Flip.min.js"></script><script defer src="vendor/katex/katex.min.js"></script><script defer src="lessons.js"></script><script defer src="engr-data.js"></script><script defer src="teaching.js"></script><script defer src="engr213.js"></script><script defer src="teaching-ui.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+<aside class="sidebar">
+<a class="brand" href="#study-lab"><span class="brand-mark">a<span>↗</span></span><span>Ash’s Study Lab<small>LEARN BY SEEING & DOING</small></span></a>
+<button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-expanded="false" aria-controls="lesson-nav">Concepts ☰</button>
+<div class="nav-label">YOUR FIELD NOTES <span>16</span></div>
+<label class="search"><span>⌕</span><input id="search" type="search" placeholder="Find a concept" aria-label="Find a concept"></label>
+<div class="course-filters" aria-label="Filter courses"><button data-filter="all" class="active" aria-pressed="true">All</button><button data-filter="math" aria-pressed="false">ODE</button><button data-filter="elec" aria-pressed="false">Circuits</button></div>
+<nav id="lesson-nav" aria-label="Lessons"></nav>
+<div class="sidebar-bottom"><div><span>Recall progress</span><strong id="progress-label">0 / 16</strong></div><progress id="progress" value="0" max="16"></progress><small>Earn a check by answering from memory.</small></div>
+</aside>
+<div class="workspace">
+<header class="topbar"><span id="course-label">ASH’S STUDY LAB</span><div><a id="study-lab-link" href="#study-lab">Study Lab</a><button id="motion-toggle" aria-pressed="false">Motion on</button><button id="library-toggle">Image library <span>↗</span></button></div></header>
+<main id="main" tabindex="-1"></main>
+<footer class="site-footer"><a href="/">← Ashfaaq Kazi</a><span>Intuition → reasoning → recall</span><span>Built for understanding, one idea at a time.</span></footer>
+</div>
+<noscript><p>This study lab needs JavaScript for its interactive lessons. Download the images directly from the assets folder.</p></noscript>
+</body></html>

@@ -80,6 +80,7 @@ const allPosts = [
 const entries = [
   urlEntry(`${BASE_URL}/`, today, 'monthly', '1.0'),
   urlEntry(`${BASE_URL}/blog`, today, 'weekly', '0.8'),
+  urlEntry(`${BASE_URL}/study-lab/`, today, 'weekly', '0.8'),
   ...allPosts.map((p) =>
     urlEntry(`${BASE_URL}/blog/${p.slug}`, (p.published_at || today).slice(0, 10), 'monthly', '0.6')
   ),
