@@ -88,3 +88,7 @@ To update it after testing and building the source lab, run
 `node scripts/sync-study-lab.mjs /absolute/path/to/ash-study-lab/dist`, then build
 and deploy this portfolio project. The importer mounts relative assets under
 `/study-lab/` and adds a link back to the portfolio. No textbook PDF is included.
+
+### ELEC 275 teaching revision
+
+The Study Lab snapshot includes eight circuit concept lessons, two complete methods for each of P1–P5, six explained drills, named-rule accordions, and a printed/PDF page reference map. New routes are `#elec-P1-a` through `#elec-P5-b`, and `#elec-references`. Textbook attribution: Rizzoni & Kearns (2022), seventh edition. Original source files and the independent numerical/UI checks live in the adjacent `ash-study-lab` project. No textbook PDF or original practice document is published.
