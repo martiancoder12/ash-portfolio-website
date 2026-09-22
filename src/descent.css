@@ -253,3 +253,45 @@ body.descent a:focus-visible {
   .study-lab-card { transition: none !important; }
   .study-lab-card:hover { transform: none; }
 }
+
+/* The constant-solution lesson lives on the production Study Lab page. */
+.study-constant-jump{display:inline-flex;align-items:center;min-height:48px;padding:0 4px;font-size:14px;color:var(--accent)!important}
+.study-constant{margin-top:clamp(72px,10vw,118px);padding-top:28px;border-top:1px solid rgba(13,13,12,.16);scroll-margin-top:100px}
+.study-constant-kicker{margin:0 0 15px;color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.study-constant h2{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(34px,4.8vw,58px);font-weight:500;line-height:1.12;letter-spacing:-.025em}
+.study-constant-lead{max-width:75ch;margin:20px 0;color:#4A4A46;font-size:16px;line-height:1.75}
+.study-constant strong{color:#0D0D0C;font-weight:600}
+.study-constant-equation{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;margin:22px 0 28px;color:#4A4A46;font-size:13px}
+.study-constant-equation span,.study-constant-math{font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.6vw,30px);color:#26715D;line-height:1.55}
+.study-constant-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(22px,5vw,60px);align-items:start}
+.study-constant-figure{margin:0;padding:24px;background:#EFF7F2;border:1px solid #dce9df;border-radius:12px}
+.study-constant-figure figcaption{font-size:15px;font-weight:500}
+.study-constant-figure svg{display:block;width:100%;margin:20px 0 12px;overflow:visible}
+.study-constant-slider{display:block;font-size:14px;line-height:1.5}
+.study-constant-slider span{display:flex;justify-content:space-between;gap:16px}
+.study-constant-slider input{display:block;width:100%;height:32px;accent-color:#26715D;cursor:pointer}
+.study-constant-slider output{font-variant-numeric:tabular-nums}
+.study-constant-readout{font-size:13px;line-height:1.75;color:#4A4A46;margin:12px 0 0;font-variant-numeric:tabular-nums}
+.study-constant h3{font-family:'Newsreader',Georgia,serif;font-size:27px;font-weight:500;line-height:1.25;margin:0}
+.study-constant-explanation p{margin:15px 0 0;color:#4A4A46;font-size:15px;line-height:1.8}
+.study-constant-walkthrough{margin-top:36px}
+.study-constant-step-head{display:flex;align-items:baseline;justify-content:space-between;gap:15px}
+.study-constant-step-head>span{font-family:var(--font-mono);font-size:11px;color:#6c6c65;white-space:nowrap}
+.study-constant-predict{font-size:14px;color:#4A4A46;line-height:1.7;margin:10px 0 22px}
+.study-constant-steps{list-style:none;padding:0;margin:0}
+.study-constant-steps li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:15px;padding:23px 0;border-top:1px solid rgba(13,13,12,.1)}
+.study-constant-step-number{font-family:var(--font-mono);font-size:12px;color:var(--accent);padding-top:4px}
+.study-constant-steps h4{font-weight:600;font-size:15px;line-height:1.5;margin:0}
+.study-constant-steps p{margin:12px 0 0}
+.study-constant-steps p:last-child{color:#4A4A46;font-size:14px;line-height:1.8;max-width:90ch}
+.study-constant-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.study-constant-controls button{min-height:44px;padding:10px 16px;border:1px solid rgba(13,13,12,.2);border-radius:8px;background:white;font:inherit;font-size:13px;color:#0D0D0C;cursor:pointer}
+.study-constant-controls button:hover:enabled{border-color:#185FA5}
+.study-constant-controls button:disabled{opacity:.4;cursor:default}
+.study-constant-controls .study-constant-next,.study-constant-controls button[aria-pressed=true]{background:#0D0D0C;color:white;border-color:#0D0D0C}
+.study-constant button:focus-visible,.study-constant input:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.study-constant-recall{margin-top:32px;padding:25px;background:#EEF5FB;border-radius:12px;border:1px solid #dce5ee}
+.study-constant-recall h3{font-size:23px;max-width:65ch}
+.study-constant-feedback{font-size:14px;line-height:1.75;color:#4A4A46;margin:16px 0 0;min-height:25px}
+.study-constant-source{font-size:12px;line-height:1.8;color:#676761;margin:24px 0 0;max-width:100ch}
+@media(max-width:760px){.study-constant-grid{grid-template-columns:1fr}.study-constant-figure{padding:20px}.study-constant-figure svg{max-width:540px;margin-left:auto;margin-right:auto}.study-constant-steps li{gap:10px;grid-template-columns:22px minmax(0,1fr)}.study-constant-controls button{flex:1;padding:10px;white-space:nowrap}.study-constant-recall{padding:20px}.study-constant-math{overflow-wrap:anywhere}}

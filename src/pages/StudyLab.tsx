@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import DescentNav, { useDescentBody } from '@/components/DescentNav'
+import StudyConstantSolution from '@/components/StudyConstantSolution'
 
 const serif = "'Newsreader',Georgia,serif"
 const labUrl = 'https://ash-visual-study-lab.vercel.app'
@@ -78,6 +79,7 @@ export default function StudyLab() {
               <div data-study-reveal="" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
                 <a href={`${labUrl}/#study-lab`} target="_blank" rel="noreferrer" className="d-hover-fade" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 48, padding: '0 21px', borderRadius: 11, background: '#0D0D0C', color: '#fff', fontSize: 14, fontWeight: 600 }}>Open Study Lab ↗</a>
                 <a href="#course-desks" className="d-hover-border-ink" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 48, padding: '0 20px', border: '1px solid rgba(13,13,12,.16)', borderRadius: 11, fontFamily: 'var(--font-mono)', fontSize: 12 }}>Choose a course ↓</a>
+                <a href="#constant-solutions" className="study-constant-jump">Why y = −1 is a solution ↓</a>
               </div>
             </div>
 
@@ -112,6 +114,8 @@ export default function StudyLab() {
               ))}
             </div>
           </section>
+
+          <StudyConstantSolution />
 
           <section data-study-reveal="" style={{ display: 'grid', gridTemplateColumns: '52px 1fr', gap: 18, marginTop: 'clamp(70px,9vw,104px)', paddingTop: 24, borderTop: '1px solid rgba(13,13,12,.16)' }}>
             <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>03</span>
