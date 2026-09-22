@@ -11,6 +11,7 @@ const AdminProjectForm = lazy(() => import('./admin/pages/ProjectForm'));
 const AdminProjectFiles = lazy(() => import('./admin/pages/ProjectFiles'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const StudyLab = lazy(() => import('./pages/StudyLab'));
 const AdminPosts = lazy(() => import('./admin/pages/Posts'));
 const AdminPostForm = lazy(() => import('./admin/pages/PostForm'));
 
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/projects/:slug" element={<ProjectDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/study-lab" element={<StudyLab />} />
 
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />

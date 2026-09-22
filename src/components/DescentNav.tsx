@@ -15,8 +15,9 @@ export default function DescentNav({ active }: { active?: string }) {
       </Link>
       <div data-nav-links="" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(14px,3vw,28px)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, color: '#8A8A83' }}>
         {sections.map((id) => (
-          <a key={id} href={`/#${id}`} className="d-hover-ink" style={{ color: 'inherit' }}>{id}</a>
+          <a key={id} href={`/#${id}`} className="d-hover-ink d-nav-section" style={{ color: 'inherit' }}>{id}</a>
         ))}
+        <Link to="/study-lab" className="d-hover-ink d-nav-study" style={{ color: active === 'study-lab' ? '#0D0D0C' : 'inherit', fontWeight: active === 'study-lab' ? 600 : 500 }}>study lab</Link>
         <Link to="/blog" className="d-hover-ink" style={{ color: active === 'blog' ? '#0D0D0C' : 'inherit', fontWeight: active === 'blog' ? 600 : 500 }}>blog</Link>
       </div>
     </nav>

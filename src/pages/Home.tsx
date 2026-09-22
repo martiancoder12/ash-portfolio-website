@@ -353,8 +353,9 @@ export default function Home() {
         </a>
         <div data-nav-links="" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(14px,3vw,28px)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, color: '#8A8A83' }}>
           {['journey', 'research', 'work', 'credentials', 'contact'].map((id) => (
-            <a key={id} href={`#${id}`} className="d-hover-ink" style={{ color: 'inherit' }}>{id}</a>
+            <a key={id} href={`#${id}`} className="d-hover-ink d-nav-section" style={{ color: 'inherit' }}>{id}</a>
           ))}
+          <Link to="/study-lab" className="d-hover-ink d-nav-study" style={{ color: 'inherit' }}>study lab</Link>
           <Link to="/blog" className="d-hover-ink" style={{ color: 'inherit' }}>blog</Link>
         </div>
       </nav>
