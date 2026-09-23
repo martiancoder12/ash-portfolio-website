@@ -317,6 +317,129 @@ elec275LectureSection(
 )
 ];
 
+const ELEC275_FIELD_LENSES={
+  'linear-modeling':{
+    physics:'The circuit is a compact story about fields and moving charge. An electric field establishes a potential difference; mobile charge responds; materials oppose that motion and convert organized electrical energy into heat. The symbols hide the microscopic motion so the transferable structure becomes visible.',
+    formula:'v=iR says that, for an ohmic material in its linear operating range, sustaining twice the charge-flow rate requires twice the potential drop. R is the device’s conversion factor between the across effect and the through response.',
+    engineer:'Select a model detailed enough for the decision: nominal resistance for a first calculation, then tolerance, temperature coefficient, power rating, wiring resistance, and transient behaviour when the design margin demands them.',
+    electrician:'Trace source → protection → conductor → load → return before measuring. The schematic is a functional map; the installation adds terminal IDs, wire colours, enclosure locations, ratings, isolation points, and code requirements.'
+  },
+  'topology':{
+    physics:'In the lumped-circuit approximation, a good conductor settles to nearly one electric potential along each ideal-wire region. Joining terminals forces them to share a node voltage; breaking that conducting path creates a different physical system, no matter how similar the drawing looks.',
+    formula:'“Same node” means zero modeled voltage difference. “Series” means charge has no alternate path, so one current crosses both elements. “Parallel” means both elements span the same two potentials, so their voltages are equal.',
+    engineer:'Topology is the design skeleton. Engineers redraw cable runs, connectors, relays, and loads as nodes and branches, then check fault paths, redundancy, isolation, and whether a sensor is truly measuring the intended points.',
+    electrician:'Continuity testing and point-to-point checks verify the real topology against the drawing. A misplaced jumper, shared neutral, loose termination, or unexpected bond changes the circuit even when every component value is correct.'
+  },
+  'quantities':{
+    physics:'Current is the rate at which charge crosses an imagined surface; voltage is work per unit charge between two points. Electrons drift slowly in metal, but the electromagnetic field that organizes their motion establishes around the circuit very quickly.',
+    formula:'i=dq/dt turns “how much charge?” into “how fast is charge crossing?”; v=dw/dq turns energy transfer into joules per coulomb. The sign reports direction relative to the arrow or polarity you chose.',
+    engineer:'Translate sensor ranges, conductor ampacity, insulation voltage, and energy budgets into consistent references and units. A signed result is information for the design, not automatically an error.',
+    electrician:'Measure voltage across two points and current through a path (or around a conductor with a clamp meter). Establish the reference—line-to-line, line-to-neutral, or line-to-ground—before interpreting a reading.'
+  },
+  'sources':{
+    physics:'A source does not manufacture charge. Chemical reactions, electromagnetic induction, light, or mechanical work separate charge and maintain an electromotive force; the closed external circuit then permits a continuous current. The source converts another energy form into electrical energy.',
+    formula:'An ideal voltage source holds v=V_s while the load decides i; an ideal current source holds i=I_s while the network decides v. “Ideal” means the unconstrained partner quantity can become whatever the model requires.',
+    engineer:'Start with the ideal source to understand function, then add internal resistance, current limit, regulation, ripple, grounding, thermal limits, and protection to predict real behaviour under normal and fault loads.',
+    electrician:'Verify supply type, nominal voltage, phase, polarity, frequency, available fault current, and protective device before connection. A correct open-circuit voltage does not prove the source can support the load.'
+  },
+  'power':{
+    physics:'Energy is carried by the electromagnetic field surrounding conductors and enters a load where the field does work on charge. In a resistor that organized energy becomes lattice vibration—heat. The wires guide the energy transfer; they are not buckets carrying stored power.',
+    formula:'p=vi multiplies energy per coulomb by coulombs per second, giving joules per second. With passive references, p>0 means energy enters the element; p<0 means the element is delivering energy to the rest of the circuit.',
+    engineer:'Use the power ledger to size sources, conductors, heat sinks, resistors, batteries, and protection. Derate components and check worst-case tolerance and ambient temperature rather than designing exactly at the nameplate limit.',
+    electrician:'Compare measured voltage/current with nameplate watts, inspect imbalance and overheating, and use load studies or thermal imaging to find high-resistance joints. De-energize and follow approved procedures before intrusive work.'
+  },
+  'three-laws':{
+    physics:'KCL is the continuity of charge: charge cannot accumulate indefinitely at an ordinary circuit node. KVL is the quasi-static form of Faraday’s law: when changing magnetic flux through the loop is negligible, the net potential change around it is zero. Ohm’s law is a material relation, not a conservation law.',
+    formula:'Σi=0 balances charge flow at a boundary; Σv=0 balances energy per charge around a closed path; v=iR states how one ideal resistor responds. Together they supply conservation plus device behaviour.',
+    engineer:'Choose node or mesh equations to minimize unknowns, then validate with power and limiting cases. When high frequency, long wiring, or magnetic coupling matters, leave the lumped model and include inductance, capacitance, or field analysis.',
+    electrician:'At a junction, measured branch currents should reconcile within instrument accuracy; around an energized control loop, measured drops should account for the supply. Unexpected drop often points to a bad contact, undersized conductor, or overloaded path.'
+  },
+  'series-boardwork':{
+    physics:'With no branch at the midpoint, charge continuity forces the same steady current through both resistors. Each material needs an electric field proportional to its resistance to sustain that current, so the total source voltage divides according to how much field-drop each element requires.',
+    formula:'v_k=V_sR_k/(R_1+R_2) says each resistor receives the same fraction of source voltage as its fraction of total series resistance. It is a consequence of KVL and Ohm’s law, not an independent law.',
+    engineer:'Use dividers for references and sensing only after checking load impedance, tolerance, input bias current, power, and noise. A following circuit loads the midpoint and changes the ratio.',
+    electrician:'Voltage drop along a feeder behaves like an unwanted divider between conductor resistance and the load. Measure source and load-end voltage under load; an excessive difference can expose long runs, undersized cable, or poor terminations.'
+  },
+  'division':{
+    physics:'Topology creates the shared constraint: one charge-flow rate in series, one potential difference in parallel. Ohmic materials then set how the conserved total is apportioned. The divider rules are the visible shadow of charge and energy conservation.',
+    formula:'Voltage divides directly with resistance because one current multiplies each R. Current divides inversely with resistance because one voltage is divided by each R; conductance makes that proportionality direct.',
+    engineer:'Apply division for bias networks, sensing, shunts, pull-ups, and current sharing, then include loading, component tolerance, temperature, and power dissipation before releasing the design.',
+    electrician:'Use expected divider drops to troubleshoot a live series path and expected branch currents to check parallel loads. A zero or full-supply reading often localizes an open, short, or failed connection.'
+  },
+  'equivalent-resistance':{
+    physics:'The external world interacts with a network only through terminal voltage and current. If two internal arrangements demand the same v for every applied i at that port, no attached linear load can distinguish them—even though fields and heating inside may differ.',
+    formula:'R_eq=v_test/i_test defines the slope of the port’s i–v line. Series paths add required field-drops; parallel paths add available charge-flow channels, which is why conductances add.',
+    engineer:'Reduce a subsystem to estimate loading, voltage drop, fault current, time constants, and source requirements without carrying every internal element through the system calculation.',
+    electrician:'Resistance seen from a panel or device terminals can reveal opens, shorts, parallel backfeeds, or unexpected bonds—but only on a verified de-energized circuit with sensitive equipment isolated as required.'
+  },
+  'superposition':{
+    physics:'Maxwell’s equations and linear material laws permit responses to add when the system stays in a linear regime. Each source creates its own field pattern; the real field is their signed sum. Saturation, diodes, and temperature-dependent behaviour break that simple addition.',
+    formula:'x=Σx^(k) means add source contributions to a voltage or current using one common reference. Power cannot be superposed because squaring the summed response creates cross-terms.',
+    engineer:'Separate DC bias, signal, interference, and fault contributions to understand which source dominates a node. Then recombine them and check that no component leaves its assumed linear range.',
+    electrician:'Isolation tests often remove or disable one supply or control signal at a time to locate backfeed and induced-voltage paths. Real systems require approved isolation and awareness that stored or alternate sources may remain energized.'
+  },
+  'source-load':{
+    physics:'Connection forces source and load to share one terminal voltage and one compatible current. The operating point is not chosen by either side alone; it is the state where both physical constitutive behaviours can exist simultaneously.',
+    formula:'v=V_T−iR_T describes source voltage sag with delivered current; v=f(i) describes what the load demands. Their intersection is the only pair that satisfies both boundary conditions.',
+    engineer:'Use the source–load view for batteries, sensors, amplifiers, motors, and power converters. It makes compatibility, regulation, startup, stability, and operating margin visible before integration.',
+    electrician:'Compare supply ratings and measured loaded voltage with equipment inrush and running current. A system that reads correctly with the load disconnected may collapse when a motor, heater, or long feeder is connected.'
+  },
+  'source-transformations':{
+    physics:'The internal field and current distribution can change while the boundary relationship stays identical. Thévenin and Norton forms are two physical stories with the same terminal line: the same open-circuit voltage, short-circuit current, and slope.',
+    formula:'V_T=I_NR_T ties together the two intercepts of one linear port characteristic. The resistance is unchanged because it is the characteristic’s slope; only the chosen source representation changes.',
+    engineer:'Transform sources to reveal reducible networks, combine parallel current injections, or choose the representation that makes loading and control interaction easiest to calculate.',
+    electrician:'A source transformation is mainly a diagnostic mental model: a stiff supply has small series impedance; a current-limited source resembles a Norton form. It helps explain voltage sag and why readings change with the connected load.'
+  },
+  'thevenin-norton':{
+    physics:'Linearity collapses all internal complexity into an affine terminal law: one intercept plus one slope. Open circuit reveals the voltage intercept; short circuit reveals the current intercept; a test source probes the slope while dependent physics remains active.',
+    formula:'V_T=V_oc, I_N=I_sc, and R_T=V_oc/I_sc are three views of the same i–v line. Once any two are known, the entire external behaviour of the linear one-port is fixed.',
+    engineer:'Replace a board, sensor network, or distribution segment by its equivalent to evaluate many candidate loads quickly, perform sensitivity studies, and define interface requirements between teams.',
+    electrician:'Use measured open-circuit voltage plus voltage under a known safe load to estimate source impedance and locate weak batteries, corroded contacts, or long-run drop. Never create a short-circuit test unless an approved procedure and rated equipment explicitly call for it.'
+  },
+  'maximum-power':{
+    physics:'A tiny load draws strong current but collapses terminal voltage; a huge load preserves voltage but barely draws current. Their product peaks between those extremes, exactly when source and load resistances match. The same current then heats both equally.',
+    formula:'P_L=V_T²R_L/(R_T+R_L)² contains both competing effects. Differentiation places the peak at R_L=R_T, giving V_L=V_T/2 and 50% efficiency.',
+    engineer:'Impedance matching matters in communications, sensing, and some energy-harvesting interfaces. Power distribution usually chooses R_L≫R_T instead, prioritizing regulation and efficiency over the mathematical maximum.',
+    electrician:'Treat unexpected source heating and voltage sag as signs of excessive source-path impedance or an overly heavy load. The field goal is normally safe delivery and acceptable drop—not intentional 50% loss.'
+  },
+  'practical-measurement':{
+    physics:'Every measurement couples another physical system to the one observed. A voltmeter creates an extra charge-flow path; an ammeter adds opposition in the measured path. “Non-invasive” means the coupling is small enough to neglect, not literally absent.',
+    formula:'R_V→∞ makes voltmeter current approach zero; R_A→0 makes ammeter voltage drop approach zero. The loading formula is just a new divider after the instrument becomes part of the network.',
+    engineer:'Specify input impedance, burden voltage, bandwidth, isolation, category rating, and uncertainty so the instrument does not invalidate the model or expose the operator/equipment to unacceptable risk.',
+    electrician:'Choose the correct function, terminals, range, and CAT rating; prove the tester on a known source before and after a safety-critical test; connect voltage in parallel and current with an approved series or clamp method.'
+  },
+  'nonlinear-loads':{
+    physics:'Real materials change their response with electric field, temperature, carrier density, magnetic state, or mechanical load. A diode’s carrier barrier, a lamp filament’s heating, and a motor’s back-emf all make the terminal relationship curve rather than remain a fixed slope.',
+    formula:'The load line is every v–i pair the linear source can supply; i=f(v) is every pair the device can accept. Their intersection is the self-consistent operating point, and multiple intersections can imply switching or instability.',
+    engineer:'Use operating-point and load-line analysis before small-signal linearization. Verify safe operating area, startup path, thermal feedback, and whether the chosen intersection is stable across tolerance and temperature.',
+    electrician:'Expect resistance readings on electronic loads to differ from energized behaviour. Diagnose with manufacturer curves, live operating measurements, and approved test procedures rather than forcing a fixed-resistance assumption onto drives, LEDs, and controls.'
+  }
+};
+
+const ELEC275_TECHNICIAN_INVENTOR_LENSES={
+  'linear-modeling':'A technician turns symptoms into a smallest-useful circuit model: rail, ground, path, load, expected drop. An inventor starts with that model on a breadboard, measures where reality departs, then adds parasitics, tolerances, and protection only as evidence demands.',
+  'topology':'Board repair is topology archaeology: follow nets through vias, connectors, planes, and zero-ohm links rather than judging by physical closeness. An inventor uses the schematic and PCB netlist as the contract that keeps a prototype’s electrical connectivity intact during layout.',
+  'quantities':'A technician asks which node is the reference, whether a rail is present, and where current stops. An inventor uses current consumption, voltage headroom, and energy per operation to decide battery life, regulator choice, and whether a subsystem can coexist on the same supply.',
+  'sources':'USB, bench supplies, batteries, regulators, and motherboard rails are practical sources with limits. A technician checks both open-circuit voltage and behaviour under a controlled load; an inventor designs current limiting, decoupling, reverse-polarity protection, and startup sequencing around those limits.',
+  'power':'Unexpected heat is information: a shorted capacitor, failing regulator, or overloaded IC turns electrical power into a thermal clue. Inventors build a power tree and budget every rail, then verify it with supply telemetry, current-limited bring-up, and thermal inspection.',
+  'three-laws':'Voltage-drop tracing applies KVL along a power path; current injection and return-path reasoning apply KCL at suspect nets. Inventors use the laws to predict test points and design-for-debug features before the PCB exists.',
+  'series-boardwork':'Pull-up networks, battery monitors, and ADC inputs are loaded dividers in real electronics. A technician compares measured midpoint voltage with the unloaded prediction; an inventor chooses values that balance accuracy, power draw, noise, and input leakage.',
+  'division':'Technicians use divider expectations to locate an open resistor, leaky input, or shorted branch. Inventors use dividers and shunts to translate real-world voltages and currents into safe ADC ranges, then calibrate for tolerance and loading.',
+  'equivalent-resistance':'Measuring resistance to ground on an unpowered board gives a quick signature of each rail, but parallel semiconductor paths complicate interpretation. An inventor estimates the equivalent load a regulator or sensor output will see before connecting subsystems.',
+  'superposition':'A technician separates DC rail level, ripple, injected signal, and noise coupling to identify which source creates the symptom. An inventor intentionally layers bias and signal paths, then verifies that the combined waveform keeps every device in its linear range.',
+  'source-load':'A power adapter can show nominal voltage until a laptop draws current; a logic output can collapse into an excessive load. Technicians load-test interfaces, while inventors compare drive capability, input demand, inrush, and startup timing before joining modules.',
+  'source-transformations':'Technicians may not redraw the source formally, but they reason in the same terms: “stiff voltage with series loss” versus “limited current with shunt leakage.” Inventors choose the form that best exposes how an interface will behave under changing loads.',
+  'thevenin-norton':'A technician can estimate a suspicious rail’s source impedance from no-load and known-load readings without opening every upstream block. An inventor publishes a simple output model so another module designer can predict loading without knowing the full circuit.',
+  'maximum-power':'Wireless links, antennas, sensors, and some energy harvesters care about matching; digital power rails usually care about low source impedance instead. Technicians distinguish a deliberate match from a fault that wastes half the power, while inventors optimize for the actual mission.',
+  'practical-measurement':'A 10× oscilloscope probe, logic analyzer, DMM, or current shunt can alter a sensitive node. Technicians choose probes and grounding carefully; inventors add buffered test points, current-sense footprints, and safe measurement access during design.',
+  'nonlinear-loads':'Motherboard semiconductors, LEDs, protection diodes, and motors cannot be diagnosed as fixed resistors. Technicians compare diode-mode and powered readings with known-good behaviour; inventors sweep devices, find the operating point, and design margin around temperature and part variation.'
+};
+
+for(const lecture of Object.values(ELEC275_LECTURE_NOTES))for(const section of lecture){
+  section.fieldLens=ELEC275_FIELD_LENSES[section.id]||null;
+  if(section.fieldLens)section.fieldLens.technician=ELEC275_TECHNICIAN_INVENTOR_LENSES[section.id];
+}
+
 const elec275LectureProgress=()=>saved('elec275-lecture-notes-v1',{});
 let elec275LectureStepState={};
 
