@@ -3,7 +3,7 @@
 const DASHBOARD_SOURCE_DATE='23 September 2026';
 
 const DASHBOARD_COURSES=[
- {code:'COMP 248',title:'Object-Oriented Programming I',credits:'3.5',group:'Complementary core',tone:'violet',schedule:'Mon lecture · Wed tutorial · Mon lab',moodle:'https://moodle.concordia.ca/moodle/course/view.php?id=190225',resources:[['Lecture Notes','#comp248-notes'],['Tutorial 2','#comp248-tutorial-2'],['Lecture 2','#comp248-lecture-2']]},
+ {code:'COMP 248',title:'Object-Oriented Programming I',credits:'3.5',group:'Complementary core',tone:'violet',schedule:'Mon lecture · Wed tutorial · Mon lab',moodle:'https://moodle.concordia.ca/moodle/course/view.php?id=190225',resources:[['Lecture Notes','#comp248-notes'],['Tutorial 3','#comp248-tutorial-3'],['Tutorial 2','#comp248-tutorial-2'],['Lecture 2','#comp248-lecture-2']]},
  {code:'ELEC 275',title:'Principles of Electrical Engineering',credits:'3.5',group:'Engineering core',tone:'purple',schedule:'Tue/Thu lecture · Wed tutorial · Fri lab',moodle:'https://moodle.concordia.ca/moodle/course/view.php?id=190957',resources:[['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes'],['Quiz desk','#quiz']]},
  {code:'ENGR 213',title:'Applied Ordinary Differential Equations',credits:'3',group:'Engineering core',tone:'green',schedule:'Tue/Thu lecture · Mon tutorial',moodle:'https://moodle.concordia.ca/moodle/course/view.php?id=190352',resources:[['Lecture Notes','#engr-notes'],['Practice desk','#engr213']]},
  {code:'INSE 201',title:'Security Ethics, Laws, Standards and Compliance',credits:'1.5',group:'Cybersecurity core',tone:'amber',schedule:'Tue lecture',moodle:'https://moodle.concordia.ca/moodle/course/view.php?id=191028',resources:[['Lecture Notes','#inse201-notes'],['Lecture 2','#inse201-lecture-2']]},
@@ -36,7 +36,8 @@ const DASHBOARD_MODULES=[
  {course:'COMP 248',kind:'Course index',title:'Lecture Notes',meta:'Two modules · seventeen source-mapped concepts',href:'#comp248-notes',tone:'violet'},
  {course:'COMP 248',kind:'Lecture 1',title:'Introduction and Java Basics',meta:'Seven concepts · pipeline and error labs',href:'#comp248-lecture-1',tone:'violet'},
  {course:'COMP 248',kind:'Lecture 2',title:'Java Fundamentals and Console Input',meta:'Ten concepts · expression and Scanner labs',href:'#comp248-lecture-2',tone:'violet'},
- {course:'COMP 248',kind:'Tutorial 2',title:'Java Fundamentals · Interactive Workbook',meta:'Six guided questions · live checks · recall quiz',href:'#comp248-tutorial-2',tone:'violet',current:true},
+ {course:'COMP 248',kind:'Tutorial 2',title:'Java Fundamentals · Interactive Workbook',meta:'Six guided questions · live checks · recall quiz',href:'#comp248-tutorial-2',tone:'violet'},
+ {course:'COMP 248',kind:'Tutorial 3',title:'State Changes, Casting, and Strings',meta:'Five guided questions · timelines · String inspector',href:'#comp248-tutorial-3',tone:'violet',current:true},
  {course:'COMP 232',kind:'Course index',title:'Lecture Notes',meta:'Weeks 1–3 · logic, quantifiers, and inference',href:'#comp232-notes',tone:'indigo'},
  {course:'COMP 232',kind:'Continue next',title:'Week 3 · Rules of Inference',meta:'Rosen §1.6 · five concept notes',href:'#comp232-week-3',tone:'indigo',current:true},
  {course:'ELEC 275',kind:'Lecture Notes',title:'Circuit Fundamentals',meta:'Lecture 1 · seven teaching cards',href:'#elec275-lecture-1',tone:'purple'},

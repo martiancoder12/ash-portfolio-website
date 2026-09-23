@@ -181,7 +181,7 @@ const COMP248_NOTES={
 };
 
 const comp248Progress=()=>saved('comp248-notes-v1',{});
-const comp248Route=id=>id==='comp248-notes'||id==='comp248-tutorial-2'||/^comp248-lecture-[12]$/.test(id);
+const comp248Route=id=>id==='comp248-notes'||/^comp248-tutorial-[23]$/.test(id)||/^comp248-lecture-[12]$/.test(id);
 let comp248Steps={};
 
 function comp248Switch(){
@@ -194,7 +194,7 @@ function comp248Hub(){
     const source=COMP248_SOURCE[number],sections=COMP248_NOTES[number];
     const count=sections.filter(section=>progress[`L${number}-${section.id}`]).length;
     return `<a class="notes-lecture-card comp248-lecture-card" href="#comp248-lecture-${number}"><div><span>LECTURE ${number}</span><span>${count} / ${sections.length} studied</span></div><h2>${source.title}</h2><p>${source.sub}</p><ul>${sections.map(section=>`<li>${section.title}</li>`).join('')}</ul><strong>Open Lecture ${number} module →</strong></a>`;
-  }).join('')+`<a class="notes-lecture-card comp248-tutorial-card-link" href="#comp248-tutorial-2"><div><span>TUTORIAL 2</span><span>6 guided questions</span></div><h2>Java Fundamentals · Interactive Workbook</h2><p>Predict literal types, classify identifiers, trace arithmetic, repair code, and build a working rectangle program.</p><ul><li>Immediate feedback</li><li>Live Java reasoning traces</li><li>Saved progress and recall quiz</li></ul><strong>Open Tutorial 2 →</strong></a>`;
+  }).join('')+`<a class="notes-lecture-card comp248-tutorial-card-link" href="#comp248-tutorial-2"><div><span>TUTORIAL 2</span><span>6 guided questions</span></div><h2>Java Fundamentals · Interactive Workbook</h2><p>Predict literal types, classify identifiers, trace arithmetic, repair code, and build a working rectangle program.</p><ul><li>Immediate feedback</li><li>Live Java reasoning traces</li><li>Saved progress and recall quiz</li></ul><strong>Open Tutorial 2 →</strong></a>`+`<a class="notes-lecture-card comp248-tutorial-card-link" href="#comp248-tutorial-3"><div><span>TUTORIAL 3</span><span>5 guided questions</span></div><h2>State Changes, Casting, and Strings</h2><p>Trace pre/post increment, operator precedence, mixed numeric modes, String indices, and substring replacement.</p><ul><li>Evaluation timelines</li><li>Interactive String inspector</li><li>Saved progress and recall quiz</li></ul><strong>Open Tutorial 3 →</strong></a>`;
   main.innerHTML=`${comp248Switch()}<section class="notes-hero comp248-notes-hero"><div><div class="eyebrow">COMP 248 · LECTURE NOTES</div><h1>Read the problem.<br>Trace the state.<br>Make Java obey.</h1><p>Two source-mapped modules built from Nora Houari’s Fall 2026 decks and checked against two Java textbooks. Learn the mental model first, then make every expression and input boundary predictable.</p></div><div class="comp248-hero-code" aria-hidden="true"><span>public static void</span><strong>main</strong><i>(String[] args)</i><b>{ think(); code(); test(); }</b></div></section><div class="notes-lecture-grid comp248-lecture-grid">${cards}</div><section class="comp248-course-contract"><div><span>COURSE QUESTION</span><h2>What does Java know at this exact line?</h2><p>Good beginners do not guess at code. They track types, values, evaluation order, and the next input token until the program’s behaviour becomes explainable.</p></div><dl><div><dt>Primary evidence</dt><dd>125 lecture slides across L01 and L02</dd></div><div><dt>Textbook support</dt><dd>Morelli & Walde Chapters 0–2 and 5; Goodrich et al. Chapter 1</dd></div><div><dt>Practice model</dt><dd>Predict first, execute second, explain the difference</dd></div></dl></section><section class="notes-how"><div><span>HOW TO USE THESE</span><h2>Predict before you press Run.</h2></div><ol><li>Use Lecture 1 to connect an algorithm to source, bytecode, and execution.</li><li>Use Lecture 2 to trace types, values, operators, input, and strings.</li><li>Reveal each reasoning step only after writing your prediction.</li><li>Mark a concept studied when you can explain the output without the notes.</li></ol></section><section class="notes-reference"><div class="eyebrow">REFERENCE BASIS</div><h2>COMP 248 · Fall 2026</h2><p class="apa-reference">Houari, N. (2026). COMP 248 L01 and L02 [Lecture slides]. Concordia University.</p><p>Primary companion: Morelli, R., & Walde, R. (2017). <i>Java, Java, Java: Object-Oriented Problem Solving</i> (3rd ed., open-source edition). Technical cross-check: Goodrich, M. T., Tamassia, R., & Goldwasser, M. H. (2014). <i>Data Structures and Algorithms in Java</i> (6th ed.). Wiley.</p></section>`;
   animate('.notes-hero, .notes-lecture-card, .comp248-course-contract');
 }
@@ -282,6 +282,7 @@ function wireComp248Labs(number){
 
 function renderComp248Notes(){
   if(activeId==='comp248-tutorial-2')return renderComp248Tutorial2();
+  if(activeId==='comp248-tutorial-3')return renderComp248Tutorial3();
   document.title='COMP 248 lecture notes · Ash’s Study Lab';
   $('#course-label').textContent='COMP 248 / LECTURE NOTES';
   const match=activeId.match(/^comp248-lecture-([12])$/);

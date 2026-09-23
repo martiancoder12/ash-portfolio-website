@@ -14,7 +14,7 @@ const MODULE_TOC_CONFIG={
  elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes']]},
  math:{code:'ENGR 213',title:'Differential equations',workspaces:[['Quiz practice','#engr213'],['Lecture Notes','#engr-notes']]},
  inse:{code:'INSE 201',title:'Security ethics',workspaces:[['Lecture Notes','#inse201-notes']]},
- java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Tutorial 2','#comp248-tutorial-2']]}
+ java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3']]}
 };
 function moduleWorkspaceActive(href){
  if(href==='#quiz')return activeId==='quiz'||activeId==='elec-references'||/^elec-P[1-5]-[ab]$/.test(activeId)||/^E[1-8]$/.test(activeId);
@@ -24,8 +24,9 @@ function moduleWorkspaceActive(href){
  if(href==='#engr-notes')return activeId==='engr-notes'||/^engr-lecture-\d+$/.test(activeId);
  if(href==='#comp232-notes')return compRoute(activeId);
  if(href==='#inse201-notes')return typeof inseRoute==='function'&&inseRoute(activeId);
- if(href==='#comp248-notes')return typeof comp248Route==='function'&&comp248Route(activeId)&&activeId!=='comp248-tutorial-2';
+ if(href==='#comp248-notes')return typeof comp248Route==='function'&&comp248Route(activeId)&&!/^comp248-tutorial-/.test(activeId);
  if(href==='#comp248-tutorial-2')return activeId==='comp248-tutorial-2';
+ if(href==='#comp248-tutorial-3')return activeId==='comp248-tutorial-3';
  return false;
 }
 function moduleTocSections(){
@@ -42,7 +43,7 @@ function moduleTocSections(){
  }).filter(Boolean).slice(0,14);
 }
 function moduleProgress(topic,sections){
- const checks=[...main.querySelectorAll('.note-done input[type="checkbox"],[data-comp-done],[data-e275-done],[data-inse-done],[data-tut-done]')];
+ const checks=[...main.querySelectorAll('.note-done input[type="checkbox"],[data-comp-done],[data-e275-done],[data-inse-done],[data-tut-done],[data-tut3-done]')];
  if(checks.length)return{done:checks.filter(input=>input.checked).length,total:checks.length,label:'Topics studied'};
  if(topic==='comp'&&typeof compProgress==='function')return{done:Object.values(compProgress()).filter(Boolean).length,total:17,label:'Course progress'};
  if(topic==='inse'&&typeof inseProgress==='function')return{done:Object.values(inseProgress()).filter(Boolean).length,total:14,label:'Course progress'};
