@@ -64,7 +64,9 @@ export default async function middleware(request) {
   // TEMP DIAGNOSTIC (remove after debugging): fingerprint of the runtime secret
   // and whether a session cookie arrived. Leaks nothing usable.
   const fp = await hmacSha256Hex('fp:', secret || 'MISSING');
-  const diag = { 'x-gate-fp': fp.slice(0, 12), 'x-gate-cookie': readSessionCookie(request) ? '1' : '0' };
+  const recv = readSessionCookie(request) || 'NONE';
+  const recvFp = await hmacSha256Hex('recv:', recv);
+  const diag = { 'x-gate-fp': fp.slice(0, 12), 'x-gate-recv': recvFp.slice(0, 12) };
 
   const accept = request.headers.get('accept') || '';
   if (accept.includes('text/html')) {
