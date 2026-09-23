@@ -56,6 +56,12 @@ body.module-mode[data-topic="inse"]{
  --module-accent-soft:#fbf0dc;
  --module-accent-line:#ead3ae;
 }
+body.module-mode[data-topic="java"]{
+ --module-accent:#6652c8;
+ --module-accent-deep:#4938a6;
+ --module-accent-soft:#eeeafd;
+ --module-accent-line:#d5cef3;
+}
 
 /* Shared product chrome */
 body.module-mode .sidebar{

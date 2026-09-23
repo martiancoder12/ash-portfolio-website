@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const source = path.resolve(process.argv[2] || path.join(root, '../ash-study-lab/dist'))
 const target = path.join(root, 'public/study-lab')
-const entries = ['index.html', 'style.css', 'module-system.css', 'dashboard.js', 'dashboard.css', 'lessons.js', 'app.js', 'engr-data.js', 'engr213.js', 'engr213.css', 'teaching.js', 'teaching-ui.js', 'teaching.css', 'elec-teaching.js', 'elec-ui.js', 'elec.css', 'class-notes.js', 'class-notes.css', 'elec275-notes.js', 'elec275-lectures.js', 'comp232-notes.js', 'comp232.css', 'inse201.js', 'inse201.css', 'hub.css', 'assets', 'vendor', 'prompts']
+const entries = ['index.html', 'style.css', 'module-system.css', 'dashboard.js', 'dashboard.css', 'lessons.js', 'app.js', 'engr-data.js', 'engr213.js', 'engr213.css', 'teaching.js', 'teaching-ui.js', 'teaching.css', 'elec-teaching.js', 'elec-ui.js', 'elec.css', 'class-notes.js', 'class-notes.css', 'elec275-notes.js', 'elec275-lectures.js', 'comp232-notes.js', 'comp232.css', 'inse201.js', 'inse201.css', 'comp248.js', 'comp248.css', 'hub.css', 'assets', 'vendor', 'prompts']
 for (const entry of entries) {
   if (!fs.existsSync(path.join(source, entry))) throw new Error(`Build is missing ${entry}`)
 }
