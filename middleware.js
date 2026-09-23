@@ -61,6 +61,11 @@ export default async function middleware(request) {
     return; // valid session — continue to the static asset
   }
 
+  // TEMP DIAGNOSTIC (remove after debugging): fingerprint of the runtime secret
+  // and whether a session cookie arrived. Leaks nothing usable.
+  const fp = await hmacSha256Hex('fp:', secret || 'MISSING');
+  const diag = { 'x-gate-fp': fp.slice(0, 12), 'x-gate-cookie': readSessionCookie(request) ? '1' : '0' };
+
   const accept = request.headers.get('accept') || '';
   if (accept.includes('text/html')) {
     // Serve the login page at the REQUESTED URL (no redirect) so the Supabase
@@ -71,12 +76,13 @@ export default async function middleware(request) {
         'content-type': 'text/html; charset=utf-8',
         'content-security-policy': CSP,
         'cache-control': 'no-store',
+        ...diag,
       },
     });
   }
 
   return new Response(JSON.stringify({ error: 'unauthorized' }), {
     status: 401,
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', ...diag },
   });
 }
