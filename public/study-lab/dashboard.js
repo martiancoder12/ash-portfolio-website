@@ -77,6 +77,7 @@ function dashboardIcon(name){
   external:'<path d="M15 3h6v6M10 14 21 3M18 13v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h7"/>',
   close:'<path d="m6 6 12 12M18 6 6 18"/>',
   check:'<path d="m5 12 4 4L19 6"/>',
+  signout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>',
   source:'<path d="M7 3h10v4H7zM5 7h14v14H5z"/><path d="M9 11h6M9 15h6M9 19h4"/>'
  };
  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]||icons.home}</svg>`;
@@ -132,7 +133,7 @@ function renderSchoolDashboard(){
   <header class="dashboard-topbar">
    <a class="dashboard-brand" href="#study-lab" aria-label="Ash's Study Lab dashboard"><span class="dashboard-brand-mark">a↗</span><span>Ash’s Study Lab<small>School command centre</small></span></a>
    <div class="dashboard-search-wrap"><label class="dashboard-search"><span>${dashboardIcon('search')}</span><input id="dashboard-search" type="search" autocomplete="off" placeholder="Search a course, concept, deadline, or room" aria-label="Search the school dashboard" aria-controls="dashboard-search-results" aria-expanded="false"></label><div id="dashboard-search-results" class="dashboard-search-results" hidden></div></div>
-   <div class="dashboard-profile"><button id="dashboard-notifications" class="dashboard-icon-button" type="button" aria-label="Show upcoming Moodle deadlines" aria-expanded="false">${dashboardIcon('bell')}<span class="dashboard-notification-dot" aria-hidden="true"></span></button><div><strong>Ash Kazi</strong><span>BEng Cybersecurity</span></div><span class="dashboard-avatar" aria-hidden="true">AK</span></div>
+   <div class="dashboard-profile"><button id="dashboard-notifications" class="dashboard-icon-button" type="button" aria-label="Show upcoming Moodle deadlines" aria-expanded="false">${dashboardIcon('bell')}<span class="dashboard-notification-dot" aria-hidden="true"></span></button><div><strong>Ash Kazi</strong><span>BEng Cybersecurity</span></div><span class="dashboard-avatar" aria-hidden="true">AK</span><button type="button" class="dashboard-icon-button" data-gate-signout aria-label="Sign out of the Study Lab" title="Sign out">${dashboardIcon('signout')}</button></div>
    <div id="dashboard-notification-popover" class="dashboard-notification-popover" hidden><div class="dashboard-popover-head"><strong>Upcoming from Moodle</strong><button type="button" class="dashboard-icon-button" data-close-notifications aria-label="Close notifications">${dashboardIcon('close')}</button></div><a href="https://moodle.concordia.ca/moodle/mod/assign/view.php?id=4621816" target="_blank" rel="noopener"><span>24 Sep</span><div><strong>Assignment 2</strong><small>COMP 232 · 11:59 PM</small></div></a><a href="https://moodle.concordia.ca/moodle/mod/quiz/view.php?id=4621818" target="_blank" rel="noopener"><span>25 Sep</span><div><strong>Quiz 2 closes</strong><small>COMP 232 · 11:59 PM</small></div></a></div>
   </header>
   <div class="dashboard-shell">

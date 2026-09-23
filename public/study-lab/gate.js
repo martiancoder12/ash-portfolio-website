@@ -126,6 +126,17 @@ function buildOverlay() {
 
 document.documentElement.classList.add('gate-locked');
 
+// Sign out: clear the session and return to the lock screen. Delegated so the
+// topbar button works no matter when the app renders it.
+function signOut() {
+  try { sessionStorage.removeItem(SESSION_KEY); } catch {}
+  location.reload();
+}
+document.addEventListener('click', event => {
+  const btn = event.target.closest('[data-gate-signout]');
+  if (btn) signOut();
+});
+
 if (sessionValid()) {
   reveal();
 } else if (document.readyState === 'loading') {
