@@ -8,3 +8,6 @@
 .mobile-nav-toggle{display:none}
 @media(max-width:800px){.sidebar{position:relative;min-height:84px}.sidebar .brand{margin-bottom:0;max-width:230px}.mobile-nav-toggle{display:block;position:absolute;right:20px;top:23px;background:#24453e;color:#d7e9dc;border-color:#547164;font-size:.73rem;padding:7px 10px}.sidebar:not(.nav-open) .search,.sidebar:not(.nav-open) .course-filters,.sidebar:not(.nav-open) #lesson-nav{display:none}.sidebar.nav-open .search{margin-top:18px}.sidebar.nav-open #lesson-nav{max-height:260px}.sidebar .nav-label{display:none}}
 @media(max-width:400px){.sidebar .brand{font-size:.93rem;gap:9px}.sidebar .brand-mark{width:32px;height:36px;font-size:27px}.sidebar .brand small{font-size:.53rem}.mobile-nav-toggle{right:15px;padding:7px 8px;font-size:.67rem}.sidebar{padding-left:15px}.engr-breadcrumb select{max-width:205px}}
+
+/* Topic palette — the selected desk chip follows the active course accent. */
+.desk-switch a.selected{background:var(--accent-soft);border-color:var(--teal)}

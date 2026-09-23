@@ -2,3 +2,6 @@
 @media(max-width:1100px){.teach-roadmap ol{grid-template-columns:repeat(3,1fr);gap:19px 25px}.teach-roadmap li:nth-child(3):after{content:''}.teach-rule-library{grid-template-columns:1fr}}
 @media(max-width:600px){.teach-entry,.teach-glossary dl{grid-template-columns:1fr}.teach-roadmap{padding:15px}.teach-roadmap ol{grid-template-columns:repeat(2,1fr);gap:16px 23px}.teach-roadmap li:after{display:none}.teach-roadmap li>span{display:inline-block;margin:0 7px 0 0}.teaching-step{padding:18px 12px;grid-template-columns:26px 1fr}.teaching-step p{font-size:.86rem}.teach-do .engr-step-math{padding:10px 8px}.teach-check{grid-template-columns:1fr;gap:2px}.teach-rule summary{font-size:.8rem}.teach-citation{font-size:.73rem}.constant-controls{padding:17px}.constant-controls label{flex-basis:100%}.constant-controls input{flex-basis:100%}.constant-explanation article{padding:19px}.constant-readout{font-size:.84rem}.teach-thought{font-size:.85rem}.teach-bibliography{padding:18px}}
 @media print{.teach-glossary,.constant-controls{display:none}.teaching-step{break-inside:avoid}.teach-roadmap ol{grid-template-columns:repeat(3,1fr)}}
+
+/* Topic palette — the method roadmap follows the active course accent. */
+.teach-roadmap{background:var(--accent-soft);border-color:var(--accent-soft-line)}

@@ -9,3 +9,14 @@
 @media(max-width:900px){.hub-hero{grid-template-columns:1fr}.hub-orbit{width:min(100%,320px)}.hub-method{grid-template-columns:1fr}.hub-method ol{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:650px){.hub-hero{padding:25px}.hub-hero h1{font-size:2.65rem}.hub-desks{grid-template-columns:1fr}.hub-desk{min-height:290px;padding:22px}.hub-method ol{grid-template-columns:1fr}.topbar a#study-lab-link{font-size:.7rem;padding:6px 9px}.hub-orbit span:nth-child(2){right:1%}}
 @media(prefers-reduced-motion:reduce){.hub-desk{transition:none}.hub-desk:hover{transform:none}}
+
+/* Topic palettes on the home shelf — each desk card carries its course colour. */
+.hub-hero{background:var(--accent-deep)}
+.hub-hero .eyebrow{color:var(--accent-eyebrow)}
+.hub-hero .subtitle{color:var(--accent-ink-soft)}
+.hub-orbit,.hub-orbit:before,.hub-orbit:after{border-color:var(--accent-line)}
+.hub-orbit strong{color:var(--accent-pop)}
+.hub-desk-ode{--teal:#00695c;border-top:4px solid #0d6b57}
+.hub-desk-elec{--teal:#a94f12;background:#fbf4e9;border-top:4px solid #c2601a}
+.hub-desk-ode:hover{border-color:#0d6b57}
+.hub-desk-elec:hover{border-color:#c2601a}
