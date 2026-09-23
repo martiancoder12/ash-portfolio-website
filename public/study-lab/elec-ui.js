@@ -1,6 +1,6 @@
 'use strict';
 function elecRoute(id){return id==='elec-references'||/^elec-P[1-5]-[ab]$/.test(id)||id==='elec275-lectures'||/^elec275-lecture-\d+$/.test(id)}
-function elecSwitch(){return `<nav class="desk-switch" aria-label="Study desks"><a href="#engr213">ENGR 213 <span>Differential equations ↗</span></a><a href="#quiz" class="selected" aria-current="page">ELEC 275 <span>Circuit analysis</span></a></nav>`}
+function elecSwitch(){return `<nav class="desk-switch" aria-label="Study desks"><a href="#engr213">ENGR 213 <span>Differential equations ↗</span></a><a href="#comp232-notes">COMP 232 <span>Discrete mathematics ↗</span></a><a href="#quiz" class="selected" aria-current="page">ELEC 275 <span>Circuit analysis</span></a></nav>`}
 function elecCitation(ref){return `<a class="teach-citation" href="#elec-references">${esc(ref)}</a>`}
 function elecRules(keys){return keys.map(key=>{const r=ELEC_RULES[key];return `<details class="teach-rule"><summary>Rule: ${r.name}</summary><p>${r.plain}</p>${engrMath(r.tex)}${elecCitation(r.ref)}</details>`}).join('')}
 function elecStepHTML(s,i,current){return `<article class="step teaching-step ${current?'current':''}"><span class="step-number">${i+1}</span><div><h3>${s[0]}</h3><div class="teach-notice"><span>What I notice & why I move</span><p>${s[2]}</p></div><div class="teach-do"><span>What I write</span><div class="engr-step-math">${engrMath(s[1])}</div></div><div class="teach-rule-row">${elecRules(s[3])}</div><div class="teach-check"><strong>Quick check</strong><p>${s[4]}</p></div></div></article>`}

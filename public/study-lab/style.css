@@ -11,6 +11,7 @@
 :root{--teal-hover:#00574c;--accent-deep:#153b34;--accent-pop:#d3eab8;--accent-eyebrow:#b9d8bf;--accent-ink-soft:#c6dacf;--accent-soft:#eaf2e8;--accent-soft-line:#d5e5d8;--accent-line:#52766b;--active-bg:#d6ece1;--active-ink:#163b30}
 body[data-topic="math"]{--teal:#00695c;--teal-hover:#00574c;--accent-deep:#163d35;--accent-pop:#d3eab8;--accent-eyebrow:#b7d8b7;--accent-ink-soft:#c4d9cd;--accent-soft:#eaf4ec;--accent-soft-line:#d2e4d6;--accent-line:#537467;--active-bg:#d6ece1;--active-ink:#163b30}
 body[data-topic="elec"]{--teal:#a94f12;--teal-hover:#8c3f0c;--accent-deep:#3d2a14;--accent-pop:#ffc97e;--accent-eyebrow:#e0b183;--accent-ink-soft:#e7d6bf;--accent-soft:#faf0e0;--accent-soft-line:#e7d4b6;--accent-line:#82643c;--active-bg:#f3e2c6;--active-ink:#4a2f10}
+body[data-topic="comp"]{--teal:#425789;--teal-hover:#334670;--accent-deep:#26345f;--accent-pop:#f6d68c;--accent-eyebrow:#c9d5ff;--accent-ink-soft:#d8def2;--accent-soft:#eef0fa;--accent-soft-line:#cfd4ec;--accent-line:#6674a1;--active-bg:#e1e6f5;--active-ink:#26345f}
 .primary:hover{background:var(--teal-hover)}
 .lesson-link.active,.course-filters button.active{background:var(--active-bg);color:var(--active-ink);border-color:var(--active-bg)}
 .study-rule{background:var(--accent-soft);border-color:var(--accent-soft-line)}
