@@ -39,6 +39,7 @@ const DASHBOARD_MODULES=[
  {course:'COMP 232',kind:'Course index',title:'Lecture Notes',meta:'Weeks 1–3 · logic, quantifiers, and inference',href:'#comp232-notes',tone:'indigo'},
  {course:'COMP 232',kind:'Continue next',title:'Week 3 · Rules of Inference',meta:'Rosen §1.6 · five concept notes',href:'#comp232-week-3',tone:'indigo',current:true},
  {course:'ELEC 275',kind:'Lecture Notes',title:'Circuit Fundamentals',meta:'Lecture 1 · seven teaching cards',href:'#elec275-lecture-1',tone:'purple'},
+ {course:'ELEC 275',kind:'Lecture 2',title:'Equivalent Networks',meta:'Chapter 2 · nine objectives · Thévenin load lab',href:'#elec275-lecture-2',tone:'purple'},
  {course:'ELEC 275',kind:'Textbook Notes',title:'Chapter 1 · Foundations',meta:'Nine objectives · complete coverage',href:'#elec275-ch-1',tone:'purple'},
  {course:'ENGR 213',kind:'Lecture Notes',title:'Differential Equations',meta:'Lectures 1–3 · source-mapped notes',href:'#engr-notes',tone:'green'},
  {course:'ENGR 213',kind:'Practice',title:'Quiz practice desk',meta:'Ten worked problems · recall checks',href:'#engr213',tone:'green'},
