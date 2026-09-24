@@ -213,6 +213,7 @@ function renderSchoolDashboard(){
    <div class="dashboard-profile"><button id="dashboard-notifications" class="dashboard-icon-button" type="button" aria-label="Show upcoming assessments" aria-expanded="false">${dashboardIcon('bell')}<span class="dashboard-notification-dot" aria-hidden="true"></span></button><div><strong>Ash Kazi</strong><span>BEng Cybersecurity</span></div><span class="dashboard-avatar" aria-hidden="true">AK</span><button type="button" class="dashboard-icon-button" data-gate-signout aria-label="Sign out of the Study Lab" title="Sign out">${dashboardIcon('signout')}</button></div>
    <div id="dashboard-notification-popover" class="dashboard-notification-popover" hidden><div class="dashboard-popover-head"><strong>Upcoming assessments</strong><button type="button" class="dashboard-icon-button" data-close-notifications aria-label="Close notifications">${dashboardIcon('close')}</button></div>${dashboardNotificationItems()}<button type="button" class="dashboard-popover-calendar" data-dashboard-view="week">View all ${DASHBOARD_DEADLINES.length} dates ${dashboardIcon('arrow')}</button></div>
   </header>
+  <div class="dashboard-aurora" aria-hidden="true"><i class="is-blue"></i><i class="is-violet"></i><i class="is-pink"></i><i class="is-cyan"></i></div>
   <div class="dashboard-shell">
    <nav class="dashboard-rail" aria-label="School dashboard sections">
     <button type="button" data-dashboard-view="overview" aria-label="Overview">${dashboardIcon('home')}<span>Overview</span></button>
@@ -260,31 +261,126 @@ function renderSchoolDashboard(){
 
 function setupSchoolDashboard(){
  const root=main.querySelector('.school-dashboard');
- const switchView=(view,focusCourse='')=>{
-  if(!['overview','week','degree','courses','study','career'].includes(view))return;
+ const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const canAnimate=Boolean(motion&&window.gsap&&!reduceMotion);
+ const content=root.querySelector('.dashboard-content');
+ let viewTransition=null;
+
+ const motionItems=panel=>{
+  const selector={
+   overview:'.dashboard-metrics article,.dashboard-priority,.dashboard-primary-column>.dashboard-surface,.dashboard-side-column>.dashboard-surface',
+   week:'.dashboard-day,.dashboard-week-deadlines article,.dashboard-term-calendar',
+   degree:'.dashboard-degree-hero,.dashboard-term-stop,.dashboard-term-detail,.dashboard-degree-bottom>.dashboard-surface',
+   courses:'.dashboard-course-card',
+   study:'.dashboard-study-focus,.dashboard-study-course,.dashboard-learning-loop',
+   career:'.dashboard-career-hero,.dashboard-career-grid>.dashboard-surface,.dashboard-career-grid>.dashboard-career-report'
+  }[panel.dataset.dashboardPanel]||'.dashboard-surface';
+  return [...panel.querySelectorAll(selector)];
+ };
+
+ const animateCounts=panel=>{
+  panel.querySelectorAll('.dashboard-degree-orb strong,.dashboard-report-metrics strong').forEach(element=>{
+   const finalText=element.dataset.motionValue||element.textContent.trim(),value=Number(finalText);
+   if(!Number.isFinite(value))return;
+   element.dataset.motionValue=finalText;
+   const counter={value:0};
+   gsap.to(counter,{value,duration:.8,ease:'power2.out',overwrite:true,onUpdate:()=>{element.textContent=String(Math.round(counter.value))},onComplete:()=>{element.textContent=finalText}});
+  });
+ };
+
+ const animatePanel=panel=>{
+  if(!canAnimate)return null;
+  gsap.killTweensOf(panel.querySelectorAll('*'));
+  const heading=[...panel.querySelectorAll(':scope>.dashboard-page-head>*,:scope>.dashboard-degree-hero>div,:scope>.dashboard-career-hero>div')];
+  const items=motionItems(panel);
+  const timeline=gsap.timeline({defaults:{ease:'power3.out'}});
+  if(heading.length)timeline.from(heading,{y:16,autoAlpha:0,duration:.44,stagger:.07,clearProps:'transform,opacity,visibility'},0);
+  if(items.length)timeline.from(items,{y:24,scale:.985,autoAlpha:0,duration:.52,stagger:{each:.055,from:'start'},clearProps:'transform,opacity,visibility'},heading.length?.08:0);
+  timeline.call(()=>animateCounts(panel),[],.14);
+  return timeline;
+ };
+
+ const focusCourseCard=focusCourse=>{
+  if(!focusCourse)return;
+  const card=root.querySelector(`[data-course="${focusCourse}"]`);
+  if(!card)return;
+  card.classList.add('is-focused');
+  card.scrollIntoView({behavior:canAnimate?'smooth':'instant',block:'center'});
+  if(canAnimate)gsap.fromTo(card,{scale:.96},{scale:1,duration:.58,ease:'back.out(1.7)',clearProps:'transform'});
+  setTimeout(()=>card.classList.remove('is-focused'),1400);
+ };
+
+ const updateViewControls=(view,animateActive=true)=>{
   dashboardView=view;
   root.dataset.dashboardActive=view;
-  root.querySelectorAll('[data-dashboard-panel]').forEach(panel=>panel.hidden=panel.dataset.dashboardPanel!==view);
-  root.querySelectorAll('.dashboard-rail [data-dashboard-view]').forEach(button=>{const active=button.dataset.dashboardView===view;button.classList.toggle('is-active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current')});
-  if(focusCourse){const card=root.querySelector(`[data-course="${focusCourse}"]`);if(card){card.classList.add('is-focused');card.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>card.classList.remove('is-focused'),1400)}}
-  root.querySelector('.dashboard-content').scrollIntoView({behavior:'instant',block:'start'});
+  root.querySelectorAll('.dashboard-rail [data-dashboard-view]').forEach(button=>{
+   const active=button.dataset.dashboardView===view;
+   button.classList.toggle('is-active',active);
+   if(active){button.setAttribute('aria-current','page');if(canAnimate&&animateActive)gsap.fromTo(button,{scale:.9},{scale:1,duration:.42,ease:'back.out(2)',overwrite:'auto',clearProps:'transform'})}else button.removeAttribute('aria-current');
+  });
  };
+
+ const switchView=(view,focusCourse='',initial=false)=>{
+  if(!['overview','week','degree','courses','study','career'].includes(view))return;
+  const next=root.querySelector(`[data-dashboard-panel="${view}"]`),current=root.querySelector('[data-dashboard-panel]:not([hidden])');
+  if(!next)return;
+  if(viewTransition){viewTransition.kill();viewTransition=null}
+  updateViewControls(view,!initial);
+  const showNext=()=>{
+   root.querySelectorAll('[data-dashboard-panel]').forEach(panel=>panel.hidden=panel!==next);
+   if(window.gsap)gsap.set(next,{clearProps:'transform,opacity,visibility'});
+   content.scrollIntoView({behavior:'instant',block:'start'});
+   animatePanel(next);
+   focusCourseCard(focusCourse);
+  };
+  if(!canAnimate||initial||current===next){showNext();return}
+  root.classList.add('is-switching');
+  viewTransition=gsap.timeline({onComplete:()=>{root.classList.remove('is-switching');viewTransition=null}})
+   .to(current,{y:-10,autoAlpha:0,duration:.17,ease:'power2.in'})
+   .call(()=>{current.hidden=true;gsap.set(current,{clearProps:'transform,opacity,visibility'});next.hidden=false;content.scrollIntoView({behavior:'instant',block:'start'});animatePanel(next);focusCourseCard(focusCourse)});
+ };
+
+ if(canAnimate){
+  root.classList.add('is-motion-enabled');
+  root.querySelectorAll('.dashboard-priority,.dashboard-degree-hero,.dashboard-study-focus,.dashboard-career-hero').forEach(host=>host.insertAdjacentHTML('beforeend','<i class="dashboard-motion-orb is-one" aria-hidden="true"></i><i class="dashboard-motion-orb is-two" aria-hidden="true"></i>'));
+  ctx=gsap.context(()=>{
+   gsap.timeline({defaults:{ease:'power3.out'}})
+    .from('.dashboard-brand',{x:-14,autoAlpha:0,duration:.48})
+    .from('.dashboard-search-wrap',{y:-10,autoAlpha:0,duration:.42},'<.08')
+    .from('.dashboard-profile',{x:14,autoAlpha:0,duration:.42},'<')
+    .from('.dashboard-rail button',{x:-16,autoAlpha:0,duration:.38,stagger:.045},'<.04');
+   gsap.to('.dashboard-brand-mark',{y:-2,rotation:2,duration:2.4,ease:'sine.inOut',repeat:-1,yoyo:true});
+   gsap.timeline({repeat:-1,yoyo:true,defaults:{ease:'sine.inOut'}})
+    .to('.dashboard-aurora .is-blue',{xPercent:18,yPercent:10,scale:1.14,rotation:8,duration:11},0)
+    .to('.dashboard-aurora .is-violet',{xPercent:-16,yPercent:12,scale:1.2,rotation:-10,duration:13},0)
+    .to('.dashboard-aurora .is-pink',{xPercent:12,yPercent:-18,scale:1.16,rotation:7,duration:15},0)
+    .to('.dashboard-aurora .is-cyan',{xPercent:-12,yPercent:-12,scale:1.12,rotation:-6,duration:12},0);
+  },root);
+ }
+
  root.querySelectorAll('[data-dashboard-view]').forEach(button=>button.addEventListener('click',()=>switchView(button.dataset.dashboardView,button.dataset.courseFocus||'')));
- switchView(dashboardView);
+ switchView(dashboardView,'',true);
 
  root.querySelectorAll('[data-term]').forEach(button=>button.addEventListener('click',()=>{
   dashboardTerm=button.dataset.term;
   root.querySelectorAll('[data-term]').forEach(item=>{const active=item.dataset.term===dashboardTerm;item.classList.toggle('is-active',active);item.setAttribute('aria-pressed',String(active))});
-  root.querySelector('#dashboard-term-detail').innerHTML=dashboardTermDetail(dashboardTerm);
+  const detail=root.querySelector('#dashboard-term-detail'),update=()=>{detail.innerHTML=dashboardTermDetail(dashboardTerm);if(canAnimate)gsap.fromTo(detail.children,{y:16,autoAlpha:0},{y:0,autoAlpha:1,duration:.46,stagger:.05,ease:'power3.out',clearProps:'transform,opacity,visibility'})};
+  if(canAnimate){gsap.killTweensOf(detail);gsap.to(detail,{y:-8,autoAlpha:0,duration:.16,ease:'power2.in',onComplete:()=>{update();gsap.set(detail,{y:0,autoAlpha:1,clearProps:'transform,opacity,visibility'})}})}else update();
  }));
 
  const sourceDialog=root.querySelector('#dashboard-sources-dialog');
- const openSources=()=>{if(typeof sourceDialog.showModal==='function')sourceDialog.showModal();else sourceDialog.setAttribute('open','')};
+ const openSources=()=>{if(typeof sourceDialog.showModal==='function')sourceDialog.showModal();else sourceDialog.setAttribute('open','');if(canAnimate)gsap.fromTo(sourceDialog,{y:20,scale:.95,autoAlpha:0},{y:0,scale:1,autoAlpha:1,duration:.38,ease:'back.out(1.45)',clearProps:'transform,opacity,visibility'})};
  root.querySelectorAll('[data-open-sources]').forEach(button=>button.addEventListener('click',openSources));
  root.querySelector('#dashboard-source-settings').addEventListener('click',openSources);
 
  const notifications=root.querySelector('#dashboard-notifications'),popover=root.querySelector('#dashboard-notification-popover');
- const setNotifications=open=>{popover.hidden=!open;notifications.setAttribute('aria-expanded',String(open))};
+ const setNotifications=open=>{
+  notifications.setAttribute('aria-expanded',String(open));
+  if(!canAnimate){popover.hidden=!open;return}
+  gsap.killTweensOf(popover);
+  if(open){popover.hidden=false;gsap.fromTo(popover,{y:-8,scale:.96,autoAlpha:0,transformOrigin:'top right'},{y:0,scale:1,autoAlpha:1,duration:.3,ease:'back.out(1.6)',clearProps:'transform,opacity,visibility'})}
+  else if(!popover.hidden)gsap.to(popover,{y:-5,scale:.98,autoAlpha:0,duration:.16,ease:'power2.in',onComplete:()=>{popover.hidden=true;gsap.set(popover,{clearProps:'transform,opacity,visibility'})}});
+ };
  notifications.addEventListener('click',()=>setNotifications(popover.hidden));
  root.querySelector('[data-close-notifications]').addEventListener('click',()=>setNotifications(false));
  root.querySelector('.dashboard-popover-calendar').addEventListener('click',()=>setNotifications(false));
@@ -297,6 +393,7 @@ function setupSchoolDashboard(){
   const matches=items.filter(item=>(item.label+' '+item.meta).toLowerCase().includes(query)).slice(0,7);
   results.innerHTML=matches.length?matches.map((item,index)=>item.href?`<a href="${item.href}" role="option"><span>${esc(item.label)}</span><small>${esc(item.meta)}</small></a>`:`<button type="button" role="option" data-search-view="${item.view}" data-result-index="${index}"><span>${esc(item.label)}</span><small>${esc(item.meta)}</small></button>`).join(''):'<p>No dashboard matches. Try a course code or topic.</p>';
   results.hidden=false;search.setAttribute('aria-expanded','true');
+  if(canAnimate)gsap.fromTo(results.children,{y:-6,autoAlpha:0},{y:0,autoAlpha:1,duration:.24,stagger:.035,ease:'power2.out',overwrite:true,clearProps:'transform,opacity,visibility'});
   results.querySelectorAll('[data-search-view]').forEach(button=>button.addEventListener('click',()=>{switchView(button.dataset.searchView);search.value='';closeSearch()}));
  });
  search.addEventListener('keydown',event=>{if(event.key==='Escape'){search.value='';closeSearch()}});
