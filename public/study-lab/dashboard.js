@@ -80,6 +80,7 @@ const DASHBOARD_MODULES=[
  {course:'COMP 248',kind:'Lecture 2',title:'Java Fundamentals and Console Input',meta:'Ten concepts · expression and Scanner labs',href:'#comp248-lecture-2',tone:'violet'},
  {course:'COMP 248',kind:'Tutorial 2',title:'Java Fundamentals · Interactive Workbook',meta:'Six guided questions · live checks · recall quiz',href:'#comp248-tutorial-2',tone:'violet'},
  {course:'COMP 248',kind:'Tutorial 3',title:'State Changes, Casting, and Strings',meta:'Five guided questions · timelines · String inspector',href:'#comp248-tutorial-3',tone:'violet',current:true},
+ {course:'COMP 248',kind:'Study map',title:'Interactive Textbook Mind Map',meta:'Java, Java, Java 3e · 17 chapters · 143 sections · 8 appendices',href:'/study-lab/comp248-mind-map/',tone:'violet'},
  {course:'COMP 232',kind:'Course index',title:'Lecture Notes',meta:'Weeks 1–3 · logic, quantifiers, and inference',href:'#comp232-notes',tone:'indigo'},
  {course:'COMP 232',kind:'Continue next',title:'Week 3 · Rules of Inference',meta:'Rosen §1.6 · five concept notes',href:'#comp232-week-3',tone:'indigo',current:true},
  {course:'ELEC 275',kind:'Lecture Notes',title:'Circuit Fundamentals',meta:'Lecture 1 · seven teaching cards',href:'#elec275-lecture-1',tone:'purple'},

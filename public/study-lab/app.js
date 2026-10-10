@@ -14,7 +14,7 @@ const MODULE_TOC_CONFIG={
  elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes']]},
  math:{code:'ENGR 213',title:'Differential equations',workspaces:[['Quiz practice','#engr213'],['Lecture Notes','#engr-notes']]},
  inse:{code:'INSE 201',title:'Security ethics',workspaces:[['Lecture Notes','#inse201-notes']]},
- java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3']]}
+ java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3'],['Mind Map','/study-lab/comp248-mind-map/']]}
 };
 function moduleWorkspaceActive(href){
  if(href==='#quiz')return activeId==='quiz'||activeId==='elec-references'||/^elec-P[1-5]-[ab]$/.test(activeId)||/^E[1-8]$/.test(activeId);
