@@ -82,6 +82,7 @@ const DASHBOARD_MODULES=[
  {course:'COMP 248',kind:'Tutorial 3',title:'State Changes, Casting, and Strings',meta:'Five guided questions · timelines · String inspector',href:'#comp248-tutorial-3',tone:'violet',current:true},
  {course:'COMP 248',kind:'Study map',title:'Interactive Textbook Mind Map',meta:'Java, Java, Java 3e · 17 chapters · 143 sections · 8 appendices',href:'/study-lab/comp248-mind-map/',tone:'violet'},
  {course:'COMP 232',kind:'Course index',title:'Lecture Notes',meta:'Weeks 1–3 · logic, quantifiers, and inference',href:'#comp232-notes',tone:'indigo'},
+ {course:'COMP 232',kind:'Study map',title:'Interactive Textbook Mind Map',meta:'Rosen Discrete Math 8e · 13 chapters · 72 sections · 3 appendices',href:'/study-lab/comp232-mind-map/',tone:'indigo'},
  {course:'COMP 232',kind:'Continue next',title:'Week 3 · Rules of Inference',meta:'Rosen §1.6 · five concept notes',href:'#comp232-week-3',tone:'indigo',current:true},
  {course:'ELEC 275',kind:'Lecture Notes',title:'Circuit Fundamentals',meta:'Lecture 1 · seven teaching cards',href:'#elec275-lecture-1',tone:'purple'},
  {course:'ELEC 275',kind:'Lecture 2',title:'Equivalent Networks',meta:'Chapter 2 · nine objectives · Thévenin load lab',href:'#elec275-lecture-2',tone:'purple'},
