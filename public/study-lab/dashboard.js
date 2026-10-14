@@ -89,6 +89,7 @@ const DASHBOARD_MODULES=[
  {course:'ELEC 275',kind:'Textbook Notes',title:'Chapter 1 · Foundations',meta:'Nine objectives · complete coverage',href:'#elec275-ch-1',tone:'purple'},
  {course:'ENGR 213',kind:'Lecture Notes',title:'Differential Equations',meta:'Lectures 1–3 · source-mapped notes',href:'#engr-notes',tone:'green'},
  {course:'ENGR 213',kind:'Practice',title:'Quiz practice desk',meta:'Ten worked problems · recall checks',href:'#engr213',tone:'green'},
+ {course:'ENGR 213',kind:'Study map',title:'Interactive Textbook Mind Map',meta:'Zill Adv. Engineering Math 6e · Part 1 · 6 chapters · 38 sections · 3 appendices',href:'/study-lab/engr213-mind-map/',tone:'green'},
  {course:'ELEC 275',kind:'Practice',title:'Quiz practice desk',meta:'Five problems · two solution paths',href:'#quiz',tone:'purple'},
  {course:'INSE 201',kind:'Course index',title:'Lecture Notes',meta:'Two modules · fourteen source-mapped concepts',href:'#inse201-notes',tone:'amber'},
  {course:'INSE 201',kind:'Lecture 1',title:'Threat Modelling with STRIDE',meta:'Seven concepts · two interactive labs',href:'#inse201-lecture-1',tone:'amber'},
