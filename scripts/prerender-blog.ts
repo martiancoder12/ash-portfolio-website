@@ -143,6 +143,8 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
   const content = source.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   const labourDaySource = await readFile(path.resolve('content/blog/the-unfinished-work-of-labour-day.md'), 'utf8')
   const labourDayContent = labourDaySource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+  const democracyCoinageSource = await readFile(path.resolve('content/blog/democracy-a-new-coinage.md'), 'utf8')
+  const democracyCoinageContent = democracyCoinageSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   return [{
     title: 'How to Study for Math and Problem-Solving Courses: A Practical Active-Learning System',
     slug: 'how-to-study-math-problem-solving-courses',
@@ -165,6 +167,17 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
     updated_at: '2026-09-07T15:00:00.000Z',
     meta_title: 'The Unfinished Work of Labour Day',
     meta_description: 'Labour Day was born on a picket line in 1872. A reflection on reclaiming the holiday: the right to strike, gig and migrant work, low pay, and shorter working time.',
+  }, {
+    title: 'On Democracy: A Proposal for a Word That Does Not Yet Exist',
+    slug: 'democracy-a-new-coinage',
+    excerpt: "What if no one had ever lived under rule by the people? An essay that coins 'democracy' as a brand-new concept — argued for, from first principles, by philosophers of a world that has only ever known rule.",
+    content: democracyCoinageContent,
+    tags: ['Philosophy', 'Politics', 'Democracy', 'Essay'],
+    published_at: '2026-10-16T09:00:00-04:00',
+    created_at: '2026-10-16T13:00:00.000Z',
+    updated_at: '2026-10-16T13:00:00.000Z',
+    meta_title: 'On Democracy: A Proposal for a Word That Does Not Yet Exist',
+    meta_description: "A philosophical essay that treats 'democracy' as a net-new coinage: defining and defending rule by the people as though the concept had never existed.",
   }]
 }
 
