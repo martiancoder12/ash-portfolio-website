@@ -2,6 +2,9 @@
 
 Personal portfolio website built with React, TypeScript, Vite, Tailwind CSS, and shadcn/ui.
 
+> **Working with an AI agent?** See [AGENTS.md](AGENTS.md) for the blog publishing
+> workflow and repo-specific gotchas.
+
 ## Tech stack
 
 - **React 19** + **TypeScript**
