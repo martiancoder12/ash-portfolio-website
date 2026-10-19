@@ -18,15 +18,18 @@ function loadEnv() {
   let url = process.env.VITE_SUPABASE_URL;
   let key = process.env.VITE_SUPABASE_ANON_KEY;
   if (!url || !key) {
-    try {
-      const env = readFileSync(join(root, '.env'), 'utf8');
-      for (const line of env.split('\n')) {
-        const [k, ...rest] = line.split('=');
-        const v = rest.join('=').trim();
-        if (k.trim() === 'VITE_SUPABASE_URL' && !url) url = v;
-        if (k.trim() === 'VITE_SUPABASE_ANON_KEY' && !key) key = v;
-      }
-    } catch { /* no .env — rely on process env */ }
+    for (const name of ['.env', '.env.local']) {
+      try {
+        const env = readFileSync(join(root, name), 'utf8');
+        for (const line of env.split('\n')) {
+          const [k, ...rest] = line.split('=');
+          const v = rest.join('=').trim();
+          if (k.trim() === 'VITE_SUPABASE_URL' && !url) url = v;
+          if (k.trim() === 'VITE_SUPABASE_ANON_KEY' && !key) key = v;
+        }
+      } catch { /* file missing — try next source */ }
+      if (url && key) break;
+    }
   }
   return { url, key };
 }
