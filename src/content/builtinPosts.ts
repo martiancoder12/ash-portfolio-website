@@ -2,10 +2,12 @@ import type { Post } from '@/lib/supabase'
 import learningStrategiesSource from '../../content/blog/how-to-study-math-problem-solving-courses.md?raw'
 import labourDaySource from '../../content/blog/the-unfinished-work-of-labour-day.md?raw'
 import democracyCoinageSource from '../../content/blog/democracy-a-new-coinage.md?raw'
+import nobodyAttacksSource from '../../content/blog/nobody-attacks-the-app-anymore.md?raw'
 
 const learningStrategiesContent = learningStrategiesSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 const labourDayContent = labourDaySource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 const democracyCoinageContent = democracyCoinageSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+const nobodyAttacksContent = nobodyAttacksSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 
 export const builtinPosts: Post[] = [
   {
@@ -49,6 +51,20 @@ export const builtinPosts: Post[] = [
     published_at: '2026-10-16T09:00:00-04:00',
     meta_title: 'On Democracy: A Proposal for a Word That Does Not Yet Exist',
     meta_description: "A philosophical essay that treats 'democracy' as a net-new coinage: defining and defending rule by the people as though the concept had never existed.",
+  },
+  {
+    id: 'builtin-nobody-attacks-the-app-anymore',
+    created_at: '2026-10-23T20:00:00.000Z',
+    updated_at: '2026-10-23T20:00:00.000Z',
+    title: 'Nobody Attacks the App Anymore',
+    slug: 'nobody-attacks-the-app-anymore',
+    excerpt: "Railway, OpenCode, LiteLLM, ConnectWise — in ten days, the breaches stopped going through anyone's code. They went through custody.",
+    content: nobodyAttacksContent,
+    tags: ['Cybersecurity', 'AI security', 'Supply chain', 'API keys', 'Field notes'],
+    status: 'published',
+    published_at: '2026-10-23T16:00:00-04:00',
+    meta_title: 'Nobody Attacks the App Anymore',
+    meta_description: 'Railway, OpenCode, LiteLLM, ConnectWise: in ten days the breaches went through custody, not code. Why pooled secrets are the new perimeter — and the standing orders for any team.',
   },
 ]
 

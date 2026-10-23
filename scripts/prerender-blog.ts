@@ -145,6 +145,8 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
   const labourDayContent = labourDaySource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   const democracyCoinageSource = await readFile(path.resolve('content/blog/democracy-a-new-coinage.md'), 'utf8')
   const democracyCoinageContent = democracyCoinageSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+  const nobodyAttacksSource = await readFile(path.resolve('content/blog/nobody-attacks-the-app-anymore.md'), 'utf8')
+  const nobodyAttacksContent = nobodyAttacksSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   return [{
     title: 'How to Study for Math and Problem-Solving Courses: A Practical Active-Learning System',
     slug: 'how-to-study-math-problem-solving-courses',
@@ -178,6 +180,17 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
     updated_at: '2026-10-16T13:00:00.000Z',
     meta_title: 'On Democracy: A Proposal for a Word That Does Not Yet Exist',
     meta_description: "A philosophical essay that treats 'democracy' as a net-new coinage: defining and defending rule by the people as though the concept had never existed.",
+  }, {
+    title: 'Nobody Attacks the App Anymore',
+    slug: 'nobody-attacks-the-app-anymore',
+    excerpt: "Railway, OpenCode, LiteLLM, ConnectWise — in ten days, the breaches stopped going through anyone's code. They went through custody.",
+    content: nobodyAttacksContent,
+    tags: ['Cybersecurity', 'AI security', 'Supply chain', 'API keys', 'Field notes'],
+    published_at: '2026-10-23T16:00:00-04:00',
+    created_at: '2026-10-23T20:00:00.000Z',
+    updated_at: '2026-10-23T20:00:00.000Z',
+    meta_title: 'Nobody Attacks the App Anymore',
+    meta_description: 'Railway, OpenCode, LiteLLM, ConnectWise: in ten days the breaches went through custody, not code. Why pooled secrets are the new perimeter — and the standing orders for any team.',
   }]
 }
 
