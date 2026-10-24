@@ -11,6 +11,7 @@ import {
   User,
   Newspaper,
   SquarePen,
+  MessageSquare,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -26,6 +27,7 @@ function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
     { to: '/admin/projects/new', icon: Plus, label: 'New Project' },
     { to: '/admin/posts', icon: Newspaper, label: 'Blog Posts' },
     { to: '/admin/posts/new', icon: SquarePen, label: 'New Post' },
+    { to: '/admin/comments', icon: MessageSquare, label: 'Comments' },
   ];
 
   const isActive = (path: string) => {

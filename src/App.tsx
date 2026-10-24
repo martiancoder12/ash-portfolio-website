@@ -14,6 +14,7 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 const StudyLab = lazy(() => import('./pages/StudyLab'));
 const AdminPosts = lazy(() => import('./admin/pages/Posts'));
 const AdminPostForm = lazy(() => import('./admin/pages/PostForm'));
+const AdminComments = lazy(() => import('./admin/pages/Comments'));
 
 function PageLoader() {
   return (
@@ -65,6 +66,14 @@ export default function App() {
           element={
             <AdminLayout>
               <AdminPostForm />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/comments"
+          element={
+            <AdminLayout>
+              <AdminComments />
             </AdminLayout>
           }
         />
