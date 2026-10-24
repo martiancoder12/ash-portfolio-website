@@ -1,84 +1,105 @@
-/* Rosen Chapter 1 · reusable reader, practice desk, and deterministic checkers. */
-(function rosenCh1Module(global) {
+/* Reusable Rosen chapter reader, practice desk, and deterministic checkers. */
+(function rosenChapterModule(global) {
   'use strict';
 
-  const STORAGE_KEY = 'comp232-rosen-ch1-v1';
-  const PAGE_SIZE = 12;
-  const ROUTE = /^comp232-rosen-ch1(?:-s[1-8]|-review|-projects)?$/;
-  const ui = { sets: Object.create(null) };
-  const fallbackEsc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-  const escapeHTML = (value) => (typeof esc === 'function' ? esc(value == null ? '' : value) : fallbackEsc(value == null ? '' : value));
-  const content = () => (typeof ROSEN_CH1_CONTENT !== 'undefined' ? ROSEN_CH1_CONTENT : null);
-  const exercises = () => (typeof ROSEN_CH1_EXERCISES !== 'undefined' ? ROSEN_CH1_EXERCISES : []);
-
-  function blankStore() {
-    return { version: 1, drafts: {}, results: {}, hints: {}, revealed: {}, examples: {}, sections: {} };
-  }
-  function loadStore() {
-    const base = blankStore();
-    const raw = typeof saved === 'function' ? saved(STORAGE_KEY, base) : base;
-    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return base;
-    for (const key of Object.keys(base)) {
-      if (key === 'version') continue;
-      if (!raw[key] || typeof raw[key] !== 'object' || Array.isArray(raw[key])) raw[key] = {};
-    }
-    raw.version = 1;
-    return raw;
-  }
-  let store = loadStore();
-  function saveStore() {
-    if (typeof persist === 'function') persist(STORAGE_KEY, store);
-  }
-  function setUI(setId) {
-    if (!ui.sets[setId]) ui.sets[setId] = { query: '', difficulty: 'all', status: 'all', page: 1 };
-    return ui.sets[setId];
-  }
-  function answerRecords() {
-    if (typeof ROSEN_CH1_ANSWERS === 'undefined' || !ROSEN_CH1_ANSWERS) return [];
-    if (Array.isArray(ROSEN_CH1_ANSWERS)) return ROSEN_CH1_ANSWERS;
-    if (Array.isArray(ROSEN_CH1_ANSWERS.answers)) return ROSEN_CH1_ANSWERS.answers;
-    if (typeof ROSEN_CH1_ANSWERS === 'object') return Object.values(ROSEN_CH1_ANSWERS);
-    return [];
-  }
-  function answerMap() {
-    const map = new Map();
-    for (const record of answerRecords()) if (record && typeof record.id === 'string') map.set(record.id, record);
-    return map;
-  }
-  function math(tex, display) {
-    if (typeof engrMath === 'function') {
-      try { return engrMath(tex, display); } catch { /* Text remains available below. */ }
-    }
-    return `<code>${escapeHTML(tex)}</code>`;
-  }
-  function routeId() {
-    const id = global.location ? global.location.hash.slice(1) : 'comp232-rosen-ch1';
-    return rosenCh1Route(id) ? id : 'comp232-rosen-ch1';
-  }
-  function rosenCh1Route(id) {
-    return typeof id === 'string' && ROUTE.test(id);
-  }
-  function sectionForRoute(id) {
-    const match = id.match(/-s([1-8])$/);
-    return match ? content().sections[Number(match[1]) - 1] : null;
-  }
-  function exerciseStatus(id) {
-    const result = store.results[id];
-    if (result && (result.status === 'correct' || result.status === 'self-checked')) return 'completed';
-    if ((result && result.status) || Object.keys(store.drafts[id] || {}).some((part) => String(store.drafts[id][part]).trim())) return 'attempted';
-    return 'unanswered';
-  }
-  function rosenCh1Progress() {
-    const list = exercises();
-    const completed = list.filter((exercise) => exerciseStatus(exercise.id) === 'completed').length;
-    const attempted = list.filter((exercise) => exerciseStatus(exercise.id) === 'attempted').length;
-    const sectionsStudied = Object.values(store.sections).filter(Boolean).length;
-    return {
-      completed, done: completed, attempted, unanswered: list.length - completed - attempted,
-      total: list.length, sectionsStudied, totalSections: content() ? content().sections.length : 8,
-      percent: list.length ? Math.round((completed / list.length) * 100) : 0,
+  function createRosenChapter(options) {
+    const config = {
+      chapterNumber: 1,
+      routePrefix: 'comp232-rosen-ch1',
+      storageKey: 'comp232-rosen-ch1-v1',
+      sectionCount: 0,
+      pageSize: 12,
+      courseLabel: 'COMP 232 / ROSEN',
+      overviewEyebrow: '',
+      overviewSubtitle: 'A source-faithful reader with progressive worked examples, notation translation, and deliberately paced practice.',
+      overviewMapTitle: null,
+      sectionHints: {},
+      ...options,
     };
-  }
+    const PAGE_SIZE = config.pageSize;
+    const ui = { sets: Object.create(null) };
+    const fallbackEsc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+    const escapeHTML = (value) => (typeof esc === 'function' ? esc(value == null ? '' : value) : fallbackEsc(value == null ? '' : value));
+    const injected = (value, fallback) => typeof value === 'function' ? value() : (value === undefined ? fallback : value);
+    const content = () => injected(config.content, null);
+    const exercises = () => injected(config.exercises, []) || [];
+    const sectionCount = () => content() && Array.isArray(content().sections) ? content().sections.length : config.sectionCount;
+    const sectionRoute = (index) => `${config.routePrefix}-s${index + 1}`;
+    const routePattern = new RegExp(`^${config.routePrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}-s([1-9]\\d*)$`);
+
+    function blankStore() {
+      return { version: 1, drafts: {}, results: {}, hints: {}, revealed: {}, examples: {}, sections: {} };
+    }
+    function loadStore() {
+      const base = blankStore();
+      const raw = typeof saved === 'function' ? saved(config.storageKey, base) : base;
+      if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return base;
+      for (const key of Object.keys(base)) {
+        if (key === 'version') continue;
+        if (!raw[key] || typeof raw[key] !== 'object' || Array.isArray(raw[key])) raw[key] = {};
+      }
+      raw.version = 1;
+      return raw;
+    }
+    let store = loadStore();
+    function saveStore() {
+      if (typeof persist === 'function') persist(config.storageKey, store);
+    }
+    function setUI(setId) {
+      if (!ui.sets[setId]) ui.sets[setId] = { query: '', difficulty: 'all', status: 'all', page: 1 };
+      return ui.sets[setId];
+    }
+    function answerRecords() {
+      const records = injected(config.answers, []);
+      if (!records) return [];
+      if (Array.isArray(records)) return records;
+      if (Array.isArray(records.answers)) return records.answers;
+      if (typeof records === 'object') return Object.values(records);
+      return [];
+    }
+    function answerMap() {
+      const map = new Map();
+      for (const record of answerRecords()) if (record && typeof record.id === 'string') map.set(record.id, record);
+      return map;
+    }
+    function math(tex, display) {
+      if (typeof engrMath === 'function') {
+        try { return engrMath(tex, display); } catch { /* Text remains available below. */ }
+      }
+      return `<code>${escapeHTML(tex)}</code>`;
+    }
+    function routeId() {
+      const id = global.location ? global.location.hash.slice(1) : config.routePrefix;
+      return route(id) ? id : config.routePrefix;
+    }
+    function route(id) {
+      if (typeof id !== 'string') return false;
+      if ([config.routePrefix, `${config.routePrefix}-review`, `${config.routePrefix}-projects`].includes(id)) return true;
+      const match = id.match(routePattern);
+      return Boolean(match && Number(match[1]) <= sectionCount());
+    }
+    function sectionForRoute(id) {
+      const match = typeof id === 'string' && id.match(routePattern);
+      const data = content();
+      return match && data && Array.isArray(data.sections) ? data.sections[Number(match[1]) - 1] || null : null;
+    }
+    function exerciseStatus(id) {
+      const result = store.results[id];
+      if (result && (result.status === 'correct' || result.status === 'self-checked')) return 'completed';
+      if ((result && result.status) || Object.keys(store.drafts[id] || {}).some((part) => String(store.drafts[id][part]).trim())) return 'attempted';
+      return 'unanswered';
+    }
+    function progress() {
+      const list = exercises();
+      const completed = list.filter((exercise) => exerciseStatus(exercise.id) === 'completed').length;
+      const attempted = list.filter((exercise) => exerciseStatus(exercise.id) === 'attempted').length;
+      const sectionsStudied = Object.values(store.sections).filter(Boolean).length;
+      return {
+        completed, done: completed, attempted, unanswered: list.length - completed - attempted,
+        total: list.length, sectionsStudied, totalSections: sectionCount(),
+        percent: list.length ? Math.round((completed / list.length) * 100) : 0,
+      };
+    }
 
   /* ---------- Deterministic answer checking ---------- */
   function normalizeText(value) {
@@ -282,7 +303,7 @@
       return { ok: false, equivalent: false, error: error.message };
     }
   }
-  function checkAuto(actual, record) {
+  function defaultCheckAuto(actual, record) {
     const checker = record.checker || 'text';
     const candidates = [record.answer, ...(Array.isArray(record.accepted) ? record.accepted : [])].filter((answer) => typeof answer === 'string' && answer.trim());
     if (!candidates.length) return { status: 'unavailable', correct: false, message: 'No authored answer is available for automatic checking.' };
@@ -302,11 +323,18 @@
         ? { status: 'invalid', correct: false, message: lastError }
         : { status: 'incorrect', correct: false, message: 'Not equivalent yet. Check a counterexample row in your truth table.' };
     }
-    const comparators = { number: checkNumber, set: checkSet, truth: checkTruth, text: (a, e) => normalizeText(a) === normalizeText(e) };
+    const comparators = { number: checkNumber, set: checkSet, truth: checkTruth, text: (a, e) => normalizeText(a) === normalizeText(e), ...config.checkers };
     const compare = comparators[checker];
     if (!compare) return { status: 'invalid', correct: false, message: `Unsupported checker: ${checker}` };
     const correct = candidates.some((candidate) => compare(actual, candidate));
     return { status: correct ? 'correct' : 'incorrect', correct, message: correct ? 'Correct.' : 'Not yet. Revise your answer and check again.' };
+  }
+  function checkAuto(actual, record) {
+    if (typeof config.checkerBehavior === 'function') {
+      const checked = config.checkerBehavior(actual, record, defaultCheckAuto);
+      if (checked !== undefined) return checked;
+    }
+    return defaultCheckAuto(actual, record);
   }
 
   /* ---------- Rendering helpers ---------- */
@@ -322,21 +350,12 @@
     const steps = clean.split(/(?<=[.!?]["'”’]?)\s+(?=[A-Z0-9“"'(¬∀∃])/).filter(Boolean);
     return steps.length ? steps : [clean];
   }
-  const SECTION_HINTS = {
-    '1.1': 'Name each proposition first. Translate one connective at a time, then check the truth conditions.',
-    '1.2': 'Write the atomic statements separately before translating the sentence or circuit.',
-    '1.3': 'Choose an equivalence law for each rewrite. For a non-equivalence, find one counterexample row.',
-    '1.4': 'State the domain, predicate, variable, and quantifier before forming the English sentence.',
-    '1.5': 'Read quantifiers from left to right. Ask which later variables are allowed to depend on earlier ones.',
-    '1.6': 'Match the premises to an inference-rule pattern, then justify every conclusion line.',
-    '1.7': 'Identify the statement form and choose direct, contrapositive, or contradiction reasoning before writing.',
-    '1.8': 'Try a small case, look for structure or an invariant, and audit the proof’s domain and edge cases.',
-    review: 'Define every symbol, make a small truth table or example, and justify each inference by name.',
-    projects: 'Specify inputs and outputs first, then test boundary cases and explain the method independently.',
-  };
+  const SECTION_HINTS = config.sectionHints;
   function m2ePanel(section) {
-    const number = section ? section.number : '1';
-    const expression = number === '1.4' ? '∀x ∃y (P(x,y) → Q(x,y))' : number === '1.5' ? '∃y ∀x (x + y = 0)' : '¬p ∧ (p ∨ q) → q';
+    const number = section ? section.number : String(config.chapterNumber);
+    const expression = typeof config.m2eExpression === 'function'
+      ? config.m2eExpression(section, number)
+      : (config.m2eExpression || '¬p ∧ (p ∨ q) → q');
     return `<aside class="rosen-ch1-m2e" aria-labelledby="rosen-ch1-m2e-${escapeHTML(number)}"><div><span class="rosen-ch1-kicker">M2E · MATHS → ENGLISH</span><h2 id="rosen-ch1-m2e-${escapeHTML(number)}">Say the notation before you manipulate it.</h2><p>Translate each symbol into spoken English, identify every variable’s role, then reproduce the method on paper.</p><div class="rosen-ch1-formula">${math(expression, true)}</div></div><div class="rosen-ch1-m2e-work"><label for="rosen-ch1-notation-${escapeHTML(number)}">Notation to translate</label><div class="rosen-ch1-inline-controls"><input id="rosen-ch1-notation-${escapeHTML(number)}" data-rosen-notation-input value="${escapeHTML(expression)}" autocomplete="off"><button type="button" data-rosen-action="translate">Translate to English</button></div><p class="rosen-ch1-translation" data-rosen-translation aria-live="polite">Press Translate to hear the expression in words.</p><ol><li><strong>Read:</strong> say each symbol and name its role.</li><li><strong>Reproduce:</strong> cover the page and write the rule or method unaided.</li><li><strong>Ground:</strong> test one concrete case and one boundary case.</li><li><strong>Audit:</strong> explain why each operation is legal, then check independently.</li></ol></div></aside>`;
   }
   function translateNotation(value) {
@@ -386,12 +405,13 @@
     return { total: all.length, completed: all.filter((exercise) => exerciseStatus(exercise.id) === 'completed').length };
   }
   function chapterHeader(eyebrow, title, subtitle) {
-    const progress = rosenCh1Progress();
-    return `<header class="rosen-ch1-hero"><div><span class="rosen-ch1-kicker">${escapeHTML(eyebrow)}</span><h1>${escapeHTML(title)}</h1><p>${escapeHTML(subtitle)}</p></div><div class="rosen-ch1-progress-card" aria-label="Chapter practice progress"><strong>${progress.completed}<span> / ${progress.total}</span></strong><span>exercises completed</span><progress max="${progress.total}" value="${progress.completed}">${progress.percent}%</progress><small>${progress.attempted} in progress · ${progress.sectionsStudied}/8 sections marked studied</small></div></header><nav class="rosen-ch1-route-nav" aria-label="Chapter routes"><a href="#comp232-rosen-ch1">Chapter map</a>${content().sections.map((section, index) => `<a href="#comp232-rosen-ch1-s${index + 1}" ${routeId() === `comp232-rosen-ch1-s${index + 1}` ? 'aria-current="page"' : ''}>${section.number}</a>`).join('')}<a href="#comp232-rosen-ch1-review" ${routeId() === 'comp232-rosen-ch1-review' ? 'aria-current="page"' : ''}>Review</a><a href="#comp232-rosen-ch1-projects" ${routeId() === 'comp232-rosen-ch1-projects' ? 'aria-current="page"' : ''}>Projects</a></nav>`;
+    const currentProgress = progress();
+    const prefix = config.routePrefix;
+    return `<header class="rosen-ch1-hero"><div><span class="rosen-ch1-kicker">${escapeHTML(eyebrow)}</span><h1>${escapeHTML(title)}</h1><p>${escapeHTML(subtitle)}</p></div><div class="rosen-ch1-progress-card" aria-label="Chapter practice progress"><strong>${currentProgress.completed}<span> / ${currentProgress.total}</span></strong><span>exercises completed</span><progress max="${currentProgress.total}" value="${currentProgress.completed}">${currentProgress.percent}%</progress><small>${currentProgress.attempted} in progress · ${currentProgress.sectionsStudied}/${currentProgress.totalSections} sections marked studied</small></div></header><nav class="rosen-ch1-route-nav" aria-label="Chapter routes"><a href="#${prefix}">Chapter map</a>${content().sections.map((section, index) => `<a href="#${sectionRoute(index)}" ${routeId() === sectionRoute(index) ? 'aria-current="page"' : ''}>${section.number}</a>`).join('')}<a href="#${prefix}-review" ${routeId() === `${prefix}-review` ? 'aria-current="page"' : ''}>Review</a><a href="#${prefix}-projects" ${routeId() === `${prefix}-projects` ? 'aria-current="page"' : ''}>Projects</a></nav>`;
   }
   function renderOverview() {
     const inventory = content().inventory;
-    return `${chapterHeader('COMP 232 · ROSEN, EIGHTH EDITION · CHAPTER 1', content().title, 'A source-faithful reader with progressive worked examples, notation translation, and deliberately paced practice.')}${m2ePanel(null)}<section class="rosen-ch1-map" aria-labelledby="rosen-ch1-map-title"><div class="rosen-ch1-section-title"><span class="rosen-ch1-kicker">CHAPTER MAP</span><h2 id="rosen-ch1-map-title">Eight sections. One reasoning toolkit.</h2></div><div class="rosen-ch1-map-grid">${content().sections.map((section, index) => { const counts = sectionCounts(section.number); return `<a class="rosen-ch1-map-card" href="#comp232-rosen-ch1-s${index + 1}"><span>${section.number} · printed ${section.source.printedPageStart}–${section.source.printedPageEnd}</span><h3>${escapeHTML(section.title)}</h3><p>${section.subsections.length} subsections · ${counts.total} exercises</p><strong>${counts.completed} completed · Open section →</strong></a>`; }).join('')}</div></section><section class="rosen-ch1-inventory" aria-labelledby="rosen-ch1-inventory-title"><h2 id="rosen-ch1-inventory-title">Complete chapter inventory</h2><dl>${[['Sections', inventory.sections], ['Subsections', inventory.subsections], ['Examples', inventory.examples], ['Worked solutions', inventory.exampleSolutions], ['Definitions', inventory.definitions], ['Tables', inventory.tables], ['Figures', inventory.figures], ['Biographies', inventory.biographies], ['Remarks', inventory.remarks], ['Exercises', inventory.totalExercises], ['Key terms', inventory.keyTerms], ['Source pages', inventory.pageAssets]].map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl><p>Every display block is rendered in its source section. Original scans remain available for exact notation and visual layout.</p></section><section class="rosen-ch1-introduction"><h2>Chapter opening</h2>${content().introduction.blocks.map(renderBlock).join('')}</section><nav class="rosen-ch1-end-links" aria-label="End matter"><a href="#comp232-rosen-ch1-review"><strong>Review & synthesis</strong><span>${inventory.reviewQuestions} review questions · ${inventory.supplementaryExercises} supplementary exercises · key terms and results</span></a><a href="#comp232-rosen-ch1-projects"><strong>Projects & exploration</strong><span>${inventory.computerProjects} computer projects · ${inventory.computationsAndExplorations} explorations · ${inventory.writingProjects} writing projects</span></a></nav>`;
+    return `${chapterHeader(config.overviewEyebrow, content().title, config.overviewSubtitle)}${m2ePanel(null)}<section class="rosen-ch1-map" aria-labelledby="rosen-ch1-map-title"><div class="rosen-ch1-section-title"><span class="rosen-ch1-kicker">CHAPTER MAP</span><h2 id="rosen-ch1-map-title">${escapeHTML(config.overviewMapTitle || `${sectionCount()} sections. One reasoning toolkit.`)}</h2></div><div class="rosen-ch1-map-grid">${content().sections.map((section, index) => { const counts = sectionCounts(section.number); return `<a class="rosen-ch1-map-card" href="#${config.routePrefix}-s${index + 1}"><span>${section.number} · printed ${section.source.printedPageStart}–${section.source.printedPageEnd}</span><h3>${escapeHTML(section.title)}</h3><p>${section.subsections.length} subsections · ${counts.total} exercises</p><strong>${counts.completed} completed · Open section →</strong></a>`; }).join('')}</div></section><section class="rosen-ch1-inventory" aria-labelledby="rosen-ch1-inventory-title"><h2 id="rosen-ch1-inventory-title">Complete chapter inventory</h2><dl>${[['Sections', inventory.sections], ['Subsections', inventory.subsections], ['Examples', inventory.examples], ['Worked solutions', inventory.exampleSolutions], ['Definitions', inventory.definitions], ['Tables', inventory.tables], ['Figures', inventory.figures], ['Biographies', inventory.biographies], ['Remarks', inventory.remarks], ['Exercises', inventory.totalExercises], ['Key terms', inventory.keyTerms], ['Source pages', inventory.pageAssets]].map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl><p>Every display block is rendered in its source section. Original scans remain available for exact notation and visual layout.</p></section><section class="rosen-ch1-introduction"><h2>Chapter opening</h2>${content().introduction.blocks.map(renderBlock).join('')}</section><nav class="rosen-ch1-end-links" aria-label="End matter"><a href="#${config.routePrefix}-review"><strong>Review & synthesis</strong><span>${inventory.reviewQuestions} review questions · ${inventory.supplementaryExercises} supplementary exercises · key terms and results</span></a><a href="#${config.routePrefix}-projects"><strong>Projects & exploration</strong><span>${inventory.computerProjects} computer projects · ${inventory.computationsAndExplorations} explorations · ${inventory.writingProjects} writing projects</span></a></nav>`;
   }
 
   function exerciseParts(answer) {
@@ -451,21 +471,28 @@
   }
   function renderSection(section, index, answers) {
     const set = content().exerciseSets.find((item) => item.id === section.exerciseSetId);
-    return `${chapterHeader(`SECTION ${section.number} · PRINTED PAGES ${section.source.printedPageStart}–${section.source.printedPageEnd}`, section.title, `${section.subsections.length} subsections · ${sectionCounts(section.number).total} exercises · one active section rendered at a time`)}${m2ePanel(section)}<label class="rosen-ch1-studied"><input type="checkbox" data-rosen-section-done="${escapeHTML(section.number)}" ${store.sections[section.number] ? 'checked' : ''}> I have studied this section and can reproduce its core method on paper.</label><div class="rosen-ch1-reader-layout"><nav class="rosen-ch1-subsection-nav" aria-label="Section ${section.number} subsections">${section.subsections.map((subsection) => `<button type="button" data-rosen-action="jump" data-target="${escapeHTML(subsection.id)}">${escapeHTML(subsection.number)} ${escapeHTML(subsection.title)}</button>`).join('')}</nav><div class="rosen-ch1-narrative">${section.blocks.map(renderBlock).join('')}${section.subsections.map((subsection) => `<section class="rosen-ch1-subsection" aria-label="${escapeHTML(subsection.number)} ${escapeHTML(subsection.title)}">${subsection.blocks.map(renderBlock).join('')}</section>`).join('')}</div></div>${set ? renderExerciseSet(set, answers) : ''}<nav class="rosen-ch1-next" aria-label="Adjacent chapter routes"><a href="${index ? `#comp232-rosen-ch1-s${index}` : '#comp232-rosen-ch1'}">← ${index ? `Section ${content().sections[index - 1].number}` : 'Chapter map'}</a><a href="${index < 7 ? `#comp232-rosen-ch1-s${index + 2}` : '#comp232-rosen-ch1-review'}">${index < 7 ? `Section ${content().sections[index + 1].number}` : 'Review & synthesis'} →</a></nav>`;
+    const hasNext = index < content().sections.length - 1;
+    return `${chapterHeader(`SECTION ${section.number} · PRINTED PAGES ${section.source.printedPageStart}–${section.source.printedPageEnd}`, section.title, `${section.subsections.length} subsections · ${sectionCounts(section.number).total} exercises · one active section rendered at a time`)}${m2ePanel(section)}<label class="rosen-ch1-studied"><input type="checkbox" data-rosen-section-done="${escapeHTML(section.number)}" ${store.sections[section.number] ? 'checked' : ''}> I have studied this section and can reproduce its core method on paper.</label><div class="rosen-ch1-reader-layout"><nav class="rosen-ch1-subsection-nav" aria-label="Section ${section.number} subsections">${section.subsections.map((subsection) => `<button type="button" data-rosen-action="jump" data-target="${escapeHTML(subsection.id)}">${escapeHTML(subsection.number)} ${escapeHTML(subsection.title)}</button>`).join('')}</nav><div class="rosen-ch1-narrative">${section.blocks.map(renderBlock).join('')}${section.subsections.map((subsection) => `<section class="rosen-ch1-subsection" aria-label="${escapeHTML(subsection.number)} ${escapeHTML(subsection.title)}">${subsection.blocks.map(renderBlock).join('')}</section>`).join('')}</div></div>${set ? renderExerciseSet(set, answers) : ''}<nav class="rosen-ch1-next" aria-label="Adjacent chapter routes"><a href="${index ? `#${sectionRoute(index - 1)}` : `#${config.routePrefix}`}">← ${index ? `Section ${content().sections[index - 1].number}` : 'Chapter map'}</a><a href="${hasNext ? `#${sectionRoute(index + 1)}` : `#${config.routePrefix}-review`}">${hasNext ? `Section ${content().sections[index + 1].number}` : 'Review & synthesis'} →</a></nav>`;
   }
   function renderEndMatter(kind, answers) {
     const review = kind === 'review';
     const sets = content().exerciseSets.filter((set) => review ? ['review', 'supplementary'].includes(set.set) : ['computer-projects', 'computations-explorations', 'writing-projects'].includes(set.set));
     const endBlocks = content().endMatter.blocks;
     const reviewBlocks = `<section class="rosen-ch1-end-matter">${endBlocks.filter((block) => ['end-matter-heading', 'terms-heading'].includes(block.kind)).map(renderBlock).join('')}<dl>${endBlocks.filter((block) => block.kind === 'key-term').map(renderBlock).join('')}</dl>${endBlocks.filter((block) => block.kind === 'results-heading').map(renderBlock).join('')}<ol>${content().endMatter.resultGroups.map(renderBlock).join('')}</ol></section>`;
-    return `${chapterHeader(review ? 'END MATTER · REVIEW & SYNTHESIS' : 'END MATTER · PROJECTS & EXPLORATION', review ? 'Review the language. Test the reasoning.' : 'Build, explore, and explain.', review ? 'Key terms and results, review questions, and supplementary exercises—with drafts and checking kept local.' : 'Open-ended work remains honest: authored rubrics use model answers and explicit self-assessment, never prose string matching.')}${review ? reviewBlocks : m2ePanel(null)}${sets.map((set) => renderExerciseSet(set, answers)).join('')}<nav class="rosen-ch1-next"><a href="${review ? '#comp232-rosen-ch1-s8' : '#comp232-rosen-ch1-review'}">← ${review ? 'Section 1.8' : 'Review & synthesis'}</a><a href="${review ? '#comp232-rosen-ch1-projects' : '#comp232-rosen-ch1'}">${review ? 'Projects & exploration' : 'Chapter map'} →</a></nav>`;
+    const lastSection = content().sections[content().sections.length - 1];
+    return `${chapterHeader(review ? 'END MATTER · REVIEW & SYNTHESIS' : 'END MATTER · PROJECTS & EXPLORATION', review ? 'Review the language. Test the reasoning.' : 'Build, explore, and explain.', review ? 'Key terms and results, review questions, and supplementary exercises—with drafts and checking kept local.' : 'Open-ended work remains honest: authored rubrics use model answers and explicit self-assessment, never prose string matching.')}${review ? reviewBlocks : m2ePanel(null)}${sets.map((set) => renderExerciseSet(set, answers)).join('')}<nav class="rosen-ch1-next"><a href="${review ? `#${sectionRoute(content().sections.length - 1)}` : `#${config.routePrefix}-review`}">← ${review ? `Section ${lastSection.number}` : 'Review & synthesis'}</a><a href="${review ? `#${config.routePrefix}-projects` : `#${config.routePrefix}`}">${review ? 'Projects & exploration' : 'Chapter map'} →</a></nav>`;
   }
   function setupDelegated(host) {
-    if (host.dataset.rosenCh1Delegated === 'true') return;
-    host.dataset.rosenCh1Delegated = 'true';
+    const delegatedKey = config.delegatedKey || `rosenCh${config.chapterNumber}Delegated`;
+    const owns = (target) => {
+      const reader = target.closest && target.closest('.rosen-ch1-reader');
+      return reader && reader.dataset.rosenChapter === config.routePrefix;
+    };
+    if (host.dataset[delegatedKey] === 'true') return;
+    host.dataset[delegatedKey] = 'true';
     host.addEventListener('input', (event) => {
       const target = event.target;
-      if (!target.closest || !target.closest('.rosen-ch1-reader')) return;
+      if (!owns(target)) return;
       if (target.matches('[data-rosen-draft]')) {
         const id = target.dataset.rosenDraft, part = target.dataset.part || '0';
         if (!store.drafts[id]) store.drafts[id] = {};
@@ -478,21 +505,21 @@
       } else if (target.matches('[data-rosen-filter="query"]')) {
         const config = setUI(target.dataset.set);
         config.query = target.value; config.page = 1;
-        renderRosenCh1();
+        render();
         const replacement = host.querySelector(`[data-rosen-filter="query"][data-set="${target.dataset.set}"]`);
         if (replacement) { replacement.focus(); replacement.setSelectionRange(replacement.value.length, replacement.value.length); }
       }
     });
     host.addEventListener('change', (event) => {
       const target = event.target;
-      if (!target.closest || !target.closest('.rosen-ch1-reader')) return;
+      if (!owns(target)) return;
       if (target.matches('[data-rosen-filter="difficulty"],[data-rosen-filter="status"]')) {
         const config = setUI(target.dataset.set);
         config[target.dataset.rosenFilter] = target.value; config.page = 1;
-        renderRosenCh1();
+        render();
       } else if (target.matches('[data-rosen-section-done]')) {
         store.sections[target.dataset.rosenSectionDone] = target.checked;
-        saveStore(); renderRosenCh1();
+        saveStore(); render();
       } else if (target.matches('[data-rosen-rubric-check]')) {
         const fieldset = target.closest('[data-rubric]');
         const checks = [...fieldset.querySelectorAll('[data-rosen-rubric-check]')];
@@ -501,7 +528,7 @@
     });
     host.addEventListener('click', (event) => {
       const button = event.target.closest ? event.target.closest('[data-rosen-action]') : null;
-      if (!button || !button.closest('.rosen-ch1-reader') || button.disabled) return;
+      if (!button || !owns(button) || button.disabled) return;
       const action = button.dataset.rosenAction;
       const id = button.dataset.id;
       if (action === 'translate') {
@@ -513,14 +540,14 @@
       if (action === 'page') {
         const config = setUI(button.dataset.set);
         config.page = Number(button.dataset.page);
-        renderRosenCh1();
+        render();
         const heading = host.querySelector(`#${button.dataset.set}-title`);
         if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus(); }
         return;
       }
       if (action === 'clear-filters') {
         ui.sets[button.dataset.set] = { query: '', difficulty: 'all', status: 'all', page: 1 };
-        renderRosenCh1(); return;
+        render(); return;
       }
       if (action === 'jump') {
         const target = global.document.getElementById(button.dataset.target);
@@ -541,7 +568,7 @@
           const total = solutionSteps(block.solution).length;
           state.steps = state.steps >= total ? 1 : state.steps + 1;
         }
-        store.examples[id] = state; saveStore(); renderRosenCh1();
+        store.examples[id] = state; saveStore(); render();
         const next = host.querySelector(`[data-rosen-action="${action}"][data-id="${id}"]`);
         if (next) next.focus();
         return;
@@ -575,40 +602,87 @@
         result.messages[index] = 'Self-assessment confirmed against every rubric criterion.';
         result.status = overallResult(answer, parts.map((_, partIndex) => result.parts[partIndex] || 'review'));
       }
-      saveStore(); renderRosenCh1();
+      saveStore(); render();
       const focusTarget = host.querySelector(`[data-rosen-action="${action}"][data-id="${id}"]`) || host.querySelector(`#${id}`);
       if (focusTarget) { if (!focusTarget.matches('button,input,textarea,a')) focusTarget.setAttribute('tabindex', '-1'); focusTarget.focus(); }
     });
   }
-  function renderRosenCh1() {
-    const host = global.document && global.document.querySelector('#main');
+  function render() {
+    const host = global.document && global.document.querySelector(config.hostSelector || '#main');
     const data = content();
     if (!host || !data) return false;
     store = loadStore();
     const id = routeId();
     const answers = answerMap();
     let body;
-    if (id === 'comp232-rosen-ch1') body = renderOverview();
-    else if (id === 'comp232-rosen-ch1-review') body = renderEndMatter('review', answers);
-    else if (id === 'comp232-rosen-ch1-projects') body = renderEndMatter('projects', answers);
+    if (id === config.routePrefix) body = renderOverview();
+    else if (id === `${config.routePrefix}-review`) body = renderEndMatter('review', answers);
+    else if (id === `${config.routePrefix}-projects`) body = renderEndMatter('projects', answers);
     else {
       const section = sectionForRoute(id);
       const index = data.sections.indexOf(section);
       body = renderSection(section, index, answers);
     }
-    host.innerHTML = `<div class="rosen-ch1-reader" data-route="${escapeHTML(id)}">${body}</div>`;
-    global.document.title = `${id === 'comp232-rosen-ch1' ? data.title : id === 'comp232-rosen-ch1-review' ? 'Chapter 1 Review' : id === 'comp232-rosen-ch1-projects' ? 'Chapter 1 Projects' : `${sectionForRoute(id).number} ${sectionForRoute(id).title}`} · Rosen · Study Lab`;
+    host.innerHTML = `<div class="rosen-ch1-reader" data-rosen-chapter="${escapeHTML(config.routePrefix)}" data-route="${escapeHTML(id)}">${body}</div>`;
+    global.document.title = `${id === config.routePrefix ? data.title : id === `${config.routePrefix}-review` ? `Chapter ${config.chapterNumber} Review` : id === `${config.routePrefix}-projects` ? `Chapter ${config.chapterNumber} Projects` : `${sectionForRoute(id).number} ${sectionForRoute(id).title}`} · Rosen · Study Lab`;
     const courseLabel = global.document.querySelector('#course-label');
-    if (courseLabel) courseLabel.textContent = 'COMP 232 / ROSEN CHAPTER 1';
+    if (courseLabel) courseLabel.textContent = config.courseLabel;
     setupDelegated(host);
     return true;
   }
 
-  global.rosenCh1Route = rosenCh1Route;
-  global.renderRosenCh1 = renderRosenCh1;
-  global.rosenCh1Progress = rosenCh1Progress;
-  global.rosenCh1Checker = Object.freeze({
-    normalizeText, parseNumber, checkNumber, canonicalSet, checkSet, checkTruth,
-    parseLogic, checkLogic, checkAuto, translateNotation,
+    const checker = Object.freeze({
+      normalizeText, parseNumber, checkNumber, canonicalSet, checkSet, checkTruth,
+      parseLogic, checkLogic, checkAuto, translateNotation,
+    });
+    return Object.freeze({ route, render, progress, checker });
+  }
+
+  const chapter1 = createRosenChapter({
+    chapterNumber: 1,
+    routePrefix: 'comp232-rosen-ch1',
+    storageKey: 'comp232-rosen-ch1-v1',
+    sectionCount: 8,
+    courseLabel: 'COMP 232 / ROSEN CHAPTER 1',
+    overviewEyebrow: 'COMP 232 · ROSEN, EIGHTH EDITION · CHAPTER 1',
+    overviewMapTitle: 'Eight sections. One reasoning toolkit.',
+    content: () => (typeof ROSEN_CH1_CONTENT !== 'undefined' ? ROSEN_CH1_CONTENT : null),
+    exercises: () => (typeof ROSEN_CH1_EXERCISES !== 'undefined' ? ROSEN_CH1_EXERCISES : []),
+    answers: () => (typeof ROSEN_CH1_ANSWERS !== 'undefined' ? ROSEN_CH1_ANSWERS : []),
+    m2eExpression: (section, number) => number === '1.4' ? '∀x ∃y (P(x,y) → Q(x,y))' : number === '1.5' ? '∃y ∀x (x + y = 0)' : '¬p ∧ (p ∨ q) → q',
+    sectionHints: {
+      '1.1': 'Name each proposition first. Translate one connective at a time, then check the truth conditions.',
+      '1.2': 'Write the atomic statements separately before translating the sentence or circuit.',
+      '1.3': 'Choose an equivalence law for each rewrite. For a non-equivalence, find one counterexample row.',
+      '1.4': 'State the domain, predicate, variable, and quantifier before forming the English sentence.',
+      '1.5': 'Read quantifiers from left to right. Ask which later variables are allowed to depend on earlier ones.',
+      '1.6': 'Match the premises to an inference-rule pattern, then justify every conclusion line.',
+      '1.7': 'Identify the statement form and choose direct, contrapositive, or contradiction reasoning before writing.',
+      '1.8': 'Try a small case, look for structure or an invariant, and audit the proof’s domain and edge cases.',
+      review: 'Define every symbol, make a small truth table or example, and justify each inference by name.',
+      projects: 'Specify inputs and outputs first, then test boundary cases and explain the method independently.',
+    },
   });
+  const chapter2 = createRosenChapter({
+    chapterNumber: 2,
+    routePrefix: 'comp232-rosen-ch2',
+    storageKey: 'comp232-rosen-ch2-v1',
+    sectionCount: 6,
+    courseLabel: 'COMP 232 / ROSEN CHAPTER 2',
+    overviewEyebrow: 'COMP 232 · ROSEN, EIGHTH EDITION · CHAPTER 2',
+    content: () => (typeof ROSEN_CH2_CONTENT !== 'undefined' ? ROSEN_CH2_CONTENT : null),
+    exercises: () => (typeof ROSEN_CH2_EXERCISES !== 'undefined' ? ROSEN_CH2_EXERCISES : []),
+    answers: () => (typeof ROSEN_CH2_ANSWERS !== 'undefined' ? ROSEN_CH2_ANSWERS : []),
+  });
+
+  global.createRosenChapter = createRosenChapter;
+  global.RosenChapterEngine = Object.freeze({ create: createRosenChapter });
+  global.rosenCh1Route = chapter1.route;
+  global.renderRosenCh1 = chapter1.render;
+  global.rosenCh1Progress = chapter1.progress;
+  global.rosenCh1Checker = chapter1.checker;
+  global.rosenCh2Route = chapter2.route;
+  global.renderRosenCh2 = chapter2.render;
+  global.rosenCh2Progress = chapter2.progress;
+  global.rosenCh2Checker = chapter2.checker;
 })(typeof window !== 'undefined' ? window : globalThis);
