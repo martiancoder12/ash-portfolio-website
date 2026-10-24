@@ -32,7 +32,7 @@ Nobody is steering it. That's Block's whole point. Dessa decides what to say, wh
 
 ![Carousel slide 1 of 6 — the cover: “This Toronto-built AI never learned to read.”](/blog/dessa-never-learned-to-read/carousel-wired/slide-01.png)
 
-*This story also runs as a six-slide carousel. The slides run through this post, one per section — start here, or just read.*
+*This story also runs as a* [six-slide carousel on Instagram](https://www.instagram.com/p/De4_tmbDg8W/?img_index=1)*. The slides run through this post, one per section — start here, or just read.*
 
 ---
 
@@ -146,7 +146,7 @@ You learned to talk by listening. The question was never really whether a machin
 
 ![Carousel slide 6 of 6 — The Kicker: would you know it wasn't human?](/blog/dessa-never-learned-to-read/carousel-wired/slide-06.png)
 
-*The carousel is live on Instagram —* [@martiancoder12](https://www.instagram.com/p/De4_tmbDg8W/)*. The blog is the receipts; the slides are the story.*
+*The carousel is live on Instagram —* [@martiancoder12](https://www.instagram.com/p/De4_tmbDg8W/?img_index=1)*. The blog is the receipts; the slides are the story.*
 
 ---
 
