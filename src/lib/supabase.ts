@@ -136,3 +136,11 @@ export interface PostInsert {
   meta_title?: string | null;
   meta_description?: string | null;
 }
+
+export interface PostComment {
+  id: string;
+  created_at: string;
+  post_slug: string;
+  author_name: string;
+  body: string;
+}

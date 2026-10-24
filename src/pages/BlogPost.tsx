@@ -2,6 +2,7 @@ import { Fragment, useEffect, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router'
 import { usePostBySlug } from '@/hooks/usePosts'
 import DescentNav, { useDescentBody, formatPostDate } from '@/components/DescentNav'
+import Comments from '@/components/Comments'
 
 const serif = "'Newsreader',Georgia,serif"
 const siteUrl = 'https://ashfaaqkazi.ca'
@@ -217,6 +218,8 @@ export default function BlogPost() {
                 <p style={{ margin: '12px 0 0', fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.66, color: '#4A4A46' }}>Working on usable security, privacy engineering, or AI-agent systems? I'd genuinely like to hear from you.</p>
                 <a href="mailto:ashfaaq.kazi@outlook.com" className="d-hover-fade" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 16, minHeight: 44, padding: '0 18px', borderRadius: 10, background: '#0D0D0C', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 600 }}>ashfaaq.kazi@outlook.com →</a>
               </div>
+
+              <Comments slug={post.slug} />
             </article>
           )}
         </div>

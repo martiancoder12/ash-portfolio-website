@@ -120,7 +120,7 @@ Block, to its credit, seems to know it — hence the gated rollout, safety resea
 
 ## Before you get too excited: the receipts problem
 
-WIRED rule of thumb: the more cinematic the demo, the more boring the questions you should ask. So, boringly:
+The more cinematic the demo, the more boring the questions you should ask. So, boringly:
 
 There is no technical paper. No published weights, no parameter count, no benchmark table, no measured latency figures, no list of supported languages. Everything we know about how *well* Dessa works comes from recordings Block selected and released, which Block says were recorded live and unsteered, subtitles added after the fact. Selected by the seller, however honestly, is selected by the seller.
 
@@ -146,7 +146,7 @@ You learned to talk by listening. The question was never really whether a machin
 
 ![Carousel slide 6 of 6 — The Kicker: would you know it wasn't human?](/blog/dessa-never-learned-to-read/carousel-wired/slide-06.png)
 
-*The carousel is live on Instagram —* [@martiancoder12](https://www.instagram.com/p/De4_tmbDg8W/?img_index=1)*. The blog is the receipts; the slides are the story.*
+*The carousel is live on Instagram —* [@martiancoder12](https://www.instagram.com/p/De4_tmbDg8W/?img_index=1).
 
 ---
 
