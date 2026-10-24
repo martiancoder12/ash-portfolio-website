@@ -16,6 +16,7 @@ type PublishedPost = {
   updated_at: string
   meta_title: string | null
   meta_description: string | null
+  og_image?: string
 }
 
 function escapeHtml(value: string) {
@@ -49,6 +50,7 @@ function renderInline(value: string) {
 function markdownToHtml(markdown: string) {
   const blocks = markdown.split(/\n\n+/).map((block) => block.trim()).filter(Boolean)
   return blocks.map((block) => {
+    if (block === '---') return '<hr>'
     const image = block.match(/^!\[([^\]]*)\]\(([^)]+)\)$/)
     if (image) {
       return '<figure><img src="' + escapeHtml(safeUrl(image[2])) + '" alt="' + escapeHtml(image[1]) + '" width="1600" height="900"><figcaption>' + escapeHtml(image[1]) + '</figcaption></figure>'
@@ -62,6 +64,9 @@ function markdownToHtml(markdown: string) {
     }
     if (lines.every((line) => /^\d+\.\s/.test(line))) {
       return '<ol>' + lines.map((line) => '<li>' + renderInline(line.replace(/^\d+\.\s/, '')) + '</li>').join('') + '</ol>'
+    }
+    if (lines.every((line) => line.startsWith('> '))) {
+      return '<blockquote>' + renderInline(lines.map((line) => line.slice(2)).join(' ')) + '</blockquote>'
     }
     return '<p>' + renderInline(lines.join(' ')) + '</p>'
   }).join('\n')
@@ -86,7 +91,9 @@ function pageHtml(template: string, post: PublishedPost) {
   const title = post.meta_title || post.title + ' — ' + authorName
   const description = post.meta_description || post.excerpt || ''
   const firstImage = post.content?.match(/!\[[^\]]*\]\(([^)]+)\)/)?.[1]
-  const image = firstImage ? new URL(firstImage, siteUrl).toString() : siteUrl + '/og-image.png'
+  const image = post.og_image
+    ? new URL(post.og_image, siteUrl).toString()
+    : firstImage ? new URL(firstImage, siteUrl).toString() : siteUrl + '/og-image.png'
   const published = post.published_at || post.created_at
   const schema = JSON.stringify({
     '@context': 'https://schema.org',
@@ -119,7 +126,7 @@ function pageHtml(template: string, post: PublishedPost) {
     '<meta name="twitter:description" content="' + escapeHtml(description) + '">',
     '<meta name="twitter:image" content="' + escapeHtml(image) + '">',
     '<script type="application/ld+json">' + schema + '</script>',
-    '<style>.prerendered-blog-post{width:min(860px,calc(100% - 40px));margin:96px auto;font:16px/1.75 system-ui,sans-serif;color:#4a4a46}.prerendered-blog-post h1,.prerendered-blog-post h2,.prerendered-blog-post h3{font-family:Georgia,serif;color:#0d0d0c;line-height:1.15}.prerendered-blog-post h1{font-size:clamp(34px,4.6vw,54px)}.prerendered-blog-post h2{margin-top:48px;font-size:30px}.prerendered-blog-post h3{margin-top:30px;font-size:23px}.prerendered-blog-post a{color:#1746a2}.prerendered-blog-post figure{margin:36px 0}.prerendered-blog-post img{display:block;width:100%;height:auto;border-radius:16px}.prerendered-blog-post figcaption{font-size:12px;color:#74746e}.post-kicker,.post-byline{font-size:13px}.post-excerpt{font:italic 21px/1.5 Georgia,serif}</style>',
+    '<style>.prerendered-blog-post{width:min(860px,calc(100% - 40px));margin:96px auto;font:16px/1.75 system-ui,sans-serif;color:#4a4a46}.prerendered-blog-post h1,.prerendered-blog-post h2,.prerendered-blog-post h3{font-family:Georgia,serif;color:#0d0d0c;line-height:1.15}.prerendered-blog-post h1{font-size:clamp(34px,4.6vw,54px)}.prerendered-blog-post h2{margin-top:48px;font-size:30px}.prerendered-blog-post h3{margin-top:30px;font-size:23px}.prerendered-blog-post a{color:#1746a2}.prerendered-blog-post figure{margin:36px 0}.prerendered-blog-post img{display:block;width:100%;height:auto;border-radius:16px}.prerendered-blog-post figcaption{font-size:12px;color:#74746e}.prerendered-blog-post hr{border:none;border-top:1px solid #e0e0e0;margin:44px 0}.prerendered-blog-post blockquote{margin:28px 0;padding:18px 22px;border-left:3px solid #057dbc;background:#fafaf9;font-family:Georgia,serif;font-size:20px;line-height:1.55;color:#353531}.post-kicker,.post-byline{font-size:13px}.post-excerpt{font:italic 21px/1.5 Georgia,serif}</style>',
   ].join('\n')
 
   return template
@@ -147,6 +154,8 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
   const democracyCoinageContent = democracyCoinageSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   const nobodyAttacksSource = await readFile(path.resolve('content/blog/nobody-attacks-the-app-anymore.md'), 'utf8')
   const nobodyAttacksContent = nobodyAttacksSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+  const dessaSource = await readFile(path.resolve('content/blog/dessa-never-learned-to-read.md'), 'utf8')
+  const dessaContent = dessaSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
   return [{
     title: 'How to Study for Math and Problem-Solving Courses: A Practical Active-Learning System',
     slug: 'how-to-study-math-problem-solving-courses',
@@ -191,6 +200,18 @@ async function readBuiltinPosts(): Promise<PublishedPost[]> {
     updated_at: '2026-10-23T20:00:00.000Z',
     meta_title: 'Nobody Attacks the App Anymore',
     meta_description: 'Railway, OpenCode, LiteLLM, ConnectWise: in ten days the breaches went through custody, not code. Why pooled secrets are the new perimeter — and the standing orders for any team.',
+  }, {
+    title: 'This AI Never Learned to Read. It Learned to Talk Anyway.',
+    slug: 'dessa-never-learned-to-read',
+    excerpt: "Block's tiny Toronto-born lab built a voice model out of pure conversation — no text, no transcripts, no cheat sheet. It laughs, it interrupts, it eavesdrops on emotion. Now comes the hard part: proving it.",
+    content: dessaContent,
+    tags: ['AI', 'voice AI', 'Block', 'Toronto', 'cybersecurity'],
+    published_at: '2026-10-24T17:00:00-04:00',
+    created_at: '2026-10-24T21:00:00.000Z',
+    updated_at: '2026-10-24T21:00:00.000Z',
+    meta_title: 'This AI Never Learned to Read. It Learned to Talk Anyway.',
+    meta_description: "Block's Dessa learned to talk from pure conversation — no text, no transcripts. Why a Toronto-born voice model matters, what it deletes, and the receipts still missing.",
+    og_image: '/blog/dessa-never-learned-to-read/imagery/dessa-illus-01-head-waveform.png',
   }]
 }
 

@@ -3,11 +3,13 @@ import learningStrategiesSource from '../../content/blog/how-to-study-math-probl
 import labourDaySource from '../../content/blog/the-unfinished-work-of-labour-day.md?raw'
 import democracyCoinageSource from '../../content/blog/democracy-a-new-coinage.md?raw'
 import nobodyAttacksSource from '../../content/blog/nobody-attacks-the-app-anymore.md?raw'
+import dessaSource from '../../content/blog/dessa-never-learned-to-read.md?raw'
 
 const learningStrategiesContent = learningStrategiesSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 const labourDayContent = labourDaySource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 const democracyCoinageContent = democracyCoinageSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 const nobodyAttacksContent = nobodyAttacksSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
+const dessaContent = dessaSource.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim()
 
 export const builtinPosts: Post[] = [
   {
@@ -65,6 +67,20 @@ export const builtinPosts: Post[] = [
     published_at: '2026-10-23T16:00:00-04:00',
     meta_title: 'Nobody Attacks the App Anymore',
     meta_description: 'Railway, OpenCode, LiteLLM, ConnectWise: in ten days the breaches went through custody, not code. Why pooled secrets are the new perimeter — and the standing orders for any team.',
+  },
+  {
+    id: 'builtin-dessa-never-learned-to-read',
+    created_at: '2026-10-24T21:00:00.000Z',
+    updated_at: '2026-10-24T21:00:00.000Z',
+    title: 'This AI Never Learned to Read. It Learned to Talk Anyway.',
+    slug: 'dessa-never-learned-to-read',
+    excerpt: "Block's tiny Toronto-born lab built a voice model out of pure conversation — no text, no transcripts, no cheat sheet. It laughs, it interrupts, it eavesdrops on emotion. Now comes the hard part: proving it.",
+    content: dessaContent,
+    tags: ['AI', 'voice AI', 'Block', 'Toronto', 'cybersecurity'],
+    status: 'published',
+    published_at: '2026-10-24T17:00:00-04:00',
+    meta_title: 'This AI Never Learned to Read. It Learned to Talk Anyway.',
+    meta_description: "Block's Dessa learned to talk from pure conversation — no text, no transcripts. Why a Toronto-born voice model matters, what it deletes, and the receipts still missing.",
   },
 ]
 

@@ -40,6 +40,9 @@ function PostBody({ content }: { content: string }) {
   return (
     <div>
       {blocks.map((block, index) => {
+        if (block === '---') {
+          return <hr key={index} style={{ border: 'none', borderTop: '1px solid rgba(13,13,12,0.12)', margin: 'clamp(34px,5vw,52px) 0 0' }} />
+        }
         const image = block.match(/^!\[([^\]]*)\]\(([^)]+)\)$/)
         if (image) {
           const isHero = imageIndex++ === 0
