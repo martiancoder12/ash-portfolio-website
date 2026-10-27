@@ -16,7 +16,7 @@ const MODULE_TOC_CONFIG={
  elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes']]},
  math:{code:'ENGR 213',title:'Differential equations',workspaces:[['Quiz practice','#engr213'],['Lecture Notes','#engr-notes']]},
  inse:{code:'INSE 201',title:'Security ethics',workspaces:[['Lecture Notes','#inse201-notes']]},
- java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3'],['Mind Map','./comp248-mind-map/']]}
+ java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Planning Lab','#comp248-planning'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3'],['Mind Map','./comp248-mind-map/']]}
 };
 function moduleWorkspaceActive(href){
  if(href==='#quiz')return activeId==='quiz'||activeId==='elec-references'||/^elec-P[1-5]-[ab]$/.test(activeId)||/^E[1-8]$/.test(activeId);
@@ -28,13 +28,14 @@ function moduleWorkspaceActive(href){
  if(href==='#comp232-rosen-ch1')return isRosenCh1Route(activeId);
  if(href==='#comp232-rosen-ch2')return isRosenCh2Route(activeId);
  if(href==='#inse201-notes')return typeof inseRoute==='function'&&inseRoute(activeId);
- if(href==='#comp248-notes')return typeof comp248Route==='function'&&comp248Route(activeId)&&!/^comp248-tutorial-/.test(activeId);
+ if(href==='#comp248-notes')return typeof comp248Route==='function'&&comp248Route(activeId)&&activeId!=='comp248-planning'&&!/^comp248-tutorial-/.test(activeId);
+ if(href==='#comp248-planning')return activeId==='comp248-planning';
  if(href==='#comp248-tutorial-2')return activeId==='comp248-tutorial-2';
  if(href==='#comp248-tutorial-3')return activeId==='comp248-tutorial-3';
  return false;
 }
 function moduleTocSections(){
- let nodes=[...main.querySelectorAll('.note-card[id],.inse-note-card[id],.comp-note-card[id]')];
+ let nodes=activeId==='comp248-planning'?[...main.querySelectorAll('.plan-intro,.plan-flow-map,.plan-trace-lab,.plan-practice,.plan-exam-checklist')]:[...main.querySelectorAll('.note-card[id],.inse-note-card[id],.comp-note-card[id]')];
  if(!nodes.length)nodes=[...main.querySelectorAll('.rosen-ch1-subsection,.rosen-ch1-exercise-set,.rosen-ch1-map-card')];
  if(!nodes.length)nodes=[...main.querySelectorAll('.problem,.engr-card,.notes-lecture-card')];
  if(!nodes.length)nodes=[...main.querySelectorAll('.story,.lab,.question,.teach-roadmap')];

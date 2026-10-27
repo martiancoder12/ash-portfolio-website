@@ -1,0 +1,125 @@
+/* COMP 248 · From Problem to Program */
+.plan-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:2rem;align-items:center;margin:1.25rem 0 1rem;padding:clamp(1.5rem,4vw,3.25rem);border:1px solid #ded8f4;border-radius:28px;background:linear-gradient(135deg,#f7f4ff 0%,#fff 60%,#eff9f3 100%)}
+.plan-hero>div>span,.plan-intro>div>span,.plan-section-head>div>span,.plan-detail-kind{font-size:.7rem;font-weight:800;letter-spacing:.13em;color:#6651a4}
+.plan-hero h1{max-width:14ch;margin:.55rem 0 1rem;font-size:clamp(2.2rem,4.4vw,4.6rem);line-height:1.02;letter-spacing:-.045em;color:#272038}
+.plan-hero h1 em{color:#7055b7;font-style:normal}
+.plan-hero p{max-width:64ch;margin:0;color:#625c70;line-height:1.65}
+.plan-hero-formula{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.65rem;padding:1.5rem;border:1px solid #d9d0ef;border-radius:22px;background:#272038;color:#fff;box-shadow:0 22px 50px #3b2d6418}
+.plan-hero-formula span{padding:.65rem .55rem;border:1px solid #ffffff24;border-radius:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.07em}
+.plan-hero-formula span:last-child{background:#c8f16d;color:#253014;border-color:transparent}
+.plan-hero-formula i{color:#b7a7dd;font-style:normal}
+.plan-tabs{position:sticky;top:0;z-index:8;display:flex;gap:.35rem;overflow-x:auto;margin:0 0 1.25rem;padding:.45rem;border:1px solid #e3deeb;border-radius:15px;background:#fffffff2;backdrop-filter:blur(12px)}
+.plan-tabs button{flex:1;min-width:max-content;padding:.75rem 1rem;border:0;border-radius:10px;background:transparent;color:#6c6577;font:inherit;font-size:.82rem;font-weight:750;cursor:pointer}
+.plan-tabs button.active{background:#302642;color:#fff;box-shadow:0 4px 14px #30264220}
+.plan-program-toggle{display:inline-flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem;padding:.3rem;border:1px solid #ddd6e9;border-radius:12px;background:#f5f2f8}
+.plan-program-toggle button{padding:.6rem .9rem;border:0;border-radius:9px;background:transparent;color:#665e70;font:inherit;font-size:.82rem;font-weight:750;cursor:pointer}
+.plan-program-toggle button.active{background:#fff;color:#5c3f99;box-shadow:0 2px 8px #3d2c5c15}
+.plan-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:1.5rem;align-items:end;margin:1rem 0 1.25rem;padding:1.25rem 1.4rem;border-left:4px solid #7c61b6;border-radius:0 16px 16px 0;background:#f7f5fa}
+.plan-intro h2{margin:.35rem 0 0;font-size:clamp(1.2rem,2vw,1.65rem);line-height:1.2;color:#30283d}
+.plan-intro>p{margin:0;color:#665f70;font-size:.92rem;line-height:1.6}
+.plan-flow-layout{display:grid;grid-template-columns:minmax(340px,.92fr) minmax(360px,1.08fr);gap:1.25rem;align-items:start}
+.plan-flow-map{padding:1.25rem;border:1px solid #e2dce9;border-radius:20px;background:#fbfafc}
+.plan-flow-start,.plan-flow-end{width:max-content;margin:0 auto;padding:.35rem .85rem;border-radius:99px;background:#30283d;color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.13em}
+.plan-flow-map ol{margin:.75rem 0;padding:0;list-style:none}
+.plan-flow-map li{position:relative}
+.plan-node{display:flex;align-items:center;width:100%;gap:.75rem;padding:.8rem .9rem;border:1.5px solid #ddd6e6;border-radius:13px;background:#fff;color:#332c3d;text-align:left;font:inherit;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s}
+.plan-node:hover{border-color:#9075c2;transform:translateY(-1px)}
+.plan-node>span{display:grid;place-items:center;flex:0 0 32px;height:32px;border-radius:9px;background:#f0ebf6;color:#6b5297;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;font-weight:800}
+.plan-node>div{display:grid;gap:.15rem;flex:1}
+.plan-node strong{font-size:.88rem}
+.plan-node small{color:#857d8e;font-size:.65rem;text-transform:uppercase;letter-spacing:.09em}
+.plan-node>i{color:#a295b1;font-style:normal}
+.plan-node.kind-decision{border-style:dashed;border-color:#b5a2cf}
+.plan-node.kind-update{background:#f3f8ef;border-color:#cbdcbf}
+.plan-node.kind-output{background:#f0f7f8;border-color:#b8d4d8}
+.plan-node[aria-pressed="true"]{border-color:#6d4ca8;box-shadow:0 0 0 3px #7654ae15}
+.plan-node.is-visited{box-shadow:inset 4px 0 #9acb70}
+.plan-node.is-current{border-color:#6c973d;box-shadow:0 0 0 4px #a8d57825;transform:translateX(3px)}
+.plan-arrow{height:20px;display:grid;place-items:center;color:#a69bad;font-size:.85rem}
+.plan-branches{display:flex;flex-wrap:wrap;gap:.3rem;margin:.45rem 0 .2rem 2.5rem}
+.plan-branches span{padding:.25rem .45rem;border:1px dashed #c9badb;border-radius:6px;background:#fff;color:#6f5b89;font-size:.62rem}
+.plan-detail-column{position:sticky;top:76px}
+.plan-node-detail{padding:1.35rem;border:1px solid #ddd5e9;border-radius:20px;background:#fff;box-shadow:0 12px 30px #3625460a}
+.plan-node-detail h3{margin:.45rem 0 .8rem;font-size:1.45rem;color:#30263e}
+.plan-node-detail blockquote{margin:0 0 1rem;padding:.8rem 1rem;border-left:3px solid #8b6abb;background:#f7f3fb;color:#594d66;font-size:.9rem;line-height:1.55}
+.plan-node-detail pre,.plan-trace-card pre,.plan-tool-card pre{overflow-x:auto;margin:.75rem 0;padding:1rem;border-radius:12px;background:#282231;color:#f4effa;font: .78rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.plan-say{display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;margin:1rem 0}
+.plan-say span{padding:.25rem .4rem;border-radius:5px;background:#eaf3df;color:#4b6b2f;font-size:.6rem;font-weight:850;letter-spacing:.08em}
+.plan-say p{margin:0;color:#51445d;font-size:.88rem;font-style:italic;line-height:1.55}
+.plan-node-detail dl{margin:0}
+.plan-node-detail dl>div{padding:.65rem 0;border-top:1px solid #eee9f1}
+.plan-node-detail dt{margin-bottom:.2rem;color:#776582;font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.plan-node-detail dd{margin:0;color:#4f4756;font-size:.85rem;line-height:1.55}
+.plan-trace-lab{margin-top:1.5rem;padding:1.35rem;border:1px solid #ded8e8;border-radius:20px;background:#f8f6fa}
+.plan-section-head{display:flex;justify-content:space-between;align-items:end;gap:1rem}
+.plan-section-head h2{margin:.35rem 0 0;color:#332a3d;font-size:1.35rem}
+.plan-section-head label{display:grid;gap:.35rem;min-width:220px;color:#766b80;font-size:.7rem;font-weight:750}
+.plan-section-head select{width:100%;padding:.65rem;border:1px solid #d5cbe0;border-radius:9px;background:#fff;color:#3e3348;font:inherit;font-size:.82rem}
+.plan-trace-rule{margin:.7rem 0 1rem;color:#6d6474;font-size:.83rem}
+.plan-trace-card{border:1px solid #e1dbe7;border-radius:15px;background:#fff;overflow:hidden}
+.plan-trace-progress{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;padding:.65rem 1rem;border-bottom:1px solid #ece7f0;color:#6c5c79;font-size:.72rem;font-weight:750}
+.plan-trace-progress progress{width:100%;height:7px;accent-color:#7652aa}
+.plan-trace-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:0}
+.plan-trace-grid>section{padding:1rem 1.15rem}
+.plan-trace-grid>section>span,.plan-state-box small{display:block;color:#7b6a88;font-size:.62rem;font-weight:800;letter-spacing:.1em}
+.plan-trace-grid p{margin:.5rem 0 0;color:#625769;font-size:.85rem;line-height:1.55}
+.plan-state-box{border-left:1px solid #e8e1ec;background:#f6f9f2}
+.plan-state-box strong{display:block;margin:.5rem 0 1rem;color:#3d532c;font-size:.86rem;line-height:1.55}
+.plan-state-box pre{margin:.4rem 0 0;background:#fff;border:1px solid #e0e8d8;color:#3f4936;white-space:pre-wrap}
+.plan-trace-controls{display:flex;justify-content:flex-end;gap:.5rem;padding:.75rem 1rem;border-top:1px solid #ece7f0}
+.plan-trace-controls button,.plan-practice-actions button,#plan-print{padding:.6rem .85rem;border:1px solid #d7cede;border-radius:9px;background:#fff;color:#51445b;font:inherit;font-size:.78rem;font-weight:750;cursor:pointer}
+.plan-trace-controls button.primary,.plan-practice-actions button.primary{border-color:#5f438e;background:#5f438e;color:#fff}
+.plan-trace-controls button:disabled{opacity:.4;cursor:not-allowed}
+.plan-tool-filters{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+.plan-tool-filters button{padding:.55rem .8rem;border:1px solid #dcd4e4;border-radius:99px;background:#fff;color:#675a70;font:inherit;font-size:.75rem;font-weight:750;cursor:pointer}
+.plan-tool-filters button.active{border-color:#6d4ca8;background:#6d4ca8;color:#fff}
+.plan-tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.plan-tool-card{padding:1.15rem;border:1px solid #e0d9e7;border-radius:17px;background:#fff}
+.plan-tool-card>span,.plan-edge-card>span{color:#755b99;font-size:.62rem;font-weight:850;letter-spacing:.11em}
+.plan-tool-card pre{min-height:70px}
+.plan-tool-say{color:#6b5a77;font-size:.82rem;font-style:italic}
+.plan-tool-card dl{margin:.7rem 0 0}
+.plan-tool-card dl>div{margin-top:.55rem}
+.plan-tool-card dt{color:#817589;font-size:.65rem;font-weight:800;text-transform:uppercase}
+.plan-tool-card dd{margin:.2rem 0 0;color:#544c5b;font-size:.82rem;line-height:1.5}
+.plan-design-check,.plan-test-template,.plan-exam-checklist{margin-top:1.25rem;padding:1.25rem 1.4rem;border-radius:17px;background:#eef5e7;color:#3d4b32}
+.plan-design-check h3,.plan-test-template h3,.plan-exam-checklist h3{margin-top:0}
+.plan-design-check li,.plan-exam-checklist li{margin:.45rem 0;line-height:1.5}
+.plan-edge-method{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:.55rem;overflow-x:auto;margin-bottom:1.25rem}
+.plan-edge-method article{padding:.8rem;border:1px solid #e1dae8;border-radius:12px;background:#faf8fb}
+.plan-edge-method span{color:#937dae;font-size:.65rem;font-weight:800}
+.plan-edge-method strong{display:block;margin:.35rem 0;color:#43364e;font-size:.8rem}
+.plan-edge-method p{margin:0;color:#786e7e;font-size:.7rem;line-height:1.4}
+.plan-edge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.plan-edge-card{padding:1.1rem;border:1px solid #e0d9e7;border-radius:16px;background:#fff}
+.plan-edge-card h3{margin:.4rem 0 .85rem;color:#3a2e45;font-size:1rem}
+.plan-edge-card>div{display:grid;gap:.4rem}
+.plan-edge-card button{padding:.6rem .7rem;border:1px solid #ddd5e4;border-radius:8px;background:#faf9fb;color:#514758;text-align:left;font:inherit;font-size:.78rem;cursor:pointer}
+.plan-edge-card button.correct{border-color:#7eaa59;background:#edf6e5;color:#375322}
+.plan-edge-card button.wrong{border-color:#c98e86;background:#fff0ed;color:#803f36}
+.plan-edge-feedback{color:#554c5c;font-size:.8rem;line-height:1.55}
+.plan-edge-prompt{color:#8b818f;font-size:.78rem}
+.plan-test-template code{display:block;overflow-x:auto;color:#40562d;font:700 .78rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap}
+.plan-test-template p{margin-bottom:0;line-height:1.55}
+.plan-paper-loop{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-bottom:1.25rem}
+.plan-paper-loop span{display:flex;align-items:center;gap:.4rem;padding:.55rem .65rem;border:1px solid #ddd5e5;border-radius:8px;background:#fff;color:#5d4c69;font-size:.7rem;font-weight:750}
+.plan-paper-loop i{color:#a18eaf;font-style:normal}
+.plan-practice{padding:1.35rem;border:1px solid #dfd7e7;border-radius:20px;background:#fbfafc}
+.plan-problem{margin:1rem 0;padding:1rem;border-left:4px solid #7b5aaa;border-radius:0 12px 12px 0;background:#fff;color:#564b5f}
+.plan-problem p{margin:.4rem 0 0;line-height:1.6}
+.plan-worksheet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}
+.plan-worksheet label{display:grid;gap:.3rem;padding:.85rem;border:1px solid #e2dbe8;border-radius:12px;background:#fff}
+.plan-worksheet label>span{color:#44354f;font-size:.84rem;font-weight:800}
+.plan-worksheet label>small{color:#817586;font-size:.7rem;line-height:1.4}
+.plan-worksheet textarea{resize:vertical;width:100%;box-sizing:border-box;padding:.65rem;border:1px solid #d9d0e0;border-radius:8px;background:#fdfcfe;color:#3d3346;font:inherit;font-size:.8rem;line-height:1.5}
+.plan-practice-actions{display:flex;gap:.5rem;margin-top:1rem}
+#plan-check-feedback{color:#5b4b65;font-size:.84rem;line-height:1.55}
+.plan-model{border:1px solid #d9d0e2;border-radius:12px;background:#fff}
+.plan-model summary{padding:.9rem 1rem;color:#674b8d;font-weight:750;cursor:pointer}
+.plan-model>div{padding:0 1rem 1rem}
+.plan-model dt{margin-top:.65rem;color:#7b6889;font-size:.68rem;font-weight:800;text-transform:uppercase}
+.plan-model dd{margin:.2rem 0;color:#52475b;font-size:.85rem;line-height:1.55}
+@media(max-width:1050px){.plan-hero{grid-template-columns:1fr}.plan-hero-formula{justify-content:flex-start}.plan-flow-layout{grid-template-columns:1fr}.plan-detail-column{position:static}.plan-edge-method{grid-template-columns:repeat(7,140px)}}
+@media(max-width:700px){.plan-hero{padding:1.35rem;border-radius:20px}.plan-hero h1{font-size:2.4rem}.plan-hero-formula{padding:1rem;gap:.4rem}.plan-intro{grid-template-columns:1fr;gap:.6rem;padding:1rem}.plan-flow-layout{display:block}.plan-flow-map{padding:.8rem}.plan-detail-column{margin-top:1rem}.plan-node-detail{padding:1rem}.plan-section-head{display:grid;align-items:start}.plan-section-head label{min-width:0;width:100%}.plan-trace-grid{grid-template-columns:1fr}.plan-state-box{border-left:0;border-top:1px solid #e8e1ec}.plan-trace-controls{flex-wrap:wrap}.plan-tool-grid,.plan-edge-grid,.plan-worksheet{grid-template-columns:1fr}.plan-tool-card pre{min-height:0}.plan-paper-loop{display:grid;grid-template-columns:repeat(3,1fr)}.plan-paper-loop span{justify-content:center;text-align:center}.plan-paper-loop i{display:none}.plan-practice{padding:1rem}.plan-test-template code{white-space:normal;overflow-wrap:anywhere}.plan-tabs{border-radius:12px}.plan-tabs button{padding:.65rem .8rem}}
+@media print{.sidebar,.topbar,.site-footer,.desk-switch,.plan-hero,.plan-tabs,.plan-program-toggle,.plan-intro,.plan-paper-loop,.plan-practice-actions,#plan-print,#plan-check-feedback,.plan-model,.plan-exam-checklist{display:none!important}.workspace{margin:0!important}.plan-practice{border:0;padding:0}.plan-worksheet{display:grid;grid-template-columns:1fr 1fr}.plan-worksheet textarea{border:0;border-bottom:1px solid #777;resize:none}.plan-section-head{display:block}}
+@media(prefers-reduced-motion:reduce){.plan-node{transition:none}.plan-node:hover,.plan-node.is-current{transform:none}}
