@@ -166,10 +166,100 @@ function comp248PlanNodeDetail(program){
   return `<article class="plan-node-detail" aria-live="polite"><div class="plan-detail-kind">${node.kind.toUpperCase()} · USER STORY → JAVA</div><h3>${node.label}</h3><blockquote>${node.story}</blockquote><pre><code>${esc(node.code)}</code></pre><div class="plan-say"><span>SAY IT</span><p>${node.say}</p></div><dl><div><dt>State / execution</dt><dd>${node.state}</dd></div><div><dt>Why this works</dt><dd>${node.why}</dd></div><div><dt>Tools identified</dt><dd>${node.tools}</dd></div></dl></article>`;
 }
 
+const COMP248_PLAN_FLOW_COLOURS={slate:'#756d80',green:'#4f8b45',blue:'#377da5',amber:'#bd7a22',red:'#b85252',violet:'#7957a6'};
+
+function comp248PlanFlowText(lines,x,y,className){
+  const rows=Array.isArray(lines)?lines:[lines];
+  return `<text class="${className}" x="${x}" y="${y}" text-anchor="middle">${rows.map((line,i)=>`<tspan x="${x}" dy="${i?16:0}">${esc(line)}</tspan>`).join('')}</text>`;
+}
+
+function comp248PlanFlowWrap(label,max=20){
+  const lines=[];let line='';
+  label.split(' ').forEach(word=>{if((line+' '+word).trim().length>max&&line){lines.push(line);line=word}else line=(line+' '+word).trim()});
+  if(line)lines.push(line);return lines;
+}
+
+function comp248PlanFlowSize(node){
+  return node.kind==='decision'?{w:220,h:94}:node.kind==='start'||node.kind==='end'?{w:190,h:58}:{w:200,h:60};
+}
+
+function comp248PlanFlowNode(node,x,y){
+  const {w,h}=comp248PlanFlowSize(node),lines=comp248PlanFlowWrap(node.label,node.kind==='decision'?18:22);let shape='';
+  if(node.kind==='decision')shape=`<polygon class="plan-node-shape plan-flow-diamond" points="${x},${y-h/2} ${x+w/2},${y} ${x},${y+h/2} ${x-w/2},${y}"/>`;
+  else if(node.kind==='input')shape=`<polygon class="plan-node-shape" points="${x-w/2+18},${y-h/2} ${x+w/2},${y-h/2} ${x+w/2-18},${y+h/2} ${x-w/2},${y+h/2}"/>`;
+  else shape=`<rect class="plan-node-shape" x="${x-w/2}" y="${y-h/2}" width="${w}" height="${h}" rx="${node.kind==='start'||node.kind==='end'?h/2:9}"/>`;
+  return `<g class="plan-node kind-${node.kind}" data-plan-node="${node.id}" role="button" tabindex="0" aria-label="${esc(node.kind+': '+node.label)}" aria-pressed="${comp248Plan.node===node.id}"><title>${esc(node.label)} — select for the M2E teaching drawer</title>${shape}${comp248PlanFlowText(lines,x,y-(lines.length-1)*8+5,'plan-node-label')}</g>`;
+}
+
+function comp248PlanFlowEdge(d,tone='slate',to=''){
+  return `<path class="plan-flow-edge tone-${tone}" d="${d}" marker-end="url(#plan-arrow-${tone})" data-plan-edge-to="${to}"/>`;
+}
+
+function comp248PlanFlowChip(branch,x,y,w){
+  const lines=Array.isArray(branch.label)?branch.label:[branch.label];
+  return `<g class="plan-flow-chip tone-${branch.tone||'slate'}"><rect x="${x-w/2}" y="${y-25}" width="${w}" height="50" rx="9"/>${comp248PlanFlowText(lines,x,y-(lines.length-1)*8+4,'plan-chip-label')}</g>`;
+}
+
+function comp248PlanFlowChipRow(branches,y){
+  const n=branches.length,w=n>=6?125:n===4?170:n===3?190:n===2?240:220,gap=n>=6?15:n===4?20:n===3?35:n===2?80:0,total=n*w+(n-1)*gap,start=(900-total)/2+w/2;
+  return {items:branches.map((branch,i)=>({...branch,x:start+i*(w+gap),y,w})),markup:branches.map((branch,i)=>comp248PlanFlowChip(branch,start+i*(w+gap),y,w)).join('')};
+}
+
+function comp248PlanFlowConnect(from,to,tone='slate'){
+  const a=comp248PlanFlowSize(from.node),b=comp248PlanFlowSize(to.node);
+  return comp248PlanFlowEdge(`M ${from.x} ${from.y+a.h/2} V ${to.y-b.h/2}`,tone,to.node.id);
+}
+
+function comp248PlanFlowFan(from,to,branches){
+  const row=comp248PlanFlowChipRow(branches,from.y+115),a=comp248PlanFlowSize(from.node),b=comp248PlanFlowSize(to.node),top=to.y-b.h/2,merge=top-20;
+  const edges=row.items.map(item=>comp248PlanFlowEdge(`M ${from.x} ${from.y+a.h/2} V ${from.y+68} H ${item.x} V ${item.y-25}`,item.tone,from.node.id)+comp248PlanFlowEdge(`M ${item.x} ${item.y+25} V ${merge} H ${to.x} V ${top}`,item.tone,to.node.id)).join('');
+  return {edges,chips:row.markup};
+}
+
+function comp248PlanFlowEdgeLabel(label,x,y,tone){
+  const width=label.length*6.3+18;
+  return `<g class="plan-flow-edge-label tone-${tone}"><rect x="${x-width/2}" y="${y-11}" width="${width}" height="22" rx="6"/>${comp248PlanFlowText(label,x,y+4,'plan-edge-label-text')}</g>`;
+}
+
+function comp248PlanQ1Diagram(program){
+  const byId=Object.fromEntries(program.nodes.map(node=>[node.id,node])),at=(id,y)=>({node:byId[id],x:450,y}),positions=[at('setup',50),at('difficulty',170),at('name',410),at('lock',530),at('score1',770),at('colour',890),at('score2',1130),at('year',1250),at('score3',1490),at('outcome',1610),at('hall',1850),at('end',2090)],p=Object.fromEntries(positions.map(item=>[item.node.id,item]));
+  let edges=['setup>difficulty','name>lock','score1>colour','score2>year','score3>outcome'].map(pair=>{const[a,b]=pair.split('>');return comp248PlanFlowConnect(p[a],p[b])}).join(''),chips='';
+  const fans=[
+    ['difficulty','name',[{label:['1 · Easy','× 1.0'],tone:'blue'},{label:['2 · Medium','× 1.5'],tone:'amber'},{label:['3 · Hard','× 2.0'],tone:'violet'}]],
+    ['lock','score1',[{label:['Exactly 30','0 points'],tone:'green'},{label:['25 through 35','−10 points'],tone:'blue'},{label:['15 through 45','−20 points'],tone:'amber'},{label:['Otherwise','−30 points'],tone:'red'}]],
+    ['colour','score2',[{label:['GREEN','+15 points'],tone:'green'},{label:['RED or YELLOW','−15 points'],tone:'red'},{label:['BLUE','−10 points'],tone:'blue'},{label:['Otherwise','−20 points'],tone:'amber'}]],
+    ['year','score3',[{label:['Exactly 1974','+20 points'],tone:'green'},{label:['Within 5 years','−10 points'],tone:'blue'},{label:['Within 10 years','−20 points'],tone:'amber'},{label:['Otherwise','−35 points'],tone:'red'}]],
+    ['outcome','hall',[{label:['Score ≥ 110','MASTER'],tone:'green'},{label:['Score ≥ 80','ESCAPED'],tone:'blue'},{label:['Score ≥ 50','BARELY OUT'],tone:'amber'},{label:['Otherwise','TRAPPED'],tone:'red'}]],
+    ['hall','end',[{label:['YES','Record result'],tone:'green'},{label:['NO','Do not record'],tone:'slate'}]]
+  ];
+  fans.forEach(([a,b,branches])=>{const fan=comp248PlanFlowFan(p[a],p[b],branches);edges+=fan.edges;chips+=fan.chips});
+  return {height:2170,edges,chips,nodes:positions.map(item=>comp248PlanFlowNode(item.node,item.x,item.y)).join('')};
+}
+
+function comp248PlanQ2Diagram(program){
+  const byId=Object.fromEntries(program.nodes.map(node=>[node.id,node])),at=(id,y)=>({node:byId[id],x:450,y}),positions=[at('setup',50),at('menu',165),at('switch',290),at('zones',550),at('quantity',795),at('valid',935),at('subtotal',1085),at('discount',1215),at('receipt',1470),at('end',1605)],p=Object.fromEntries(positions.map(item=>[item.node.id,item]));
+  let edges=comp248PlanFlowConnect(p.setup,p.menu)+comp248PlanFlowConnect(p.menu,p.switch)+comp248PlanFlowConnect(p.quantity,p.valid)+comp248PlanFlowConnect(p.subtotal,p.discount)+comp248PlanFlowConnect(p.receipt,p.end),chips='',labels='';
+  const switchRow=comp248PlanFlowChipRow([{label:['1 · Single','purchase'],tone:'green'},{label:['2 · 10-Trip','zone rule'],tone:'blue'},{label:['3 · Monthly','purchase'],tone:'green'},{label:['4 · Reduced','purchase'],tone:'green'},{label:['5 · Exit','no receipt'],tone:'red'},{label:['Default','invalid'],tone:'red'}],405);
+  chips+=switchRow.markup;
+  switchRow.items.forEach((item,i)=>{edges+=comp248PlanFlowEdge(`M 450 337 V 360 H ${item.x} V 380`,item.tone,'switch');if(i<4)edges+=comp248PlanFlowEdge(`M ${item.x} 430 V 473 H 450 V 503`,item.tone,'zones');else{const lane=i===4?835:875;edges+=comp248PlanFlowEdge(`M ${item.x} 430 V 458 H ${lane} V 865 H 450 V 888`,item.tone,'valid')}});
+  const zoneRow=comp248PlanFlowChipRow([{label:['Fare assigned','continue to quantity'],tone:'green'},{label:['Restricted 10-Trip','skip quantity'],tone:'red'}],665);
+  chips+=zoneRow.markup;
+  edges+=comp248PlanFlowEdge('M 450 597 V 618 H 300 V 640','green','zones')+comp248PlanFlowEdge('M 450 597 V 618 H 600 V 640','red','zones')+comp248PlanFlowEdge('M 300 690 V 745 H 450 V 765','green','quantity')+comp248PlanFlowEdge('M 600 690 V 720 H 790 V 850 H 450 V 888','red','valid');
+  edges+=comp248PlanFlowEdge('M 450 982 V 1055','green','subtotal')+comp248PlanFlowEdge('M 560 935 H 920 V 1605 H 545','red','end');
+  labels+=comp248PlanFlowEdgeLabel('TRUE · valid purchase',565,1015,'green')+comp248PlanFlowEdgeLabel('FALSE · skip receipt',735,918,'red');
+  const discountFan=comp248PlanFlowFan(p.discount,p.receipt,[{label:['Monthly AND quantity ≥ 3','5% discount'],tone:'green'},{label:['Every other path','discount = 0'],tone:'blue'}]);edges+=discountFan.edges;chips+=discountFan.chips;
+  return {height:1690,edges,chips:chips,labels,nodes:positions.map(item=>comp248PlanFlowNode(item.node,item.x,item.y)).join('')};
+}
+
+function comp248PlanFlowDiagram(program){
+  const diagram=program===COMP248_PLAN_PROGRAMS.q1?comp248PlanQ1Diagram(program):comp248PlanQ2Diagram(program),markers=Object.entries(COMP248_PLAN_FLOW_COLOURS).map(([tone,colour])=>`<marker id="plan-arrow-${tone}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="${colour}"/></marker>`).join('');
+  return `<div class="plan-flow-legend" aria-label="Flowchart legend"><span><i class="legend-start"></i>Start / end</span><span><i class="legend-input"></i>Input</span><span><i class="legend-decision"></i>Decision</span><span><i class="legend-update"></i>Update</span><span><i class="legend-output"></i>Output</span><strong>Coloured connectors = alternative paths</strong></div><div class="plan-flow-scroll" tabindex="0" aria-label="Scrollable ${esc(program.label)} decision flowchart"><svg class="plan-flow-svg" viewBox="0 0 900 ${diagram.height}" aria-label="${esc(program.label)} branching process flow"><title>${esc(program.label)} — Visio-style decision flowchart</title><desc>Standard flowchart shapes show the program sequence. Decision diamonds fan out into coloured alternative paths. Select any shape to read its user story, Java, pronunciation, and state reasoning.</desc><defs>${markers}</defs><g class="plan-flow-connectors">${diagram.edges}</g><g>${diagram.chips||''}${diagram.labels||''}</g><g class="plan-flow-nodes">${diagram.nodes}</g></svg></div><p class="plan-flow-hint">Select any shape for its teaching drawer. On a small screen, swipe the diagram sideways to inspect every branch.</p>`;
+}
+
 function comp248PlanFlowView(){
   const program=COMP248_PLAN_PROGRAMS[comp248Plan.program],traces=COMP248_PLAN_TRACES[comp248Plan.program];
   if(!traces[comp248Plan.trace])comp248Plan.trace=Object.keys(traces)[0];
-  return `${comp248PlanProgramToggle()}<section class="plan-intro"><div><span>THE SHARED DESIGN LOOP</span><h2>Story → state → decision → update → output → test</h2></div><p>${program.intro} Select any node for its teaching drawer, or run the guided trace beneath the map.</p></section><div class="plan-flow-layout"><section class="plan-flow-map" aria-label="${program.label} process flow"><div class="plan-flow-start">START</div><ol>${program.nodes.map((node,i)=>`<li><button type="button" class="plan-node kind-${node.kind}" data-plan-node="${node.id}" aria-pressed="${comp248Plan.node===node.id}"><span>${String(i+1).padStart(2,'0')}</span><div><strong>${node.label}</strong><small>${node.kind}</small></div><i>→</i></button>${node.branches?`<div class="plan-branches">${node.branches.map(b=>`<span>${b}</span>`).join('')}</div>`:''}${i<program.nodes.length-1?'<div class="plan-arrow" aria-hidden="true">↓</div>':''}</li>`).join('')}</ol><div class="plan-flow-end">END</div></section><aside id="plan-node-detail" class="plan-detail-column">${comp248PlanNodeDetail(program)}</aside></div><section class="plan-trace-lab"><div class="plan-section-head"><div><span>GUIDED PAPER TRACE</span><h2>Which instruction is running, and what does Java know?</h2></div><label>Input path<select id="plan-trace-scenario">${Object.entries(traces).map(([id,t])=>`<option value="${id}" ${comp248Plan.trace===id?'selected':''}>${t.label}</option>`).join('')}</select></label></div><p class="plan-trace-rule">Predict the next state before pressing Next. Output stays separate from internal variables.</p><div id="plan-trace-card"></div></section>`;
+  return `${comp248PlanProgramToggle()}<section class="plan-intro"><div><span>THE SHARED DESIGN LOOP</span><h2>Follow the branches. Then trace the state.</h2></div><p>${program.intro} Every diamond asks a question; every coloured path shows what can happen next.</p></section><div class="plan-flow-layout"><section class="plan-flow-map" aria-label="${program.label} process flow">${comp248PlanFlowDiagram(program)}</section><aside id="plan-node-detail" class="plan-detail-column">${comp248PlanNodeDetail(program)}</aside></div><section class="plan-trace-lab"><div class="plan-section-head"><div><span>GUIDED PAPER TRACE</span><h2>Which instruction is running, and what does Java know?</h2></div><label>Input path<select id="plan-trace-scenario">${Object.entries(traces).map(([id,t])=>`<option value="${id}" ${comp248Plan.trace===id?'selected':''}>${t.label}</option>`).join('')}</select></label></div><p class="plan-trace-rule">Predict the next state before pressing Next. The active shape and incoming connectors follow your chosen input path. Output stays separate from internal variables.</p><div id="plan-trace-card"></div></section>`;
 }
 
 function comp248PlanDrawTrace(){
@@ -178,6 +268,7 @@ function comp248PlanDrawTrace(){
   host.innerHTML=`<article class="plan-trace-card"><div class="plan-trace-progress"><span>Step ${index+1} of ${steps.length}</span><progress max="${steps.length}" value="${index+1}"></progress></div><div class="plan-trace-grid"><section><span>CURRENT INSTRUCTION</span><pre><code>${esc(step.code)}</code></pre><p>${step.why}</p></section><section class="plan-state-box"><span>STATE NOW</span><strong>${step.state}</strong><small>OUTPUT SEPARATELY</small><pre>${esc(step.output)}</pre></section></div><div class="plan-trace-controls"><button type="button" id="plan-trace-back" ${index===0?'disabled':''}>← Back</button><button type="button" id="plan-trace-restart">Restart</button><button type="button" class="primary" id="plan-trace-next" ${index===steps.length-1?'disabled':''}>Predict, then Next →</button></div></article>`;
   const visited=steps.slice(0,index+1).map(s=>s.node);
   document.querySelectorAll('[data-plan-node]').forEach(button=>{button.classList.toggle('is-visited',visited.includes(button.dataset.planNode));button.classList.toggle('is-current',step.node===button.dataset.planNode)});
+  document.querySelectorAll('[data-plan-edge-to]').forEach(path=>{path.classList.toggle('is-visited',visited.includes(path.dataset.planEdgeTo));path.classList.toggle('is-current',step.node===path.dataset.planEdgeTo)});
   $('#plan-trace-back').onclick=()=>{comp248Plan.traceIndex=Math.max(0,index-1);comp248PlanDrawTrace()};
   $('#plan-trace-restart').onclick=()=>{comp248Plan.traceIndex=0;comp248PlanDrawTrace()};
   $('#plan-trace-next').onclick=()=>{comp248Plan.traceIndex=Math.min(steps.length-1,index+1);comp248PlanDrawTrace()};
@@ -206,7 +297,7 @@ function comp248PlanDrawBody(){
   else host.innerHTML=comp248PlanFlowView();
   document.querySelectorAll('[data-plan-view]').forEach(button=>{button.classList.toggle('active',button.dataset.planView===comp248Plan.view);button.setAttribute('aria-pressed',String(button.dataset.planView===comp248Plan.view))});
   host.querySelectorAll('[data-plan-program]').forEach(button=>button.onclick=()=>{comp248Plan.program=button.dataset.planProgram;comp248Plan.node=COMP248_PLAN_PROGRAMS[comp248Plan.program].first;comp248Plan.trace=Object.keys(COMP248_PLAN_TRACES[comp248Plan.program])[0];comp248Plan.traceIndex=0;comp248PlanDrawBody()});
-  host.querySelectorAll('[data-plan-node]').forEach(button=>button.onclick=()=>{comp248Plan.node=button.dataset.planNode;host.querySelectorAll('[data-plan-node]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));$('#plan-node-detail').innerHTML=comp248PlanNodeDetail(COMP248_PLAN_PROGRAMS[comp248Plan.program])});
+  host.querySelectorAll('[data-plan-node]').forEach(button=>{const select=()=>{comp248Plan.node=button.dataset.planNode;host.querySelectorAll('[data-plan-node]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));$('#plan-node-detail').innerHTML=comp248PlanNodeDetail(COMP248_PLAN_PROGRAMS[comp248Plan.program])};button.onclick=select;button.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();select()}}});
   const scenario=$('#plan-trace-scenario');if(scenario)scenario.onchange=()=>{comp248Plan.trace=scenario.value;comp248Plan.traceIndex=0;comp248PlanDrawTrace()};
   if(comp248Plan.view==='flow')comp248PlanDrawTrace();
   host.querySelectorAll('[data-plan-tool-filter]').forEach(button=>button.onclick=()=>{comp248Plan.toolFilter=button.dataset.planToolFilter;comp248PlanDrawBody()});
