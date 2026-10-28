@@ -92,6 +92,10 @@ To update it after testing and building the source lab, run
 and deploy this portfolio project. The importer mounts relative assets under
 `/study-lab/` and adds a link back to the portfolio. No textbook PDF is included.
 
+### ELEC 275 Practice Deck D1
+
+The Study workspace includes the new Practice Deck module at `/study-lab/#elec275-practice` and Deck D1 at `/study-lab/#elec275-practice-d1`. D1 contains 156 fully solved questions: 112 Rizzoni source-mastery items (18 examples, 11 Check Your Understanding items, and 83 homework problems) plus 44 original exam-practice items (24 MCQs, 12 short-answer, and 8 long-answer). The snapshot includes the 61 required source-reference pages, not the complete textbook PDF. Attempts, solution reveals, and mastery remain browser-local under `elec275-practice-v1`.
+
 ### ELEC 275 teaching revision
 
 The Study Lab snapshot includes eight circuit concept lessons, two complete methods for each of P1–P5, six explained drills, named-rule accordions, and a printed/PDF page reference map. New routes are `#elec-P1-a` through `#elec-P5-b`, and `#elec-references`. Textbook attribution: Rizzoni & Kearns (2022), seventh edition. Original source files and the independent numerical/UI checks live in the adjacent `ash-study-lab` project. No textbook PDF or original practice document is published.
