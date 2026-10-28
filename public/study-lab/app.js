@@ -14,7 +14,7 @@ function cleanup(){if(playback){playback.kill();playback=null}if(ctx){ctx.revert
 function animate(selector='.lesson-content'){if(!motion||!window.gsap)return;ctx=gsap.context(()=>gsap.from(selector,{y:12,autoAlpha:0,duration:.38,ease:'power2.out',stagger:.045}),main)}
 const MODULE_TOC_CONFIG={
  comp:{code:'COMP 232',title:'Discrete mathematics',workspaces:[['Lecture Notes','#comp232-notes'],['Rosen Chapter 1','#comp232-rosen-ch1'],['Rosen Chapter 2','#comp232-rosen-ch2']]},
- elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes'],['Fundamentals Rapid-Fire · 81','./elec275-fundamentals.html'],['D1 Thought Framework · 156','./elec275-d1-framework.html'],['Practice Deck','#elec275-practice']]},
+ elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes'],['Fundamentals Rapid-Fire · 81','./elec275-fundamentals.html'],['D1 Thought Framework · 156','./elec275-d1-framework.html'],['Practice Decks · 295','#elec275-practice'],['D1 · Circuit Concepts','#elec275-practice-d1'],['D2 · Nodal & Mesh','#elec275-practice-d2'],['Midterm Simulation','#elec275-practice-simulation']]},
  math:{code:'ENGR 213',title:'Differential equations',workspaces:[['Quiz practice','#engr213'],['Lecture Notes','#engr-notes']]},
  inse:{code:'INSE 201',title:'Security ethics',workspaces:[['Lecture Notes','#inse201-notes']]},
  java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Planning Lab','#comp248-planning'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3'],['Mind Map','./comp248-mind-map/']]}
@@ -23,7 +23,9 @@ function moduleWorkspaceActive(href){
  if(href==='#quiz')return activeId==='quiz'||activeId==='elec-references'||/^elec-P[1-5]-[ab]$/.test(activeId)||/^E[1-8]$/.test(activeId);
  if(href==='#elec275-lectures')return activeId==='elec275-lectures'||/^elec275-lecture-\d+$/.test(activeId);
  if(href==='#elec275-notes')return activeId==='elec275-notes'||/^elec275-ch-\d+$/.test(activeId);
- if(href==='#elec275-practice')return isPracticeRoute(activeId);
+ if(href==='#elec275-practice')return activeId==='elec275-practice';
+ if(href==='#elec275-practice-simulation')return activeId==='elec275-practice-simulation';
+ if(/^#elec275-practice-d[1-2]$/.test(href))return activeId===href.slice(1)||activeId.startsWith(`${href.slice(1)}/`);
  if(href==='#engr213')return ['engr213','engr-curves','engr-references'].includes(activeId)||/^engr-(S[1-5]|L[1-5])$/.test(activeId)||/^M[1-8]$/.test(activeId);
  if(href==='#engr-notes')return activeId==='engr-notes'||/^engr-lecture-\d+$/.test(activeId);
  if(href==='#comp232-notes')return compRoute(activeId);
