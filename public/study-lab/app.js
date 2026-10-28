@@ -14,7 +14,7 @@ function cleanup(){if(playback){playback.kill();playback=null}if(ctx){ctx.revert
 function animate(selector='.lesson-content'){if(!motion||!window.gsap)return;ctx=gsap.context(()=>gsap.from(selector,{y:12,autoAlpha:0,duration:.38,ease:'power2.out',stagger:.045}),main)}
 const MODULE_TOC_CONFIG={
  comp:{code:'COMP 232',title:'Discrete mathematics',workspaces:[['Lecture Notes','#comp232-notes'],['Rosen Chapter 1','#comp232-rosen-ch1'],['Rosen Chapter 2','#comp232-rosen-ch2']]},
- elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes'],['Practice Deck','#elec275-practice']]},
+ elec:{code:'ELEC 275',title:'Circuit analysis',workspaces:[['Quiz practice','#quiz'],['Lecture Notes','#elec275-lectures'],['Textbook Notes','#elec275-notes'],['Fundamentals Rapid-Fire · 81','./elec275-fundamentals.html'],['Practice Deck','#elec275-practice']]},
  math:{code:'ENGR 213',title:'Differential equations',workspaces:[['Quiz practice','#engr213'],['Lecture Notes','#engr-notes']]},
  inse:{code:'INSE 201',title:'Security ethics',workspaces:[['Lecture Notes','#inse201-notes']]},
  java:{code:'COMP 248',title:'Object-oriented programming',workspaces:[['Lecture Notes','#comp248-notes'],['Planning Lab','#comp248-planning'],['Tutorial 2','#comp248-tutorial-2'],['Tutorial 3','#comp248-tutorial-3'],['Mind Map','./comp248-mind-map/']]}
